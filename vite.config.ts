@@ -48,4 +48,9 @@ export default defineConfig({
             type: 'module',
         },
     })],
+    // 개발 서버 설정, 배포시 지우기
+    server: {
+        port: 3000,  // 개발 서버 포트 설정
+        host: '0.0.0.0', // Docker에서 접근할 수 있도록 변경
+    }
 })
