@@ -37,6 +37,7 @@ export default function Thunder() {
 
   return (
     <ThunderContainer>
+      <BackGroundMint/>
       <CarouselWrapper images={images} />
       <SearchBar search={searchQuery} setQuery={setSearchQuery} />
       <PostList posts={posts} />
@@ -51,5 +52,14 @@ const ThunderContainer = styled.div`
     width: 100%;
     min-height: 100vh;
     background-color: #FFFFFF;
+    position: relative;
+`;
+
+const BackGroundMint = styled.div`
+  background-color: #71C9B0;
+  width: 100%;
+  height: 97px;
+  position: absolute;
+  top: 0;
 `;
 
