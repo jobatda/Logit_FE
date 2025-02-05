@@ -2,6 +2,9 @@ import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Post } from "../../types/Post";
 
+import personIcon from '../../temp_assets/personIcon.png';
+import betweenBar from '../../temp_assets/betweenBar.png';
+
 interface PostItemProps extends Post {
     onClick: () => void;
 }
@@ -38,7 +41,7 @@ export default function PostItem(props: PostItemProps) {
             <PostImage src={image} alt="post" />
             <PostTitle ref={titleRef}>{title}</PostTitle>
             <PostMidleWrapper>
-                <PersonIcon src="src/pages/thunder/temp_assets/icn_settings.png" />
+                <PersonIcon src={personIcon} alt=""/>
                 <PostPeople>
                     {currentPeople}명/{totalPeople}명
                 </PostPeople>
@@ -46,7 +49,7 @@ export default function PostItem(props: PostItemProps) {
             </PostMidleWrapper>
             <PostBottomWrapper>
                 <PostDate>{formatDate(travelDate)}</PostDate>
-                <PostBar src="src/pages/thunder/temp_assets/Rectangle 34648168.png" alt="" />
+                <PostBar src={betweenBar} alt="날짜 사이 바" />
                 <PostLocation>{location}</PostLocation>
             </PostBottomWrapper>
         </PostContainer>

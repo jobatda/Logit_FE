@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { SearchInputProps } from "../../types/SearchInput";
 
+import searchIcon from "../../temp_assets/icn_search.png";
+
 export default function SearchInput({ search, setQuery }: SearchInputProps) {
     return (
         <SearchInputContainer>
-            {!search && <SearchIcon src={"src/pages/thunder/temp_assets/icn_search.png"} alt="" />}
+            {!search && <SearchIcon src={searchIcon} alt="" />}
             <Search 
                 value={search} 
                 onChange={(e) => setQuery(e.target.value)} 
