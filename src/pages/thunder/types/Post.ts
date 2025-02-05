@@ -12,6 +12,7 @@ interface Post {
 
 interface PostProps {
     posts: Post[]
+    onPostClick: (postId: number) => void;
 }
 
 export type{ Post, PostProps };

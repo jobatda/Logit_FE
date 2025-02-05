@@ -1,14 +1,14 @@
 import styled from "styled-components"
 import PostItem from "./PostItem";
-import { Post, PostProps } from "../../types/Post"
+import { PostProps } from "../../types/Post"
 
 export default function PostList(props: PostProps) {
-    const { posts } = props;
+    const { posts, onPostClick } = props;
 
     return (
         <PostContainer>
-            {posts.map((post, index) => (
-                <PostItem key={post.id} {...post} />
+            {posts.map((post) => (
+                <PostItem key={post.id} {...post} onClick={() => onPostClick(post.id)} />
             ))}
         </PostContainer>
     )
