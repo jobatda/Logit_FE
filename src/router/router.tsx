@@ -4,6 +4,7 @@ import Loading from "../pages/utilPages/Loading";
 
 const Layout = lazy(() => import("../layout/Layout"));
 const Main = lazy(() => import("../pages/main/Main"));
+const Thunder = lazy(() => import("../pages/thunder/Thunder"));
 
 export const router = createBrowserRouter([
         {
@@ -13,10 +14,10 @@ export const router = createBrowserRouter([
                 {
                     children: [
                         {index: true, element: <Main/>},
-                        // {
-                        //     path: "login",
-                        //     element: <Login/>,
-                        // },
+                        {
+                            path: "thunder",
+                            element: <Suspense fallback={<Loading/>}><Thunder/></Suspense>,
+                        },
                     ],
                 }
             ],
