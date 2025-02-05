@@ -2,8 +2,12 @@ import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Post } from "../../types/Post";
 
-export default function PostItem(props: Post) {
-    const { image, title, totalPeople, currentPeople, days, travelDate, location } = props;
+interface PostItemProps extends Post {
+    onClick: () => void;
+}
+
+export default function PostItem(props: PostItemProps) {
+    const { image, title, totalPeople, currentPeople, days, travelDate, location, onClick } = props;
     const titleRef = useRef<HTMLParagraphElement>(null);
 
     const formatDate = (dateString: string) => {
@@ -30,7 +34,7 @@ export default function PostItem(props: Post) {
     }, [title]);
 
     return (
-        <PostContainer>
+        <PostContainer onClick={onClick}>
             <PostImage src={image} alt="post" />
             <PostTitle ref={titleRef}>{title}</PostTitle>
             <PostMidleWrapper>

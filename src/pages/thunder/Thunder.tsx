@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 
 import CarouselWrapper from "./components/Carousel/CarouselWrapper";
 import SearchBar from "./components/Search/SearchBar";
@@ -13,6 +15,7 @@ export default function Thunder() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [images, setImages] = useState<Image[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -33,14 +36,25 @@ export default function Thunder() {
       { id: 5, isAI: false, image: "src/pages/thunder/temp_assets/Frame 1707484749.png", title: "Desert Safari", currentPeople: 4, totalPeople: 6, days: 4, travelDate: "2023-08-05", location: "Dubai" }
     ];
     setPosts(dummyPosts);
+    // axios.get("/api/posts") // API 호출
+    // .then(response => {
+    //   setPosts(response.data);
+    // })
+    // .catch(error => {
+    //   console.error("Error fetching posts:", error);
+    // });
   }, []);
+
+    const handlePostClick = (postId: number) => {
+        navigate(`/Thunder/${postId}`);
+    }
 
   return (
     <ThunderContainer>
       <BackGroundMint/>
       <CarouselWrapper images={images} />
       <SearchBar search={searchQuery} setQuery={setSearchQuery} />
-      <PostList posts={posts} />
+      <PostList posts={posts} onPostClick={handlePostClick} />
     </ThunderContainer>
   );
 };
