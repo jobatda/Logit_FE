@@ -1,14 +1,31 @@
 import styled from "styled-components"
+import { useState, useEffect } from "react"
 import PostItem from "./PostItem";
-import { PostProps } from "../../types/Post"
+import { PostListType } from "../../types/Post"
 
-export default function PostList(props: PostProps) {
-    const { posts, onPostClick } = props;
+// 더미 데이터
+import { dummyPosts } from "../../temp_dummyData/dummy"
+
+
+export default function PostList() {
+    const [posts, setPosts] = useState<PostListType>();
+
+    useEffect(() => {
+        // axios.get("/api/posts") // API 호출
+        // .then(response => {
+        //   setPosts(response.data);
+        // })
+        // .catch(error => {
+        //   console.error("Error fetching posts:", error);
+        // });
+        setPosts(dummyPosts);
+    }, []);
+
 
     return (
         <PostContainer>
-            {posts.map((post) => (
-                <PostItem key={post.id} {...post} onClick={() => onPostClick(post.id)} />
+            {posts && posts.map((post) => (
+                <PostItem key={post.id} id={post.id} />
             ))}
         </PostContainer>
     )
