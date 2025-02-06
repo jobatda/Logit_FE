@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
+import btnSettingIcon from "../../temp_assets/btn_settings.png";
+
 export default function SettingIcon() {
     return (
         <SettingIconContainer>
-            <Icon src={"src/pages/thunder/temp_assets/btn_settings.png"} alt="Setting Icon" />
+            <Icon src={btnSettingIcon} alt="Setting Icon" />
         </SettingIconContainer>
     );
 }
