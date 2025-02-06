@@ -1,6 +1,7 @@
 import {VitePWA} from 'vite-plugin-pwa';
 import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -47,7 +48,7 @@ export default defineConfig({
             suppressWarnings: true,
             type: 'module',
         },
-    })],
+    }), svgr()],
     // 개발 서버 설정, 배포시 지우기
     server: {
         port: 3000,  // 개발 서버 포트 설정

@@ -1,5 +1,5 @@
 import {createGlobalStyle} from "styled-components";
-import {fonts} from "./fonts";
+import 'pretendard/dist/web/variable/pretendardvariable.css';
 
 export const GlobalStyled = createGlobalStyle`
     *, *::before, *::after {
@@ -10,7 +10,6 @@ export const GlobalStyled = createGlobalStyle`
         margin: 0;
         padding: 0;
     }
-    ${fonts}
 
     html {
         line-height: 1.5;
@@ -26,7 +25,7 @@ export const GlobalStyled = createGlobalStyle`
     }
 
     body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+        font-family: "Pretendard Variable", system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
         line-height: 1.5;
     }
 
@@ -75,6 +74,7 @@ export const GlobalStyled = createGlobalStyle`
         border: none;
         background: none;
         cursor: pointer;
+        display: flex;
     }
 
     a {
