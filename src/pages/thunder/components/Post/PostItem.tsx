@@ -1,18 +1,21 @@
-import { useRef, useEffect,useState } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Post, DateTravelType } from "../../types/Post";
+import { PostType, DateTravelType } from "../../types/Post";
 
 import personIcon from '../../temp_assets/personIcon.png';
 import betweenBar from '../../temp_assets/betweenBar.png';
+import { dummyPost } from "../../temp_dummyData/dummy" // 더미데이터 test
 
-interface PostItemProps extends Post {
-    onClick: () => void;
+interface PostId {
+    id: number;
 }
 
-export default function PostItem(props: PostItemProps) {
-    const { image, title, totalPeople, currentPeople, days, travelDate, location, onClick } = props;
+export default function PostItem({ id }: PostId) {
+    const [post, setPost] = useState<PostType>();
     const [dateOutput, setDateOutput] = useState<DateTravelType>({ month: "", day: "", dayOfWeek: "" });
     const titleRef = useRef<HTMLParagraphElement>(null);
+    const navigate = useNavigate();
 
     const getDayOfWeek = (date: Date): string => {
         const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
@@ -36,32 +39,43 @@ export default function PostItem(props: PostItemProps) {
         return truncatedTitle + "...";
     };
 
+    const onClickToPostDetail = () => {
+        navigate(`/thunder/${id}`);
+    };
+
     useEffect(() => {
+        // axios.get(`/api/posts/${id}`) // API 호출
+        setPost(dummyPost);
+        // 위에서 데이터 못 받아오면 바로 return, 몇번 시도하도록 만들어야함
+        if (!post) return;
+
         if (titleRef.current) {
-            titleRef.current.innerText = title;
-            truncateTitle(title);
+            titleRef.current.innerText = post.title;
+            truncateTitle(post.title);
         }
-        const date:Date = new Date(travelDate);
+        const date:Date = new Date(post.travelDate);
         const { month, day } = formatDate(date);
         const dayOfWeek = getDayOfWeek(date);
         setDateOutput({ month, day, dayOfWeek });
-    }, [title]);
+    }, [post]);
+
+    if (!post) {return null;}
 
     return (
-        <PostContainer onClick={onClick}>
-            <PostImage src={image} alt="post" />
-            <PostTitle ref={titleRef}>{title}</PostTitle>
+        <PostContainer onClick={onClickToPostDetail}>
+            <PostImage src={post.thunderImage} alt="post" />
+            <PostTitle ref={titleRef}>{post.title}</PostTitle>
             <PostMidleWrapper>
                 <PersonIcon src={personIcon} alt=""/>
                 <PostPeople>
-                    {currentPeople}명/{totalPeople}명
+                    {post.currentPeople}명/{post.totalPeople}명
                 </PostPeople>
-                <PostDays>{days}박 {days + 1}일</PostDays>
+                <PostDays>{post.days}박 {post.days + 1}일</PostDays>
             </PostMidleWrapper>
             <PostBottomWrapper>
                 <PostDate>{dateOutput["month"]}월 {dateOutput["day"]}일 ({dateOutput["dayOfWeek"]})</PostDate>
                 <PostBar src={betweenBar} alt="날짜 사이 바" />
-                <PostLocation>{location}</PostLocation>
+                <PostLocation>{post.location}</PostLocation>
             </PostBottomWrapper>
         </PostContainer>
     );
@@ -135,11 +149,11 @@ const PostBottomWrapper = styled.div`
 
 const PostDate = styled.p`
     margin-right: 5px;
-    `;
-    
-    const PostBar = styled.img`
-    `;
-    
-    const PostLocation = styled.p`
+`;
+
+const PostBar = styled.img`
+`;
+
+const PostLocation = styled.p`
     margin-left: 5px;
 `;

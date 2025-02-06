@@ -1,7 +1,8 @@
-interface Post {
+// 게시물 타입
+interface PostType {
     id: number; // 게시물 ID
     isAI: boolean // isAI is a boolean type 없어질 수도 있음
-    image: string; // 이미지 URL
+    thunderImage: string; // 이미지 URL
     title: string
     currentPeople: number; // 현재 인원수
     totalPeople: number; // 총원
@@ -10,10 +11,8 @@ interface Post {
     location: string; // 여행 지역
 }
 
-interface PostProps {
-    posts: Post[]
-    onPostClick: (postId: number) => void;
-}
+// 게시물 리스트 타입
+type PostListType = PostType[];  // interface를 type으로 변경하고 배열 타입으로 직접 선언
 
 interface PostDetailType {
     id: number; // 게시물 ID
@@ -61,4 +60,4 @@ interface PostDetailContentProp {
     scheduleImage: string; // 여행 일정 이미지
 }
 
-export type{ Post, PostProps, PostDetailType, PostDetailInfoProp, PostDetailContentProp, DateTravelType };
+export type{ PostType, PostListType, PostDetailType, PostDetailInfoProp, PostDetailContentProp, DateTravelType };
