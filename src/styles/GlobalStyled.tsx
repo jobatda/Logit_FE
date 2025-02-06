@@ -1,4 +1,5 @@
 import {createGlobalStyle} from "styled-components";
+import {fonts} from "./fonts";
 
 export const GlobalStyled = createGlobalStyle`
     *, *::before, *::after {
@@ -9,6 +10,7 @@ export const GlobalStyled = createGlobalStyle`
         margin: 0;
         padding: 0;
     }
+    ${fonts}
 
     html {
         line-height: 1.5;

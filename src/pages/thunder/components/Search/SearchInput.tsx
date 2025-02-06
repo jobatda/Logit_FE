@@ -34,6 +34,7 @@ const Search = styled.input`
     outline: none;
     background: none;
     background-color: #F8F8F8;
+    font-family: 'Pretendard-Regular';
 `;
 
 const SearchIcon = styled.img`

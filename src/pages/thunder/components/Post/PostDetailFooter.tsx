@@ -14,12 +14,14 @@ export default function PostDetailFooter() {
 }
 
 const PostDetailFooterContainer = styled.div`
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    max-width: 390px;
     max-height: 80px;
+    background-color: #FFFFFF;
 `;
-
+    
 const FooterTopLine = styled.div`
     position: absolute;
     top: 0;
@@ -42,8 +44,9 @@ const FooterWrapper = styled.div`
 const PostBookmark = styled.img`
     max-width: 32px;
     max-height: 32px;
+    cursor: pointer;
 `;
-
+    
 const PostJoin = styled.button`
     width: 100%;
     height: 100%;
@@ -54,4 +57,5 @@ const PostJoin = styled.button`
     font-size: 18px;
     line-height: 17px;
     fonst-weight: 700; // bold
+    cursor: pointer;
 `;
