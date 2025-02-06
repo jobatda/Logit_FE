@@ -52,9 +52,10 @@ const ThunderContainer = styled.div`
 
 const BackGroundMint = styled.div`
   background-color: #71C9B0;
-  width: 100%;
-  height: 97px;
   position: absolute;
-  top: 0;
+  height: 147px;
+  width: 100vw;
+  max-width: 500px;
+  top: -50px;
 `;
 

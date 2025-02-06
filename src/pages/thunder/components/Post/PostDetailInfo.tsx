@@ -101,15 +101,15 @@ const DetailTopWrapper = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    max-height: 542px;
+    // max-height: 542px;
     height: 542px;
-    max-width: 390px;
+    // max-width: 390px;
 `;
 
 const ImageBannerWrapper = styled.div`
     width: 100%;
     height: 100%;
-    max-width: 390px;
+    // max-width: 390px;
     max-height: 226px;
     position: relative;
 `;
