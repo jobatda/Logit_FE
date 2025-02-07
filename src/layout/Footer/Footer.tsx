@@ -40,6 +40,7 @@ const FooterWrapper = styled.footer`
     justify-content: space-between;
     z-index: 500;
     background-color: white;
+    border-top: 1px solid #C8C8C8;
 
     @media (min-width: 500px) {
         transform: translateX(-50%);

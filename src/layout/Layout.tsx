@@ -38,7 +38,6 @@ const LayoutMain = styled.main<{ $isWithoutHeaderFooter: boolean }>`
     css`
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         min-height: calc(100vh - 56px - 80px)
     `};
 `;

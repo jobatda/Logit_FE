@@ -1,5 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import {createBrowserRouter} from "react-router-dom";
+import {lazy, Suspense} from "react";
 import Loading from "../pages/utilPages/Loading";
 
 const Layout = lazy(() => import("../layout/Layout"));
@@ -7,6 +7,7 @@ const PostDetail = lazy(() => import("../pages/thunder/components/Post/PostDetai
 const Main = lazy(() => import("../pages/main/Main"));
 const Thunder = lazy(() => import("../pages/thunder/Thunder"));
 const RegionMap = lazy(() => import("../pages/regionMap/RegionMap.tsx"));
+const Feed = lazy(() => import("../pages/feed/Feed.tsx"));
 
 export const router = createBrowserRouter([
         {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
                         {
                             path: "regionMap",
                             element: <RegionMap/>,
+                        },
+                        {
+                            path: "feed",
+                            element: <Feed/>,
                         },
                     ],
                 }
