@@ -6,34 +6,41 @@ import FeedPlusIcon from "../../assets/feed/FeedPlusIcon.svg?react";
 import test1 from "../../assets/feed/test1.png";
 import test2 from "../../assets/feed/test2.png";
 import test3 from "../../assets/feed/test3.png";
+import {useNavigate} from "react-router-dom";
 
 const posts = [
     {
+        id: 1,
         user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
         location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
         img: test1,
     },
     {
+        id: 2,
         user: "안농 123",
         location: "전북 무주",
         img: test2,
     },
     {
+        id: 3,
         user: "안농 123",
         location: "전북 무주",
         img: test3,
     },
     {
+        id: 4,
         user: "안농 123",
         location: "전북 무주",
         img: test2,
     },
     {
+        id: 5,
         user: "안농 123",
         location: "전북 무주",
         img: test3,
     },
     {
+        id: 6,
         user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
         location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
         img: test1,
@@ -41,6 +48,7 @@ const posts = [
 ];
 
 export default function Feed() {
+    const navigate = useNavigate();
     const [selectedFilter, setSelectedFilter] = useState("인기순");
 
     return (
@@ -77,8 +85,8 @@ export default function Feed() {
                 </FilterButton>
             </Filter>
             <FeedGrid>
-                {posts.map((post, index) => (
-                    <FeedItem key={index}>
+                {posts.map((post) => (
+                    <FeedItem key={post.id} onClick={() => navigate("/feed/scroll", {state: {feedId: post.id}})}>
                         <FeedImage src={post.img}/>
                         <UserInfoDiv>
                             <UserImage src={post.img}/>
