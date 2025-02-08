@@ -5,8 +5,7 @@ import Footer from "./Footer/Footer.tsx";
 
 export default function Layout() {
     const location = useLocation();
-    const isWithoutHeaderFooter = /^\/thunder\/\d+$/.test(location.pathname);
-
+    const isWithoutHeaderFooter = /^\/thunder\/\d+(\/members\/?)?\/?$/i.test(location.pathname);
     return (
         <LayoutWrapper $isWithoutHeaderFooter={isWithoutHeaderFooter}>
              {!isWithoutHeaderFooter && <Header />}
