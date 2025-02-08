@@ -2,7 +2,7 @@ import styled, {css} from "styled-components";
 
 type RowProps = {
     $verticalAlign?: "center" | "top" | "bottom" | "distribute";
-    $horizonAlign?: "center" | "left" | "right" | "distribute";
+    $horizonAlign?: "center" | "left" | "right" | "distribute" | "even";
     $gap?: number;
 };
 
@@ -33,6 +33,8 @@ const RowCSS = (props?: RowProps) => css`
                     return "flex-end";
                 case "distribute":
                     return "space-between";
+                case "even":
+                    return "space-evenly";
             }
         } else {
             return "flex-start";

@@ -10,7 +10,7 @@ const Thunder = lazy(() => import("../pages/thunder/Thunder"));
 const RegionMap = lazy(() => import("../pages/regionMap/RegionMap.tsx"));
 const Feed = lazy(() => import("../pages/feed/Feed.tsx"));
 const FeedScroll = lazy(() => import("../pages/feed/FeedScroll.tsx"));
-
+const Login = lazy(() => import("../pages/login/Login.tsx"));
 
 export const router = createBrowserRouter([
         {
@@ -43,6 +43,10 @@ export const router = createBrowserRouter([
                         {
                             path: "feed/scroll",
                             element: <FeedScroll/>,
+                        },
+                        {
+                            path: "login",
+                            element: <Login/>,
                         },
                     ],
                 }
