@@ -46,7 +46,7 @@ const CarouselContainer = styled.div`
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    backgorund-color: #111111;
+
 
 `;
     
@@ -55,11 +55,12 @@ const Embla = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
-`
+    background-color: rgba(255, 255, 255); // 불투명하게 설정
+`;
 
 const EmblaContainer = styled.div`
     display: flex;
-    `; 
+`; 
     
 const EmblaSlide = styled.div`
     margin-left: 20px;
