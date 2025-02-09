@@ -1,11 +1,12 @@
 import {useState} from 'react';
+import {SELECTED_IMAGES} from "../util/const.ts";
 
 export const useImageSelection = () => {
     const [selectedModal, setSelectedModal] = useState<{ isOpen: boolean; name: string; }>({
         isOpen: false,
         name: '',
     });
-    const [selectedImages, setSelectedImages] = useState<{ [key: string]: string }>({});
+    const [selectedImages, setSelectedImages] = useState<{ [key: string]: string }>(SELECTED_IMAGES);
 
     const toggleIsOpen = (pathId: string) => {
         setSelectedModal(prev => ({

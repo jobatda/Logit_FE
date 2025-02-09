@@ -50,12 +50,19 @@ const posts = [
 export default function Feed() {
     const navigate = useNavigate();
     const [selectedFilter, setSelectedFilter] = useState("인기순");
+    const [selectedTab, setSelectedTab] = useState("피드");
 
     return (
         <>
             <TabsList>
                 {["피드", "축제", "체험"].map((tab) => (
-                    <Tab key={tab}>{tab}</Tab>
+                    <Tab
+                        key={tab}
+                        onClick={() => setSelectedTab(tab)}
+                        $isSelected={selectedTab === tab}
+                    >
+                        {tab}
+                    </Tab>
                 ))}
             </TabsList>
             <SearchInputDiv>
@@ -113,10 +120,14 @@ const TabsList = styled.div`
     border-bottom: 1px solid #F8F8F8;
 `;
 
-const Tab = styled.div`
+const Tab = styled.div<{ $isSelected: boolean }>`
     min-width: 48px;
     text-align: center;
-    border-bottom: 2px solid #71C9B0;
+    padding-bottom: 8px;
+    border-bottom: ${({ $isSelected }) => ($isSelected ? "2px solid #71C9B0" : "none")};
+    color: ${({ $isSelected }) => ($isSelected ? "#71C9B0" : "#606060")};
+    cursor: pointer;
+    font-weight: ${({ $isSelected }) => ($isSelected ? "500" : "300")};
 `;
 
 const SearchInputDiv = styled.div`
@@ -143,7 +154,7 @@ const Filter = styled.div`
 const FilterButton = styled.button<{ $isSelected: boolean }>`
     font-size: 12px;
     font-weight: ${({$isSelected}) => ($isSelected ? "600" : "400")};
-    color: #A1A1A1;
+    color: #606060;
 `;
 
 const StyledHr = styled.hr`
@@ -196,7 +207,7 @@ const UserImage = styled.img`
 const LocationInfoDiv = styled.div`
     margin-top: 4px;
     display: flex;
-    gap: 8px;
+    gap: 5px;
     align-items: center;
 `;
 

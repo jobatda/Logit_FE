@@ -148,7 +148,7 @@ const FeedScrollImage = styled.img`
 `;
 
 const LocationInfoDiv = styled.div`
-    margin-top: 12px;
+    margin: 12px 0;
     display: flex;
     gap: 8px;
     align-items: center;
