@@ -50,7 +50,6 @@ const posts = [
         content: "대둔산 경치 좋네",
         date: "25년 2월 16일",
     },
-
 ];
 
 export default function FeedScroll() {

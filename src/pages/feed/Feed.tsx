@@ -66,7 +66,7 @@ export default function Feed() {
                 ))}
             </TabsList>
             <SearchInputDiv>
-                <SearchIcon/>
+                <SearchIcon color="#606060"/>
                 <SearchInput type="text"/>
             </SearchInputDiv>
             <Filter>
