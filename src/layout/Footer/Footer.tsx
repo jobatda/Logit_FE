@@ -3,25 +3,30 @@ import FeedIcon from "../../assets/Layout/FeedIcon.svg?react";
 import HomeIcon from "../../assets/Layout/HomeIcon.svg?react";
 import ThunderIcon from "../../assets/Layout/ThunderIcon.svg?react";
 import MyIcon from "../../assets/Layout/MyIcon.svg?react";
+import MapIcon from "../../assets/Layout/MapIcon.svg?react";
 import {NavLink} from "react-router-dom";
 
 export default function Footer() {
     return (
         <FooterWrapper>
+            <StyledNavLink to="/regionMap">
+                <MapIcon/>
+                <FooterPageName>지도</FooterPageName>
+            </StyledNavLink>
             <StyledNavLink to="/feed">
-                <FeedIcon />
+                <FeedIcon/>
                 <FooterPageName>피드</FooterPageName>
             </StyledNavLink>
             <StyledNavLink to="/">
-                <HomeIcon />
+                <HomeIcon/>
                 <FooterPageName>홈</FooterPageName>
             </StyledNavLink>
             <StyledNavLink to="/thunder">
-                <ThunderIcon />
+                <ThunderIcon/>
                 <FooterPageName>번개</FooterPageName>
             </StyledNavLink>
             <StyledNavLink to="/myPage">
-                <MyIcon />
+                <MyIcon/>
                 <FooterPageName>마이</FooterPageName>
             </StyledNavLink>
         </FooterWrapper>
@@ -56,7 +61,7 @@ const StyledNavLink = styled(NavLink)`
     text-decoration: none;
     gap: 4px;
     color: #C8C8C8;
-    
+
     &.active {
         color: #71C9B0;
     }
