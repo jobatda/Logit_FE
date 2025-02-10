@@ -11,6 +11,7 @@ const RegionMap = lazy(() => import("../pages/regionMap/RegionMap.tsx"));
 const Feed = lazy(() => import("../pages/feed/Feed.tsx"));
 const FeedScroll = lazy(() => import("../pages/feed/FeedScroll.tsx"));
 const Login = lazy(() => import("../pages/login/Login.tsx"));
+const MyPage = lazy(() => import("../pages/myPage/MyPage.tsx"));
 
 export const router = createBrowserRouter([
         {
@@ -22,15 +23,15 @@ export const router = createBrowserRouter([
                         {index: true, element: <Main/>},
                         {
                             path: "thunder",
-                            element: <Suspense fallback={<Loading/>}><Thunder/></Suspense>,
+                            element: <Thunder/>
                         },
                         {
                             path: "thunder/:id",
-                            element: <Suspense fallback={<Loading/>}><PostDetail/></Suspense>,
+                            element: <PostDetail/>
                         },
                         {
                             path: "thunder/:id/members",
-                            element: <Suspense fallback={<Loading/>}><PostDetailMembers/></Suspense>,
+                            element: <PostDetailMembers/>
                         },
                         {
                             path: "regionMap",
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
                         {
                             path: "login",
                             element: <Login/>,
+                        },
+                        {
+                            path: "mypage",
+                            element: <MyPage/>,
                         },
                     ],
                 }
