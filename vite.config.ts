@@ -40,6 +40,7 @@ export default defineConfig({
             globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
             cleanupOutdatedCaches: true,
             clientsClaim: true,
+            maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB로 파일 크기 한도 설정
         },
 
         devOptions: {
@@ -50,8 +51,8 @@ export default defineConfig({
         },
     }), svgr()],
     // 개발 서버 설정, 배포시 지우기
-    server: {
-        port: 3000,  // 개발 서버 포트 설정
-        host: '0.0.0.0', // Docker에서 접근할 수 있도록 변경
-    }
+    // server: {
+    //     port: 3000,  // 개발 서버 포트 설정
+    //     host: '0.0.0.0', // Docker에서 접근할 수 있도록 변경
+    // }
 })

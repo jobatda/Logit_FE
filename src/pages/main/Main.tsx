@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import PeopleIcon from "../../assets/main/PeopleIcon.svg?react";
@@ -29,6 +30,12 @@ const feedDummys = [
 ]
 
 export default function Main() {
+    const navigate = useNavigate();
+    
+    const onClickGoAiPlanner = () => {
+        navigate("/aitripplan");
+    }
+
     return (
         <>
             <SearchBarWrapper>
@@ -36,7 +43,7 @@ export default function Main() {
                 <SearchIcon color="#71C9B0"/>
             </SearchBarWrapper>
             <Row $gap={14}>
-                <MenuItem>
+                <MenuItem onClick={onClickGoAiPlanner}>
                     <Title>AI 플래너</Title>
                     <Subtitle>1분 만에<br/>나만의 여행<br/> 코스 제작</Subtitle>
                     <img src={AIPlanIcon} alt=""/>
