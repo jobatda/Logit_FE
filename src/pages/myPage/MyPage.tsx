@@ -3,6 +3,8 @@ import {useState} from "react";
 
 import MyPageProfile from "./components/MyPageProfile";
 import BookMarkContent from "./components/BookMarkContent";
+import PlanContent from "./components/PlanContent";
+import ThunderContent from "./components/ThunderContent";
 
 export default function MyPage() {
     const [activeTab, setActiveTab] = useState('profile');
@@ -16,7 +18,7 @@ export default function MyPage() {
             <MyPageSelectorBar>
                 <SelectorBarContent $isActive={activeTab==='profile'} onClick={onClickChangeTab('profile')}>프로필</SelectorBarContent>
                 <SelectorBarContent $isActive={activeTab==='bookMark'} onClick={onClickChangeTab('bookMark')}>북마크</SelectorBarContent>
-                <SelectorBarContent $isActive={activeTab==='plane'} onClick={onClickChangeTab('plane')}>여행 플랜</SelectorBarContent>
+                <SelectorBarContent $isActive={activeTab==='plan'} onClick={onClickChangeTab('plan')}>여행 플랜</SelectorBarContent>
                 <SelectorBarContent $isActive={activeTab==='thunder'} onClick={onClickChangeTab('thunder')}>참여 번개</SelectorBarContent>
             </MyPageSelectorBar>
             <MyPagerContentWrapper>
@@ -24,12 +26,10 @@ export default function MyPage() {
                     <MyPageProfile/>
                 ) : activeTab === 'bookMark' ? (
                     <BookMarkContent/>
-                ) : activeTab === 'plane' ? (
-                    <></>
-                    // <PlaneContent/>
+                ) : activeTab === 'plan' ? (
+                    <PlanContent/>
                 ) : (
-                    <></>
-                    // <ThunderContent/>
+                    <ThunderContent/>
                 )}
             </MyPagerContentWrapper>
         </MyPageWrapper>
