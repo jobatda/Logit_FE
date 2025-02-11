@@ -5,8 +5,8 @@ import locationIcon from '../../temp_assets/ic_round-place.png';
 import dateIcon from '../../temp_assets/mingcute_time-line.png';
 import memberIcon from '../../temp_assets/fluent_people-24-regular.png';
 import memberDetailBtn from '../../temp_assets/memberDetailBtn.png';
-import goBackBtn from '../../temp_assets/postDetailGoBackBtn.png';
-import shareBtn from '../../temp_assets/postDetailShareBtn.png';
+import goBackBtn from '../../temp_assets/postDetailBackBtn.svg';
+import shareBtn from '../../temp_assets/postDetailShareBtn.svg';
 import memberImgMini from '../../temp_assets/memberImageMini.png'; // member가 부족할 때 땜빵
 import memberDetailModal from '../../temp_assets/postDetailModal.png';
 
@@ -121,15 +121,17 @@ const GoBackBtn = styled.img`
     left: 16px;
     width: 32px;
     height: 32px;
+    object-fit: cover;
 `;
-
-const ShareBtn = styled.img`
+    
+    const ShareBtn = styled.img`
     cursor: pointer;
     position: absolute;
     top: 50px;
     right: 16px;
     width: 32px;
     height: 32px;
+    object-fit: cover;
 `;
 
 const DetailImage = styled.img`
