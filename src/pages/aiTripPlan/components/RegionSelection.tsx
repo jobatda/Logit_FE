@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { useTravelPlanner } from "../context/TravelPlannerContext";
 import PageNavigation from "./PageNavigation";
 
@@ -9,7 +8,6 @@ const regions = [
 
 export default function RegionSelection({ onNext }: { onNext: () => void }) {
     const { data, setRegion } = useTravelPlanner();
-    const navigate = useNavigate();
 
     const handleRegionClick = (region: string) => {
     setRegion(region);
@@ -22,12 +20,6 @@ export default function RegionSelection({ onNext }: { onNext: () => void }) {
             // alert("지역을 선택해 주세요.");
         }
     };
-
-    const handelPrevClick = () => {
-        navigate("/");
-    };
-
-
 
   return (
     <>
@@ -49,8 +41,8 @@ export default function RegionSelection({ onNext }: { onNext: () => void }) {
             ))}
         </RegionSelectionList>
         <ButtonWrapper>
-            <PrevButton onClick={handelPrevClick}>홈으로</PrevButton>
-            <NextButton onClick={handleNextClick}>다음</NextButton>
+            <PrevButton></PrevButton>
+            <NextButton $isAbled={!data.region} onClick={handleNextClick}>다음</NextButton>
         </ButtonWrapper>
     </>
   );
@@ -121,7 +113,7 @@ const ButtonWrapper = styled.div`
     justify-content: space-between;
 `;
 
-const NextButton = styled.button`
+const NextButton = styled.button<{$isAbled: boolean}>`
     width: 93px;
     height: 36px;
     display: flex;
@@ -131,7 +123,9 @@ const NextButton = styled.button`
     border: 1px solid #71C9B0;
     font-size: 13px;
     font-weight: 500;
-    color: #71C9B0;
+    // color: {} #71C9B0;
+    color: ${({ $isAbled }) => ($isAbled ? '#71C9B0' : '#FFFFFF')};
+    background-color: ${({ $isAbled }) => ($isAbled ? '#FFFFFF' : '#71C9B0')};
     &:hover {
         background-color: #71C9B0;
         color: #FFFFFF;
@@ -139,14 +133,5 @@ const NextButton = styled.button`
 `;
     
 const PrevButton = styled.button`
-    width: 93px;
-    height: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    border: 1px solid #D9D9D9;
-    font-size: 13px;
-    font-weight: 500;
-    color: #A1A1A1;
+    opacity: 0;
 `;

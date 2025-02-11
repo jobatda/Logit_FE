@@ -53,7 +53,8 @@ export default function DurationSelection({ onNext, onPrevious }: { onNext: () =
       </DurationList>
         <ButtonWrapper>
             <PrevButton onClick={handlePrevClick}>이전</PrevButton>
-            <NextButton onClick={handleNextClick}>다음</NextButton>
+            {/* <NextButton onClick={handleNextClick}>다음</NextButton> */}
+            <NextButton $isAbled={!data.duration} onClick={handleNextClick}>다음</NextButton>
         </ButtonWrapper>
     </div>
   );
@@ -110,7 +111,8 @@ const ButtonWrapper = styled.div`
     // align-items: center;
 `;
 
-const NextButton = styled.button`
+
+const NextButton = styled.button<{$isAbled: boolean}>`
     width: 93px;
     height: 36px;
     display: flex;
@@ -120,7 +122,8 @@ const NextButton = styled.button`
     border: 1px solid #71C9B0;
     font-size: 13px;
     font-weight: 500;
-    color: #71C9B0;
+    color: ${({ $isAbled }) => ($isAbled ? '#71C9B0' : '#FFFFFF')};
+    background-color: ${({ $isAbled }) => ($isAbled ? '#FFFFFF' : '#71C9B0')};
     &:hover {
         background-color: #71C9B0;
         color: #FFFFFF;

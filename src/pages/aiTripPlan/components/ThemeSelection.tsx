@@ -30,7 +30,6 @@ export default function ThemeSelection({ onPrevious}: { onPrevious: () => void})
       setThemes([...data.themes, theme]);
     }
   };
-
   // const handleComplete = () => {
     // setThemes(s);
     // onComplete(); // 완료 후 서버로 데이터 전송 또는 결과 페이지로 이동
@@ -40,7 +39,7 @@ export default function ThemeSelection({ onPrevious}: { onPrevious: () => void})
     if (data.themes.length > 1) {
         // onNext();
     } else {
-        // alert("지역을 선택해 주세요.");
+        alert("지역을 선택해 주세요.");
         // 실행하고 다음 추천 리스트로 넘어가기
     }
 };
@@ -68,12 +67,14 @@ const handlePrevClick = () => {
       <div>
         <ButtonWrapper>
             <PrevButton onClick={handlePrevClick}>이전</PrevButton>
-            <NextButton onClick={handleNextClick}>다음</NextButton>
+            {/* <NextButton onClick={handleNextClick}>다음</NextButton> */}
+            <NextButton $isAbled={data.themes.length > 1} onClick={handleNextClick}>다음</NextButton>
         </ButtonWrapper>
       </div>
     </>
   );
 }
+
 
 const Aisubject = styled.div`
     font-size: 14px;
@@ -148,7 +149,8 @@ const ButtonWrapper = styled.div`
     justify-content: space-between;
 `;
 
-const NextButton = styled.button`
+
+const NextButton = styled.button<{$isAbled: boolean}>`
     width: 93px;
     height: 36px;
     display: flex;
@@ -158,7 +160,8 @@ const NextButton = styled.button`
     border: 1px solid #71C9B0;
     font-size: 13px;
     font-weight: 500;
-    color: #71C9B0;
+    color: ${({ $isAbled }) => ($isAbled ? '#FFFFFF' : '#71C9B0')};
+    background-color: ${({ $isAbled }) => ($isAbled ? '#71C9B0' : '#FFFFFF')};
     &:hover {
         background-color: #71C9B0;
         color: #FFFFFF;
