@@ -55,12 +55,15 @@ const PostBookmark = styled.img`
 const PostJoin = styled.button`
     width: 100%;
     height: 100%;
-    padding: 16.5px 110px;
+    padding: 16.5px 0;
     border-radius: 15px;
     background-color: #71C9B0;
     color: #FFFFFF;
-    font-size: 18px;
-    line-height: 17px;
+    font-size: 17px;
+    letter-spacing: 1px;
+    line-height: 18px;
     fonst-weight: 700; // bold
+    display: flex;
+    justify-content: center;
     cursor: pointer;
 `;

@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+import goHomeIcon from "../../../assets/aiPlan/aiPlanGoHome.svg";
 
 type PageNavigationProps = {
   currentStep: number;
@@ -7,16 +10,25 @@ type PageNavigationProps = {
 };
 
 export default function PageNavigation({ currentStep, totalSteps }: PageNavigationProps) {
+  const navigate = useNavigate();
+
+  const onClickGoHome = () => {
+    navigate("/");
+  };
+
   return (
     <PagenavigationWrapper>
+      <GoHomeBtn src={goHomeIcon} onClick={onClickGoHome} />
+      <NavigationWrapper>
        {Array.from({ length: totalSteps }, (_, index) => (
-        <React.Fragment key={index}>
+         <React.Fragment key={index}>
           <Dot isActive={index + 1 === currentStep}>
             {String(index + 1).padStart(2, '0')}
           </Dot>
           {index + 1 === currentStep && <CurrentPageBar />}
         </React.Fragment>
       ))}
+      </NavigationWrapper>
     </PagenavigationWrapper>
   );
 }
@@ -24,10 +36,23 @@ export default function PageNavigation({ currentStep, totalSteps }: PageNavigati
 const PagenavigationWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    gap:7px;
-    padding: 26px 26px;
+    padding: 16px 6px 12px 0;
+`;
+
+const GoHomeBtn = styled.img`
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    object-fit: cover;
+`;
+
+const NavigationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
 `;
 
 const Dot = styled.div<{ isActive: boolean }>`
