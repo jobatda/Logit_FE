@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 // 게시물 타입
 interface PostType {
     id: number; // 게시물 ID
@@ -54,13 +56,15 @@ interface PostDetailInfoProp {
     authorId: number; // 작성자 ID
     id: number; // 게시물 ID
     members: string[]; // 멤버 이미지 URL
-    onClickToMemberCheck: function; // 멤버 확인 페이지로 이동
+    onClickToMemberCheck: MouseEventHandler<HTMLDivElement>; // 멤버 확인 페이지로 이동
 }
 
 interface PostDetailContentProp {
     content: string; // 내용
     scheduleImage: string; // 여행 일정 이미지
 }
+
+
 
 export type{ 
     PostType,

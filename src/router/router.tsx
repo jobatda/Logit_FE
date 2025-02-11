@@ -12,6 +12,7 @@ const Feed = lazy(() => import("../pages/feed/Feed.tsx"));
 const FeedScroll = lazy(() => import("../pages/feed/FeedScroll.tsx"));
 const Login = lazy(() => import("../pages/login/Login.tsx"));
 const MyPage = lazy(() => import("../pages/myPage/MyPage.tsx"));
+const AiTripPlan = lazy(() => import("../pages/aiTripPlan/AiTripPlan.tsx"));
 
 export const router = createBrowserRouter([
         {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
                         {
                             path: "mypage",
                             element: <MyPage/>,
+                        },
+                        {
+                            path: "aitripplan",
+                            element: <AiTripPlan/>,
                         },
                     ],
                 }

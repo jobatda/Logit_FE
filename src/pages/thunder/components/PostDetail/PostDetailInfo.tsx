@@ -64,7 +64,6 @@ export default function PostDetailInfo(prop :PostDetailInfoProp) {
                         &nbsp;/ {prop.totalPeople}명
                     </InfoMemberSituation>
                     <InfoMemberDetailBtn onClick={prop.onClickToMemberCheck}>
-
                         <MemberDetailArray>
                             {prop.members.map((member, index) => (
                                 <MemberImgMini src={member||memberImgMini} key={index} alt='멤버 이미지' />

@@ -12,7 +12,12 @@ export default function Layout() {
         "/login"
     ];
 
+    const footerExcludePaths = [
+        "/aitripplan"
+    ];
+
     const isWithoutHeaderFooter = excludePaths.some(path => matchPath(path, location.pathname));
+    const isWithoutFooter = footerExcludePaths.some(path => matchPath(path, location.pathname));
 
     return (
         <LayoutWrapper $isWithoutHeaderFooter={isWithoutHeaderFooter}>
@@ -20,7 +25,7 @@ export default function Layout() {
             <LayoutMain $isWithoutHeaderFooter={isWithoutHeaderFooter}>
                 <Outlet/>
             </LayoutMain>
-            {!isWithoutHeaderFooter && <Footer/>}
+            {(!isWithoutFooter && !isWithoutHeaderFooter && <Footer/>)}
         </LayoutWrapper>
     );
 }

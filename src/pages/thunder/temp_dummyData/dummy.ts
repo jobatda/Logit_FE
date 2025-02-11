@@ -1,4 +1,4 @@
-import { PostListType, PostType, PostDetailType, PostDetailMembersType } from "../types/Post";
+import { PostListType, PostType, PostDetailType } from "../types/Post";
 import dummyPostImg from '../temp_assets/Frame 1707484749.png'; //test
 import backgorundImage from '../temp_assets/detailBackgroundImage.png'; //test
 import contentTrablePlane from '../temp_assets/trablePlaneTest.png'; //test
@@ -43,6 +43,21 @@ export const dummyPostDetail: PostDetailType = {
     scheduleImage: contentTrablePlane, // 임시 로컬 이미지
 };
 
+interface MemberType {
+    userId: number,
+    userImage: string,
+    name: string,
+    age: number,
+    sex: boolean,
+    mbti: string
+}
+
+interface PostDetailMembersType {
+    id: number,
+    currentPeople: number,
+    totalPeople: number,
+    members: MemberType[]
+}
 // PostDetailMembers.tsx
 export const dummyPostMembers: PostDetailMembersType = {
     id: 1,
@@ -57,6 +72,6 @@ export const dummyPostMembers: PostDetailMembersType = {
         { userId: 6, userImage: '', name: 'E2ve', age: 47, sex: false, mbti: 'ISTJ' },
         { userId: 7, userImage: '', name: 'Eve5', age: 42, sex: false, mbti: 'ESTJ' },
         { userId: 8, userImage: '', name: 'Eve3', age: 12, sex: true, mbti: 'ISTJ' },
-        { userId: 8, userImage: '', name: 'Eve3', age: 12, sex: false, mbti: 'ISTJ' },
+        { userId: 9, userImage: '', name: 'Eve3', age: 12, sex: false, mbti: 'ISTJ' },
     ]
 };

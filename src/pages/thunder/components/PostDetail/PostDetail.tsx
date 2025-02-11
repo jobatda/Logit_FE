@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 //test
 import {dummyPostDetail} from '../../temp_dummyData/dummy';

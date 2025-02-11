@@ -1,4 +1,3 @@
-import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
@@ -7,11 +6,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 interface PieChartProps {
   labels: string[];
   data: number[];
-  backgroundColor: string[];
   borderColor: string[];
 }
 
-export default function PieChart ({ labels, data, borderColor }) {
+export default function PieChart ({ labels, data, borderColor }: PieChartProps) {
   const chartData = {
     labels: labels,
     datasets: [
