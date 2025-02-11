@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
-import PeopleIcon from "../../assets/main/PeopleIcon.svg?react";
+import PeopleIcon from "../../assets/main/PeoPleIcon.svg?react";
 import RightArrowMiniIcon from "../../assets/main/RightArrowMiniIcon.svg?react";
 import ThunderIcon from "../../assets/main/ThunderIcon.png";
 import AIPlanIcon from "../../assets/main/AIPlanIcon.png";
@@ -31,7 +31,7 @@ const feedDummys = [
 
 export default function Main() {
     const navigate = useNavigate();
-    
+
     const onClickGoAiPlanner = () => {
         navigate("/aitripplan");
     }
@@ -39,66 +39,66 @@ export default function Main() {
     return (
         <>
             <SearchBarWrapper>
-                <SearchInput placeholder="무주, 겨울여행, 체험"/>
-                <SearchIcon color="#71C9B0"/>
+                <SearchInput placeholder="무주, 겨울여행, 체험" />
+                <SearchIcon color="#71C9B0" />
             </SearchBarWrapper>
             <Row $gap={14}>
                 <MenuItem onClick={onClickGoAiPlanner}>
                     <Title>AI 플래너</Title>
-                    <Subtitle>1분 만에<br/>나만의 여행<br/> 코스 제작</Subtitle>
-                    <img src={AIPlanIcon} alt=""/>
+                    <Subtitle>1분 만에<br />나만의 여행<br /> 코스 제작</Subtitle>
+                    <img src={AIPlanIcon} alt="" />
                 </MenuItem>
                 <MenuItem>
                     <Title>여행GO 번개</Title>
-                    <Subtitle>번개처럼 빠르게<br/>여행 친구 찾기</Subtitle>
-                    <img src={ThunderIcon} alt=""/>
+                    <Subtitle>번개처럼 빠르게<br />여행 친구 찾기</Subtitle>
+                    <img src={ThunderIcon} alt="" />
                 </MenuItem>
             </Row>
-            <RouletteItem style={{marginTop: "14px"}}>
+            <RouletteItem style={{ marginTop: "14px" }}>
                 <Title>룰렛으로 떠나는 여행</Title>
-                <img src={RouletteIcon} alt=""/>
+                <img src={RouletteIcon} alt="" />
             </RouletteItem>
             <FeedWrapper>
                 <SectionTitle>전국이 들썩! 지금 가야 할 축제는?</SectionTitle>
-                <Row $horizonAlign="distribute" $verticalAlign="center" style={{marginBottom: "12px"}}>
+                <Row $horizonAlign="distribute" $verticalAlign="center" style={{ marginBottom: "12px" }}>
                     <SectionSubTitle>배너를 클릭하고 지금 바로 알아보세요</SectionSubTitle>
                     <AddButton>
                         더보기
-                        <RightArrowMiniIcon/>
+                        <RightArrowMiniIcon />
                     </AddButton>
                 </Row>
                 <FeedSection>
                     {feedDummys.map((feed) => (
                         <FeedDetail key={feed.title}>
-                            <img src={feed.img} alt=""/>
+                            <img src={feed.img} alt="" />
                             <FeedDetailTitle>{feed.title}</FeedDetailTitle>
                             <FeedDetailLocation>
-                                <LocationIcon/>
+                                <LocationIcon />
                                 <div>{feed.location}</div>
                             </FeedDetailLocation>
                         </FeedDetail>
                     ))}
                 </FeedSection>
             </FeedWrapper>
-            <Banner/>
+            <Banner />
             <ThunderWrapper>
                 <SectionTitle>추천 번개</SectionTitle>
-                <Row $horizonAlign="distribute" $verticalAlign="center" style={{marginBottom: "12px"}}>
+                <Row $horizonAlign="distribute" $verticalAlign="center" style={{ marginBottom: "12px" }}>
                     <SectionSubTitle>함께할 여행 메이트를 찾고, 지금 바로 떠나보세요!</SectionSubTitle>
                     <AddButton>
                         더보기
-                        <RightArrowMiniIcon/>
+                        <RightArrowMiniIcon />
                     </AddButton>
                 </Row>
                 <ThunderSection>
                     {feedDummys.map((feed) => (
                         <ThunderDetail key={feed.title}>
-                            <img src={feed.img} alt=""/>
-                            <div style={{margin: "8px 0"}}>
+                            <img src={feed.img} alt="" />
+                            <div style={{ margin: "8px 0" }}>
                                 <ThunderDetailTitle>{feed.title}</ThunderDetailTitle>
-                                <Row $gap={6} $verticalAlign="center" style={{marginBottom: "3px"}}>
+                                <Row $gap={6} $verticalAlign="center" style={{ marginBottom: "3px" }}>
                                     <ThunderPeople>
-                                        <PeopleIcon/>
+                                        <PeopleIcon />
                                         2명/6명
                                     </ThunderPeople>
                                     <ThunderPeriod>
@@ -107,7 +107,7 @@ export default function Main() {
                                 </Row>
                                 <Row $gap={5}>
                                     <ThunderDate>2월 16일 (토)</ThunderDate>
-                                    <StyledHr/>
+                                    <StyledHr />
                                     <ThunderLocation>전북 무주</ThunderLocation>
                                 </Row>
                             </div>
@@ -117,7 +117,7 @@ export default function Main() {
             </ThunderWrapper>
             <ThunderBanner>
                 <ThunderBannerTitle>여행GO 번개</ThunderBannerTitle>
-                <ThunderBannerContent>전국 팔도의 숨겨진 장소로 직접 찾아 갈 타이밍!<br/> 지금 떠나볼까요?</ThunderBannerContent>
+                <ThunderBannerContent>전국 팔도의 숨겨진 장소로 직접 찾아 갈 타이밍!<br /> 지금 떠나볼까요?</ThunderBannerContent>
                 <ThunderBannerButton>바로 가기</ThunderBannerButton>
             </ThunderBanner>
         </>
