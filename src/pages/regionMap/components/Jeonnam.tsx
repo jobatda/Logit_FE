@@ -1,6 +1,6 @@
 import {RegionProps} from "../util/type.ts";
 
-export const Jeonnam: React.FC<React.SVGProps<SVGGElement>> = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProps) => {
+export const Jeonnam = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProps) => {
 
   return (
     <g id="전라남도">

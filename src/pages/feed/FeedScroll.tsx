@@ -1,4 +1,4 @@
-import {useLocation} from "react-router-dom";
+// import {useLocation} from "react-router-dom";
 import test1 from "../../assets/feed/test1.png";
 import test2 from "../../assets/feed/test2.png";
 import test3 from "../../assets/feed/test3.png";
@@ -53,8 +53,8 @@ const posts = [
 ];
 
 export default function FeedScroll() {
-    const location = useLocation();
-    const {feedId} = location.state;
+    // const location = useLocation();
+    // const {feedId} = location.state;
 
     return (
         <Column $gap={30}>
