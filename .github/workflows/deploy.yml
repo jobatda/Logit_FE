@@ -26,3 +26,9 @@ jobs:
             -t ${{ secrets.DOCKER_USERNAME }}/logit_frontend:latest \
             -t ${{ secrets.DOCKER_USERNAME }}/logit_frontend:$TAG \
             -f deploy/Dockerfile deploy
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/${{ secrets.EC2_SSH_KEY }} ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            sh run.sh
+          EOF
