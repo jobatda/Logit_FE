@@ -255,6 +255,7 @@ const MemberContentBtnWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 3px;
     width: 100%;
 `;
 
@@ -262,7 +263,12 @@ const Button = styled.button<{ $isActive: boolean }>`
     background-color: ${({ $isActive }) => ($isActive ? '#71C9B0' : '#F8F8F8')};
     color: ${({ $isActive }) => ($isActive ? '#FFFFFF' : '#606060')};
     border: none;
-    padding: 7.5px 27.5px;
+    width: 100%;
+    max-width: 78px;
+    min-height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 13px;
     cursor: pointer;
     font-size: 13px;
