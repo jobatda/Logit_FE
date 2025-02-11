@@ -1,6 +1,4 @@
-// src/context/TravelPlannerContext.tsx
-import styled from "styled-components";
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface TravelData {
   region: string | null;
@@ -23,7 +21,11 @@ const defaultData: TravelData = {
 
 const TravelPlannerContext = createContext<TravelPlannerContextType | undefined>(undefined);
 
-export function TravelPlannerProvider({ children }) {
+interface TravelPlannerProviderProps {
+  children: ReactNode;
+}
+
+export function TravelPlannerProvider({ children }: TravelPlannerProviderProps) {
   const [data, setData] = useState<TravelData>(defaultData);
 
   const setRegion = (region: string) => setData((prev) => ({ ...prev, region }));
@@ -39,8 +41,8 @@ export function TravelPlannerProvider({ children }) {
 
 export function useTravelPlanner() {
   const context = useContext(TravelPlannerContext);
-  // if (!context) {
-  //   throw new Error("useTravelPlanner must be used within a TravelPlannerProvider");
-  // }
+  if (!context) {
+    throw new Error("useTravelPlanner must be used within a TravelPlannerProvider");
+  }
   return context;
 }

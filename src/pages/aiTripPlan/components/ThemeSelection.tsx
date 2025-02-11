@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import React, { useState } from "react";
 import { useTravelPlanner } from "../context/TravelPlannerContext";
 import PageNavigation from "./PageNavigation";
 
@@ -26,20 +25,20 @@ export default function ThemeSelection({ onPrevious}: { onPrevious: () => void})
 
   const handleThemeClick = (theme: string) => {
     if (data.themes.includes(theme)) {
-      setThemes(data.themes.filter((t) => t !== theme));
+      setThemes(data.themes.filter((t: string) => t !== theme));
     } else if (data.themes.length < 3) {
       setThemes([...data.themes, theme]);
     }
   };
 
-  const handleComplete = () => {
+  // const handleComplete = () => {
     // setThemes(s);
     // onComplete(); // 완료 후 서버로 데이터 전송 또는 결과 페이지로 이동
-  };
+  // };
 
   const handleNextClick = () => {
     if (data.themes.length > 1) {
-        onNext();
+        // onNext();
     } else {
         // alert("지역을 선택해 주세요.");
         // 실행하고 다음 추천 리스트로 넘어가기
@@ -112,7 +111,7 @@ const ThemeList = styled.div`
     margin-top: 27px; 
 `;
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.div<{$selected: boolean}>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,7 +124,7 @@ const ItemWrapper = styled.div`
     }
 `;
 
-const ItemImg = styled.img<{ $selected: boolean }>`
+const ItemImg = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;

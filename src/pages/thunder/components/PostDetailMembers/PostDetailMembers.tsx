@@ -27,39 +27,57 @@ interface PostDetailMembersType {
     members: MemberType[]
 }
 
+interface ChartData {
+    labels: string[];
+    data: number[];
+    color: string[];
+    highlightedIndex?: number;
+  }
+  
+  interface ProcessedData {
+    key: string;
+    value: number;
+    percentage: string;
+  }
+
 export default function PostDetailMembers() {
     const { id } = useParams<{ id: string }>();
-    const [postMembers, setPostMembers] = useState<PostDetailMemberType | null>(null);
+    const [postMembers, setPostMembers] = useState<PostDetailMembersType | null>(null);
     const [activeTab, setActiveTab] = useState('age');
-    const [chartData, setChartData] = useState({ age: {labels: [], data: [], color: []}, sex: {labels: [], data: [], color: []}, mbti: {labels: [], data: [], color: []}});
+    const [chartData, setChartData] = useState<{ age: ChartData, sex: ChartData, mbti: ChartData}>({
+        age: { labels: [], data: [], color: [] },
+        sex: { labels: [], data: [], color: [] },
+        mbti: { labels: [], data: [], color: [] },
+    });
 
-    const processAndSortData = (data) => {
+    const processAndSortData = (data: Record<string, number>): ProcessedData[] => {
         const total = Object.values(data).reduce((sum, value) => sum + value, 0); // 전체 값의 합
         return Object.entries(data)
             .map(([key, value]) => ({ key, value, percentage: ((value / total) * 100).toFixed(2) })) // 백분율 계산
             .sort((a, b) => a.value - b.value); // value 기준으로 내림차순 정렬
     };
 
-    const insertData = (sortedData) => {
+    const insertData = (sortedData: ProcessedData[]): ChartData => {
         const maxValue = Math.max(...sortedData.map((item) => item.value)); // 최댓값 구하기
         let maxValueFound = false; // 최댓값이 이미 설정되었는지 여부를 추적
         let highlightedIndex = -1; // 첫 번째 최댓값 항목의 인덱스
-    
+      
         const result = {
-            labels: sortedData.map((item) => item.key), // key를 labels에 추가
-            data: sortedData.map((item) => item.percentage), // percentage를 data에 추가
-            color: sortedData.map((item, index) => {
-                if (item.value === maxValue && !maxValueFound) {
-                    maxValueFound = true;
-                    highlightedIndex = index; // 첫 번째 최댓값 항목의 인덱스 설정
-                    return '#71C9B0'; // 첫 번째 최댓값 항목에 민트색 설정
-                }
-                return '#F8F8F8'; // 나머지 항목에 회색 설정
-            }),
+          labels: sortedData.map((item) => item.key), // key를 labels에 추가
+          data: sortedData.map((item) => item.value), // value를 data에 추가
+          color: sortedData.map((item, index) => {
+            if (item.value === maxValue && !maxValueFound) {
+              maxValueFound = true;
+              highlightedIndex = index; // 첫 번째 최댓값 항목의 인덱스 설정
+              return "#71C9B0"; // 최댓값 항목의 색상 설정
+            }
+            return "#F8F8F8"; // 나머지 항목의 색상 설정
+          }),
+          highlightedIndex,
         };
-    
-        return { ...result, highlightedIndex };
-    };
+      
+        return result;
+      };
 
     const handleBackClick = () => {
         window.history.back();
@@ -81,34 +99,44 @@ export default function PostDetailMembers() {
 
     useEffect(() => {
         if (postMembers) {
-            const ageData = postMembers.members.reduce((acc, member) => {
+            const ageData = postMembers.members.reduce<Record<string, number>>((acc, member) => {
                 const ageGroup = Math.floor(member.age / 10) * 10 + '대';
                 acc[ageGroup] = acc[ageGroup] ? acc[ageGroup] + 1 : 1;
                 return acc;
             }, {});
-            const sexData = postMembers.members.reduce((acc, member) => {
+            const sexData = postMembers.members.reduce<Record<string, number>>((acc, member) => {
                 const sex = member.sex ? '남' : '여';
                 acc[sex] = acc[sex] ? acc[sex] + 1 : 1;
                 return acc;
             }, {});
-            const mbtiData = postMembers.members.reduce((acc, member) => {
+            const mbtiData = postMembers.members.reduce<Record<string, number>>((acc, member) => {
                 const mbti = member.mbti.startsWith('I') ? 'I' : 'E';
                 acc[mbti] = acc[mbti] ? acc[mbti] + 1 : 1;
                 return acc;
             }, {});
 
-            const sortedAgeData = processAndSortData(ageData);
-            const sortedSexData = processAndSortData(sexData);
-            const sortedMbtiData = processAndSortData(mbtiData);
-        
-            const ageResult = insertData(sortedAgeData);
-            const sexResult = insertData(sortedSexData);
-            const mbtiResult = insertData(sortedMbtiData);
             setChartData({
-                age: ageResult,
-                sex: sexResult,
-                mbti: mbtiResult
-            });
+                age: insertData(processAndSortData(ageData)),
+                sex: insertData(processAndSortData(sexData)),
+                mbti: insertData(processAndSortData(mbtiData)),
+              });
+            // const sortedAgeData = processAndSortData(ageData);
+            // const sortedSexData = processAndSortData(sexData);
+            // const sortedMbtiData = processAndSortData(mbtiData);
+        
+            // const ageResult = insertData(sortedAgeData);
+            // const sexResult = insertData(sortedSexData);
+            // const mbtiResult = insertData(sortedMbtiData);
+            // setChartData({
+            //     age: ageResult,
+            //     sex: sexResult,
+            //     mbti: mbtiResult
+            // });
+            // setChartData({
+            //     age: { ...chartData.age, labels: Object.keys(ageData), data: Object.values(ageData) },
+            //     sex: { ...chartData.sex, labels: Object.keys(sexData), data: Object.values(sexData) },
+            //     mbti: { ...chartData.mbti, labels: Object.keys(mbtiData), data: Object.values(mbtiData) },
+            //   });
         }
     }, [postMembers]);
 
@@ -144,21 +172,21 @@ export default function PostDetailMembers() {
                         <>
                             <PieChart labels={chartData.age.labels} data={chartData.age.data} borderColor={chartData.age.color} />
                             <HighlightedPieChart>
-                                {chartData.age.labels[chartData.age.highlightedIndex]}
+                                {chartData.age.highlightedIndex && chartData.age.labels[chartData.age.highlightedIndex]}
                             </HighlightedPieChart>
                         </>
                     ) : activeTab === 'sex' ? (
                         <>
                             <PieChart labels={chartData.sex.labels} data={chartData.sex.data} borderColor={chartData.sex.color} />
                             <HighlightedPieChart>
-                                {chartData.sex.labels[chartData.sex.highlightedIndex]}
+                                {chartData.sex.highlightedIndex && chartData.sex.labels[chartData.sex.highlightedIndex]}
                             </HighlightedPieChart>
                         </>
                     ) : (
                         <>
                             <PieChart labels={chartData.mbti.labels} data={chartData.mbti.data} borderColor={chartData.mbti.color} />
                             <HighlightedPieChart>
-                                {chartData.mbti.labels[chartData.mbti.highlightedIndex]}
+                                {chartData.mbti.highlightedIndex && chartData.mbti.labels[chartData.mbti.highlightedIndex]}
                             </HighlightedPieChart>
                         </>
                     )}

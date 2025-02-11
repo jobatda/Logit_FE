@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import React, { useState } from "react";
+import { useState } from "react";
 import RegionSelection from "./components/RegionSelection";
 import DurationSelection from "./components/DurationSelection";
 import ThemeSelection from "./components/ThemeSelection";

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import React from "react";
 import { useTravelPlanner } from "../context/TravelPlannerContext";
 import PageNavigation from "./PageNavigation";
 
