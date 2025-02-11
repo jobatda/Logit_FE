@@ -22,4 +22,5 @@ jobs:
             --cache-from=type=registry,ref=${{ secrets.DOCKER_USERNAME }}/logit_frontend:latest \
             --cache-to=type=inline \
             -t ${{ secrets.DOCKER_USERNAME }}/logit_frontend:latest \
-            -t ${{ secrets.DOCKER_USERNAME }}/logit_frontend:$TAG .
+            -t ${{ secrets.DOCKER_USERNAME }}/logit_frontend:$TAG \
+            -f deploy/Dockerfile
