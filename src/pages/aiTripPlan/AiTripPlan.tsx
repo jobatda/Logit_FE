@@ -2,6 +2,7 @@ import { useState } from "react";
 import RegionSelection from "./components/RegionSelection";
 import DurationSelection from "./components/DurationSelection";
 import ThemeSelection from "./components/ThemeSelection";
+import AiPlanner from "./components/AiPlanner";
 import { TravelPlannerProvider } from "./context/TravelPlannerContext";
 
 export default function AiTripPlan() {
@@ -18,7 +19,10 @@ export default function AiTripPlan() {
                 <DurationSelection onNext={nextStep} onPrevious={previousStep} />
             )}
             {step === 3 && (
-                <ThemeSelection onPrevious={previousStep} />
+                <ThemeSelection onNext={nextStep} onPrevious={previousStep} />
+            )}
+            {step === 4 && (
+                <AiPlanner/>
             )}
         </div>
         </TravelPlannerProvider>
