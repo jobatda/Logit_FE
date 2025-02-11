@@ -19,6 +19,7 @@ const PostDetailFooterContainer = styled.div`
     width: 100%;
     max-height: 80px;
     background-color: #FFFFFF;
+    z-index: 4;
 
     @media (min-width: 500px) {
         transform: translateX(-50%);

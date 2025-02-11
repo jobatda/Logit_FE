@@ -49,7 +49,7 @@ const handlePrevClick = () => {
 };
 
   return (
-    <>
+    <ThemeSelectionWrapper>
       <PageNavigation currentStep={3} totalSteps={3} />
         <Aisubject>
             AI 플래너
@@ -71,9 +71,13 @@ const handlePrevClick = () => {
             <NextButton $isAbled={data.themes.length > 1} onClick={handleNextClick}>다음</NextButton>
         </ButtonWrapper>
       </div>
-    </>
+    </ThemeSelectionWrapper>
   );
 }
+
+const ThemeSelectionWrapper = styled.div`
+  padding-bottom: 60px;
+`;
 
 
 const Aisubject = styled.div`

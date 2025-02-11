@@ -22,7 +22,7 @@ export default function RegionSelection({ onNext }: { onNext: () => void }) {
     };
 
   return (
-    <>
+    <RegionSelectionWrapper>
         <PageNavigation currentStep={1} totalSteps={3} />
         <Aisubject>
             AI 플래너
@@ -44,10 +44,13 @@ export default function RegionSelection({ onNext }: { onNext: () => void }) {
             <PrevButton></PrevButton>
             <NextButton $isAbled={!data.region} onClick={handleNextClick}>다음</NextButton>
         </ButtonWrapper>
-    </>
+    </RegionSelectionWrapper>
   );
 }
 
+const RegionSelectionWrapper = styled.div`
+    padding-bottom: 30px;
+`;
 
 const Aisubject = styled.div`
     font-size: 14px;

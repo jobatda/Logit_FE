@@ -91,6 +91,7 @@ const MemberDetailModal = styled.img`
     opacity: 1;
     transition: opacity 0.5s ease-out;
 
+    z-index: 3;
     &.fade-out {
         opacity: 0;
     }
