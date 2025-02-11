@@ -212,6 +212,8 @@ const InfoDate = styled.div`
     line-height: 17px;
     font-weight: 400; // normal
     color: #A1A1A1;
+    white-space: pre-wrap;
+    word-break: break-word;
 `;
 
 const InfoDateDuration = styled.div`
@@ -222,6 +224,7 @@ const InfoDateDuration = styled.div`
     line-height: 17px;
     font-weight: 400; // normal
     padding: 3.5px 9.5px;
+    white-space: nowrap;
 `;
 
 const InfoMemberWrapper = styled.div`
