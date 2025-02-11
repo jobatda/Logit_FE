@@ -20,7 +20,7 @@ const dummythemes = [
   { label: "축제", image: festivalImage },
 ];
 
-export default function ThemeSelection({ onPrevious}: { onPrevious: () => void}) {
+export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => void; onPrevious: () => void }) {
   const { setThemes, data } = useTravelPlanner();
 
   const handleThemeClick = (theme: string) => {
@@ -36,8 +36,8 @@ export default function ThemeSelection({ onPrevious}: { onPrevious: () => void})
   // };
 
   const handleNextClick = () => {
-    if (data.themes.length > 1) {
-        // onNext();
+    if (data.themes.length > 1 && data.region && data.duration) {
+        onNext();
     } else {
         alert("지역을 선택해 주세요.");
         // 실행하고 다음 추천 리스트로 넘어가기
