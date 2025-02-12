@@ -1,37 +1,24 @@
 import styled from "styled-components";
-
 import deleteBtn from "../../../assets/myPage/myPageCardDeleteBtn.svg";
-
-
-// TravelCardProps.ts
-export interface TravelCardProps {
-  image: string;
-  state: string;
-  title: string;
-  startDate: string;
-  endDate: string;
-}
-// joinDate?: string;
-// location?: string;
+import { TravelCardProps } from "../types/TravelCardProps";
 
   export default function TravelThunderCard(props: TravelCardProps) {
     return (
       <TravelCardWrapper>
-        <TravelCardImage src={props.image} alt={props.title} />
+        <TravelCardImage src={props.meetingContentImage[0]} alt={props.meetingTitle} />
         <DeleteBtn src={deleteBtn} alt="delete" />
         <TravelCardInfoWrapper>
-          <TravelCardState>{props.state}</TravelCardState>
-          <TravelCardTitle>{props.title}</TravelCardTitle>
+          <TravelCardState>참여완료</TravelCardState>
+          <TravelCardTitle>{props.meetingTitle}</TravelCardTitle>
           <TravelCardDateInfoWrapper>
             <TravelCardCreatedText>참여기간</TravelCardCreatedText>
             <DateBar/>
-            <TravelCardCreatedDate>{props.startDate} ~ {props.endDate}</TravelCardCreatedDate>
+            <TravelCardCreatedDate>{props.meetingStartDate} ~ {props.meetingEndDate}</TravelCardCreatedDate>
           </TravelCardDateInfoWrapper>
         </TravelCardInfoWrapper>
         </TravelCardWrapper>
     );
   };
-
 
 const TravelCardWrapper = styled.div`
   position: relative;
@@ -48,6 +35,7 @@ const DeleteBtn = styled.img`
   top: 16px;
   right: 16px;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 const TravelCardImage = styled.img`
@@ -60,6 +48,7 @@ const TravelCardImage = styled.img`
 
 const TravelCardInfoWrapper = styled.div`
   height: 109px;
+  width: 100%;
 
   // display: flex;
   // justify-content: space-between;

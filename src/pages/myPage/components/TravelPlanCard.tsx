@@ -1,40 +1,42 @@
 import styled from "styled-components";
-
 import deleteBtn from "../../../assets/myPage/myPageCardDeleteBtn.svg";
+import { TravelPlanCardProps } from "../types/TravelPlanCardProps";
 
-
-// TravelCardProps.ts
-export interface TravelCardProps {
-  image: string;
-  state: string;
-  title: string;
-  description: string;
-  tag: string[];
-  dateInfo: string;
-}
-// joinDate?: string;
-// location?: string;
-
-  export default function TravelPlanCard(props: TravelCardProps) {
-    return (
-      <TravelCardWrapper>
-        <TravelCardImage src={props.image} alt={props.title} />
-        <DeleteBtn src={deleteBtn} alt="delete" />
-        {/* Right: Text Info */}
-        <TravelCardInfoWrapper>
-          <TravelCardState>{props.state}</TravelCardState>
-          <TravelCardTitle>{props.title}</TravelCardTitle>
-          <TravelCardDescription>{props.description}</TravelCardDescription>
-          <TravelCardTag>{props.tag.map(tag => `# ${tag}`).join(" ")}</TravelCardTag>
-          <TravelCardDateInfoWrapper>
-            <TravelCardCreatedText>만든날짜</TravelCardCreatedText>
-            <DateBar/>
-            <TravelCardCreatedDate>{props.dateInfo}</TravelCardCreatedDate>
-          </TravelCardDateInfoWrapper>
-        </TravelCardInfoWrapper>
-        </TravelCardWrapper>
-    );
+export default function TravelPlanCard(props: TravelPlanCardProps) {
+  const getCoursePeriodText = (period: number) => {
+    switch (period) {
+      case 0:
+        return '당일치기';
+      case 1:
+        return '1박 2일';
+      case 2:
+        return '2박 3일';
+      default:
+        return '미정';
+    }
   };
+
+  return (
+    <TravelCardWrapper>
+      <TravelCardImage src={props.courseImage[0]} alt={props.courseTitle} />
+      <DeleteBtn src={deleteBtn} alt="delete" />
+      {/* Right: Text Info */}
+      <TravelCardInfoWrapper>
+        <TravelCardState>{getCoursePeriodText(props.coursePeriod)}</TravelCardState>
+        <TravelCardTitle>{props.courseTitle}</TravelCardTitle>
+        {/* <TravelCardDescription>{props.description}</TravelCardDescription> 여행 추천 지역 갯수 */}
+        <TravelCardDescription>총 4개의 장소</TravelCardDescription>
+        {/* <TravelCardTag>{props.tag.map(tag => `# ${tag}`).join(" ")}</TravelCardTag> */}
+        <TravelCardTag>{props.courseTheme.split(',').map(tag => `# ${tag.trim()}`).join(" ")}</TravelCardTag>
+        <TravelCardDateInfoWrapper>
+          <TravelCardCreatedText>만든날짜</TravelCardCreatedText>
+          <DateBar/>
+          <TravelCardCreatedDate>{props.courseCreDate}</TravelCardCreatedDate>
+        </TravelCardDateInfoWrapper>
+      </TravelCardInfoWrapper>
+      </TravelCardWrapper>
+  );
+};
 
 
 const TravelCardWrapper = styled.div`
@@ -67,6 +69,7 @@ const TravelCardInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 100%; // 임시로 한 번 넣어보고 이상 없으면 놔두기
   gap: 5px; 
   max-height: 109px;
 `;
