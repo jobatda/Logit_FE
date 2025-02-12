@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
-// import PhotosIcon from "../../assets/feed/PhotosIcon.svg?react";
+import PhotosIcon from "../../assets/feed/PhotosIcon.svg?react";
 import FeedPlusIcon from "../../assets/feed/FeedPlusIcon.svg?react";
 import { useNavigate } from "react-router-dom";
 import getFeeds from "../../apis/feed/getFeeds.ts";
