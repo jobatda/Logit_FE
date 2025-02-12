@@ -129,11 +129,11 @@ const UserDiv = styled.div`
     text-overflow: ellipsis;
 `;
 
-const UserImage = styled.img`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-`;
+// const UserImage = styled.img`
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50%;
+// `;
 
 const UserInfoDiv = styled.div`
     white-space: nowrap;

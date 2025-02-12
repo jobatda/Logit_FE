@@ -4,11 +4,7 @@ import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import PhotosIcon from "../../assets/feed/PhotosIcon.svg?react";
 import FeedPlusIcon from "../../assets/feed/FeedPlusIcon.svg?react";
-import test1 from "../../assets/feed/test1.png";
-import test2 from "../../assets/feed/test2.png";
-import test3 from "../../assets/feed/test3.png";
 import {useNavigate} from "react-router-dom";
-import GetThunders from "../../apis/main/getThunders.ts";
 import getFeeds from "../../apis/feed/getFeeds.ts";
 
 interface feedType {
@@ -84,7 +80,7 @@ export default function Feed() {
             </Filter>
             <FeedGrid>
                 {feeds.map((post: feedType) => (
-                    <FeedItem key={post.postId} onClick={() => navigate("/feed/scroll", {state: {feedId: post.id}})}>
+                    <FeedItem key={post.postId} onClick={() => navigate("/feed/scroll", {state: {feedId: post.postId}})}>
                         <FeedImageContainer>
                             {post.postContentImage.length > 1 && (
                                 <MoreImage>
@@ -207,11 +203,11 @@ const UserInfo = styled.div`
     flex: 1;
 `;
 
-const UserImage = styled.img`
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-`;
+// const UserImage = styled.img`
+//     width: 24px;
+//     height: 24px;
+//     border-radius: 50%;
+// `;
 
 const LocationInfoDiv = styled.div`
     margin-top: 4px;
