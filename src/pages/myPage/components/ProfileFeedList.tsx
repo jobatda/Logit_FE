@@ -1,14 +1,11 @@
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-
-import testFeedImg1 from "../../../assets/myPage/profileFeddListTest1.png"; //test
-import testFeedImg2 from "../../../assets/myPage/profileFeddListTest2.png"; //test
-import testFeedImg3 from "../../../assets/myPage/profileFeddListTest3.png"; //test
+import axios from "axios";
 
 interface FeedListType {
-    feedId: string,
-    feedImg: string,
+    postId: number,
+    postContentImage: string
 }
 
 interface ProfileFeedListProps {
@@ -21,18 +18,16 @@ export default function ProfileFeedList(props: ProfileFeedListProps) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // backend api 호출
-        const dummyFeedList = [
-            {feedId: '1', feedImg: testFeedImg1},
-            {feedId: '2', feedImg: testFeedImg2},
-            {feedId: '3', feedImg: testFeedImg3},
-            {feedId: '4', feedImg: testFeedImg2},
-            {feedId: '5', feedImg: testFeedImg1},
-            {feedId: '6', feedImg: testFeedImg3},
-            {feedId: '7', feedImg: testFeedImg2},
-        ];        
-        setFeedList(dummyFeedList);
-
+        const fetchData = async () => {
+            try {
+              const response = await axios.get(`https://travelgo.mooo.com/api//post/userLoginId/${props.userId}`);
+              console.log(`${response.data}`);
+              setFeedList(response.data);
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
     }, [props.userId]);
 
     const onClickFeed = (id:string) => {
@@ -45,8 +40,9 @@ export default function ProfileFeedList(props: ProfileFeedListProps) {
             <NoFeedMessage>피드가 없습니다</NoFeedMessage>
         ) : (
             feedList.map((feed) => (
-                    <FeedItem key={feed.feedId}>
-                        <img src={feed.feedImg} alt="피드 이미지" onClick={() => onClickFeed(feed.feedId)} />
+                    <FeedItem key={feed.postId}>
+                        <img src={`data:image/png;base64,${feed.postContentImage}`} alt="피드 이미지" onClick={() => onClickFeed(`${feed.postId}`)} />
+                        {/* <img src={`data:image/png;base64,${feed.postContentImage}`} alt="피드 이미지" onClick={() => onClickFeed(feed.postId)} /> */}
                     </FeedItem>
                 ))
             )}

@@ -7,20 +7,26 @@ import memberIcon from '../../temp_assets/fluent_people-24-regular.png';
 import memberDetailBtn from '../../temp_assets/memberDetailBtn.png';
 import goBackBtn from '../../temp_assets/postDetailBackBtn.svg';
 import shareBtn from '../../temp_assets/postDetailShareBtn.svg';
-import memberImgMini from '../../temp_assets/memberImageMini.png'; // member가 부족할 때 땜빵
+import userBasicImg from '../../temp_assets/userBasicImage.svg';
 import memberDetailModal from '../../temp_assets/postDetailModal.png';
 
+import { PostType } from "../../types/Post";
 
-import { PostDetailInfoProp } from "../../types/Post";
 
-export default function PostDetailInfo(prop :PostDetailInfoProp) {
+const dummyMemberImg = [
+    userBasicImg,
+    userBasicImg,
+    userBasicImg,
+]
+
+export default function PostDetailInfo({ post, handleOnClick }: { post: PostType; handleOnClick: () => void }) {
     const [showModal, setShowModal] = useState(true);
 
     useEffect(() => {
         // 6초 후에 모달을 닫는다.
         const timer = setTimeout(() => {
             setShowModal(false);
-        }, 20000);
+        }, 6000);
         return () => clearTimeout(timer);
     }, []);
 
@@ -28,45 +34,64 @@ export default function PostDetailInfo(prop :PostDetailInfoProp) {
         window.history.back();
     };
 
+    const getStayDuration = (startDate: string, endDate: string) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const diffTime = end.getTime() - start.getTime();
+        const days = diffTime / (1000 * 60 * 60 * 24);
+        return `${days}박 ${days + 1}일`;
+    };
+
+    const formatDateIntl = (dateString: string) => {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat("ko-KR", {month: "long", day: "numeric", weekday: "short"}).format(date);
+    };
+
     return (
         <DetailTopWrapper>
         <ImageBannerWrapper>
             <GoBackBtn src={goBackBtn} onClick={handleBackClick}/>
-            {/* ShareBtn 공유하기 버튼 구현해야됨 test */}
             <ShareBtn src={shareBtn} />
-            <DetailImage src={prop.image} />
+            <DetailImage src={`data:image/png;base64,${post.meetingContentImage[0]}`} />
         </ImageBannerWrapper>
         <DetailInfoWrapper>
                 <DetailIsRecruiting>
                     {/* test 임의로 구분 나눔 */}
-                    {prop.isRecruiting ? "모집중" : "모집완료"}
+                    {/* {post.isRecruiting ? "모집중" : "모집완료"} 
+                    이부분 관순이형이랑 api에 추가할지 논의 요함   함
+                    */}
+                    모집완료
                 </DetailIsRecruiting>
                 <DetailTitle>
-                    {prop.title}
+                    {post.meetingTitle}
                 </DetailTitle>
             <DetailInfo>
                 <InfoLocation>
                     <InfoLocationIcon src={locationIcon} />
-                    {prop.location}
+                    {post.meetingLocation}
                 </InfoLocation>
                 <InfoDateWrapper>
                     <InfoDateIcon src={dateIcon} />
                     <InfoDate>
-                        {prop.startDate["month"]}월 {prop.startDate["day"]}일 ({prop.startDate["dayOfWeek"]}) ~ {prop.endDate["month"]}월 {prop.endDate["day"]}일 ({prop.endDate["dayOfWeek"]})
+                        {formatDateIntl(post.meetingStartDate)} ~ {formatDateIntl(post.meetingEndDate)}
                     </InfoDate>
-                    <InfoDateDuration>{prop.days}박 {prop.days + 1}일</InfoDateDuration>
+                    <InfoDateDuration>{getStayDuration(post.meetingStartDate, post.meetingEndDate)}</InfoDateDuration>
                 </InfoDateWrapper>
                 <InfoMemberWrapper>
                     {showModal && <MemberDetailModal src={memberDetailModal} />}
                     <InfoMemberSituation>
                         <InfoMemberIcon src={memberIcon} alt='멤버 아이콘'/>확정 멤버
-                        &nbsp;<HilightCurrentMember>{prop.currentPeople}명</HilightCurrentMember>
-                        &nbsp;/ {prop.totalPeople}명
+                        &nbsp;<HilightCurrentMember>{post.meetingNowCnt}명</HilightCurrentMember>
+                        &nbsp;/ {post.meetingMaxCnt}명
                     </InfoMemberSituation>
-                    <InfoMemberDetailBtn onClick={prop.onClickToMemberCheck}>
+                    <InfoMemberDetailBtn onClick={handleOnClick}>
                         <MemberDetailArray>
-                            {prop.members.map((member, index) => (
+                            {/* 여기도 관순이형이랑 논의, 그냥 기본이미지 넣을까? */}
+                            {/* {post.members.map((member, index) => (
                                 <MemberImgMini src={member||memberImgMini} key={index} alt='멤버 이미지' />
+                            ))} */}
+                            {dummyMemberImg.map((member, index) => (
+                                <MemberImgMini src={member} key={index} alt='멤버 이미지' />
                             ))}
                         </MemberDetailArray>
                         <MemberDetailBtn src={memberDetailBtn} alt='멤버 현황 버튼'/>
@@ -74,8 +99,10 @@ export default function PostDetailInfo(prop :PostDetailInfoProp) {
                 </InfoMemberWrapper>
             </DetailInfo>
             <AuthorWrapper>
-                <AuthorProfileImg src={prop.authorImage} alt='작성자 프로필 이미지' />
-                <AuthorName>{prop.author}</AuthorName>
+                {/* 여기도 작성자 프로필 이미지 필요 */}
+                <AuthorProfileImg src={`data:image/png;base64,${post.meetingContentImage[0]}`} alt='작성자 프로필 이미지' />
+                {/* <AuthorName>{post.author}</AuthorName> */}
+                <AuthorName>작성자 이름</AuthorName>
             </AuthorWrapper>
         </DetailInfoWrapper>
     </DetailTopWrapper>

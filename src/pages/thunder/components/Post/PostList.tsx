@@ -4,10 +4,6 @@ import PostItem from "./PostItem";
 import { PostListType } from "../../types/Post"
 import axios from "axios"
 
-// 더미 데이터
-// import { dummyPosts } from "../../temp_dummyData/dummy"
-
-
 export default function PostList() {
     const [posts, setPosts] = useState<PostListType>();
 
@@ -22,9 +18,7 @@ export default function PostList() {
             }
           };
           fetchData();
-        // setPosts(dummyPosts);
     }, []);
-
 
     return (
         <PostContainer>

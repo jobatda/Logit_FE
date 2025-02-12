@@ -9,7 +9,7 @@ export const dummyPostDetail: PostDetailType = {
     id: 1,
     image: backgorundImage,
     isRecruiting: true,
-    title: '[전북 무주] 전북 겨울 여행 가실분 무주 1박 2일 여행, 고고',
+    title: '[전북 무주] 전북 겨울 여행 가실분 무주 1박 2일 여행, sdfdsfmsdklfmsdklfmdsklmflsdmlfk고고',
     location: 'Seoul, South Korea',
     travelDate: '2023-12-01',
     days: 40,

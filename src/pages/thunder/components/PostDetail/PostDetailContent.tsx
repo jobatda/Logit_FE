@@ -1,14 +1,12 @@
 import styled from "styled-components";
 
-import { PostDetailContentProp } from '../../types/Post';
-
-export default function PostDetailContent(prop: PostDetailContentProp) {
+export default function PostDetailContent({content, scheduleImage}: {content: string; scheduleImage: string}) {
     return (
         <DetailContentWrapper>
             <DetailContent>
-                {prop.content}
+                {content}
             </DetailContent>
-            <ContentTrablePlane src={prop.scheduleImage} alt='여행 계획 이미지'/>
+            <ContentTrablePlane src={scheduleImage} alt='여행 계획 이미지'/>
         </DetailContentWrapper>
     )
 }

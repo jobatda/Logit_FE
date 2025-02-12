@@ -2,29 +2,26 @@ import styled from "styled-components";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import PieChart from './PieChart';
+import axios from "axios";
+import { PostType } from "../../types/Post";
 
 import headerBackBtn from '../../temp_assets/detailMembersBackBtn.svg';
 import memberIcon from '../../temp_assets/PostMembersMemberCountIcon.svg';
 import memberList from '../../temp_assets/postMemberList.svg';
 
-
-import {dummyPostMembers} from "../../temp_dummyData/dummy";// test
-
-
-interface MemberType {
-    userId: number,
-    userImage: string,
-    name: string,
-    age: number,
-    sex: boolean,
-    mbti: string
-}
-
 interface PostDetailMembersType {
-    id: number,
-    currentPeople: number,
-    totalPeople: number,
-    members: MemberType[]
+members: [
+    {
+      userName: string,
+      userAge: number,
+      userSex: string,
+      userImage: string,
+      mbti: string,
+      isHost: true
+    }
+  ],
+  nowCnt: number,
+  maxCnt: number
 }
 
 interface ChartData {
@@ -42,7 +39,8 @@ interface ChartData {
 
 export default function PostDetailMembers() {
     const { id } = useParams<{ id: string }>();
-    const [postMembers, setPostMembers] = useState<PostDetailMembersType | null>(null);
+    const [postMembers, setPostMembers] = useState<PostDetailMembersType>();
+    const [post, setPost] = useState<PostType>();
     const [activeTab, setActiveTab] = useState('age');
     const [chartData, setChartData] = useState<{ age: ChartData, sex: ChartData, mbti: ChartData}>({
         age: { labels: [], data: [], color: [] },
@@ -84,28 +82,42 @@ export default function PostDetailMembers() {
     };
 
     useEffect(() => {
-        // backend에서 API로 데이터 받아오기
-        // axios.get(`/api/posts/${id}/members`)
-        //     .then(response => {
-        //         setPostMembers(response.data);
-        //     })
-        //     .catch(error => {
-        //         console.error("Error fetching post:", error);
-        //     });
+        const fetchData = async () => {
+            try {
+              const response = await axios.get(`https://travelgo.mooo.com/api/user-meeting/${id}`);
+              console.log(`postMembers: ${response.data}`);
+              setPostMembers(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        const fetchPost = async () => {
+            try {
+                const response = await axios.get(`https://travelgo.mooo.com/api/meeting/meetingId/${id}`);
+                console.log(`post: ${response.data}`);
+              setPost(response.data);
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+        };
 
-        // test data
-        setPostMembers(dummyPostMembers);
+        fetchData();
+        fetchPost();
+
+     
     }, [id]);
+
+
 
     useEffect(() => {
         if (postMembers) {
             const ageData = postMembers.members.reduce<Record<string, number>>((acc, member) => {
-                const ageGroup = Math.floor(member.age / 10) * 10 + '대';
+                const ageGroup = Math.floor(member.userAge / 10) * 10 + '대';
                 acc[ageGroup] = acc[ageGroup] ? acc[ageGroup] + 1 : 1;
                 return acc;
             }, {});
             const sexData = postMembers.members.reduce<Record<string, number>>((acc, member) => {
-                const sex = member.sex ? '남' : '여';
+                const sex = member.userSex.startsWith('m') ? '남자' : '여자';
                 acc[sex] = acc[sex] ? acc[sex] + 1 : 1;
                 return acc;
             }, {});
@@ -120,23 +132,6 @@ export default function PostDetailMembers() {
                 sex: insertData(processAndSortData(sexData)),
                 mbti: insertData(processAndSortData(mbtiData)),
               });
-            // const sortedAgeData = processAndSortData(ageData);
-            // const sortedSexData = processAndSortData(sexData);
-            // const sortedMbtiData = processAndSortData(mbtiData);
-        
-            // const ageResult = insertData(sortedAgeData);
-            // const sexResult = insertData(sortedSexData);
-            // const mbtiResult = insertData(sortedMbtiData);
-            // setChartData({
-            //     age: ageResult,
-            //     sex: sexResult,
-            //     mbti: mbtiResult
-            // });
-            // setChartData({
-            //     age: { ...chartData.age, labels: Object.keys(ageData), data: Object.values(ageData) },
-            //     sex: { ...chartData.sex, labels: Object.keys(sexData), data: Object.values(sexData) },
-            //     mbti: { ...chartData.mbti, labels: Object.keys(mbtiData), data: Object.values(mbtiData) },
-            //   });
         }
     }, [postMembers]);
 
@@ -144,7 +139,7 @@ export default function PostDetailMembers() {
         setActiveTab(tab);
     };
 
-    if (!postMembers) return null;
+    if (!postMembers || !post) return null;
 
     return (
         <PostMembersContainer>
@@ -198,8 +193,8 @@ export default function PostDetailMembers() {
                 <MemberCount>
                     <MemberCountIcon src={memberIcon} />
                     확정 멤버
-                    &nbsp;<MemberCountHilight>{postMembers.currentPeople}명</MemberCountHilight>
-                    &nbsp;/ {postMembers.totalPeople}명
+                    &nbsp;<MemberCountHilight>{post.meetingNowCnt}명</MemberCountHilight>
+                    &nbsp;/ {post.meetingMaxCnt}명
                 </MemberCount>
             </PostMembersHeaderWrapper>
             <MemberList src={memberList} alt="멤버 리스트" />
