@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
-import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import PeopleIcon from "../../assets/main/PeoPleIcon.svg?react";
 import RightArrowMiniIcon from "../../assets/main/RightArrowMiniIcon.svg?react";
 import ThunderIcon from "../../assets/main/ThunderIcon.png";
@@ -11,9 +10,6 @@ import MainBanner1 from "../../assets/main/MainBanner1.png";
 import MainBanner2 from "../../assets/main/MainBanner2.png";
 import MainBanner3 from "../../assets/main/MainBanner3.png";
 import MainBanner4 from "../../assets/main/MainBanner4.png";
-import FestivalImage1 from "../../assets/main/FestivalImage1.png";
-import FestivalImage2 from "../../assets/main/FestivalImage2.png";
-import FestivalImage3 from "../../assets/main/FestivalImage3.png";
 import Row from "../../styles/Common/Row.ts";
 import {useEffect, useState} from "react";
 import GetThunders from "../../apis/main/getThunders.ts";
@@ -97,7 +93,7 @@ export default function Main() {
                 <ThunderSection>
                     {thunders.map((feed) => (
                         <ThunderDetail key={feed.meetingId}>
-                            <img src={feed.meetingContentImage[0]} alt=""/>
+                            <img src={`data:image/png;base64,${feed.meetingContentImage[0]}`} alt=""/>
                             <div style={{margin: "8px 0"}}>
                                 <ThunderDetailTitle>{feed.meetingTitle}</ThunderDetailTitle>
                                 <Row $gap={6} $verticalAlign="center" style={{marginBottom: "3px"}}>
@@ -153,41 +149,6 @@ const MainBanner = styled.div`
         top: 56px;
         z-index: -1;
     }
-`;
-
-const ThunderBannerButton = styled.button`
-    position: absolute;
-    padding: 2px 12px;
-    background-color: rgba(255, 255, 255, 0.3);
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 22px;
-    right: 16px;
-    bottom: 16px;
-    border-radius: 30px;
-    color: #FFFFFF;
-`;
-
-const ThunderBannerContent = styled.div`
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-`;
-
-const ThunderBannerTitle = styled.div`
-    font-weight: 600;
-    line-height: 23px;
-    margin-bottom: 3px;
-`;
-
-const ThunderBanner = styled.div`
-    margin: 33px 0 22px;
-    position: relative;
-    color: #FFFFFF;
-    padding: 16px;
-    background: linear-gradient(90deg, #71C9B0 0%, #60A995 100%);
-    border-radius: 12px;
-    height: 107px;
 `;
 
 const StyledHr = styled.hr`
@@ -265,64 +226,6 @@ const ThunderSection = styled.section`
 const ThunderWrapper = styled.div`
 `;
 
-const Banner = styled.div`
-    background-color: #F7FAF9;
-    border-radius: 12px;
-    margin-bottom: 33px;
-    height: 107px;
-    width: 100%;
-`;
-
-const FeedSection = styled.section`
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    white-space: nowrap;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-`;
-
-const FeedDetailLocation = styled.div`
-    display: flex;
-    gap: 3px;
-    font-size: 12px;
-    color: #606060;
-    font-weight: 300;
-    line-height: 17px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
-`;
-
-const FeedDetailTitle = styled.div`
-    font-size: 12px;
-    color: #333333;
-    font-weight: 500;
-    line-height: 17px;
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
-`;
-
-const FeedDetail = styled.div`
-    max-width: 142px;
-    min-width: 142px;
-
-    img {
-        border-radius: 10px;
-        margin-bottom: 5px;
-    }
-`;
-
-const FeedWrapper = styled.div`
-    margin: 35px 0 33px;
-`;
-
 const SectionTitle = styled.div`
     font-weight: 600;
     color: #333333;
@@ -389,22 +292,6 @@ const MenuItem = styled.button`
         right: 13px;
     }
 `
-
-const RouletteItem = styled.button`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 3px;
-    padding: 12px 13px;
-    border-radius: 12px;
-    background-color: #F7FAF9;
-
-    img {
-        width: 34px;
-        height: 34px;
-    }
-`;
 
 const Title = styled.h3`
     font-weight: 600;

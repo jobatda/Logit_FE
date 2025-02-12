@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import PhotosIcon from "../../assets/feed/PhotosIcon.svg?react";
@@ -8,61 +8,51 @@ import test1 from "../../assets/feed/test1.png";
 import test2 from "../../assets/feed/test2.png";
 import test3 from "../../assets/feed/test3.png";
 import {useNavigate} from "react-router-dom";
+import GetThunders from "../../apis/main/getThunders.ts";
+import getFeeds from "../../apis/feed/getFeeds.ts";
 
-const posts = [
-    {
-        id: 1,
-        user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
-        location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
-        img: [test1, test2, test1],
-    },
-    {
-        id: 2,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test2],
-    },
-    {
-        id: 3,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test3],
-    },
-    {
-        id: 4,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test2],
-    },
-    {
-        id: 5,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test3],
-    },
-    {
-        id: 6,
-        user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
-        location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
-        img: [test1],
-    },
-];
+interface feedType {
+    "userId": number,
+    "postId": number,
+    "postTitle": string,
+    "postContent": string,
+    "postContentImage": string[]
+    "postDate": string,
+    "postLocation": string,
+    "postCategory": string,
+    "postTravelNum": number
+}
 
 export default function Feed() {
     const navigate = useNavigate();
     const [selectedFilter, setSelectedFilter] = useState("인기순");
-    const [selectedTab, setSelectedTab] = useState("피드");
+    const [selectedTab, setSelectedTab] = useState("feed");
+    const [feeds, setFeeds] = useState<feedType[]>([]);
+
+    useEffect(() => {
+        const fetchFeeds = async () => {
+            const result: feedType[] = await getFeeds(selectedTab);
+            setFeeds(result);
+        }
+        fetchFeeds();
+    }, [selectedTab])
+
+    const tabNames: Record<string, string> = {
+        feed: "피드",
+        festival: "축제",
+        experience: "체험"
+    };
 
     return (
         <>
             <TabsList>
-                {["피드", "축제", "체험"].map((tab) => (
+                {["feed", "festival", "experience"].map((tab) => (
                     <Tab
                         key={tab}
                         onClick={() => setSelectedTab(tab)}
                         $isSelected={selectedTab === tab}
                     >
-                        {tab}
+                        {tabNames[tab]} {/* 한글로 변경된 부분 */}
                     </Tab>
                 ))}
             </TabsList>
@@ -93,23 +83,23 @@ export default function Feed() {
                 </FilterButton>
             </Filter>
             <FeedGrid>
-                {posts.map((post) => (
-                    <FeedItem key={post.id} onClick={() => navigate("/feed/scroll", {state: {feedId: post.id}})}>
+                {feeds.map((post: feedType) => (
+                    <FeedItem key={post.postId} onClick={() => navigate("/feed/scroll", {state: {feedId: post.id}})}>
                         <FeedImageContainer>
-                            {post.img.length > 1 && (
+                            {post.postContentImage.length > 1 && (
                                 <MoreImage>
                                     <PhotosIcon/>
                                 </MoreImage>
                             )}
-                            <img src={post.img[0]} alt=""/>
+                            <img src={`data:image/png;base64,${post.postContentImage[0]}`} alt=""/>
                         </FeedImageContainer>
                         <UserInfoDiv>
                             {/*<UserImage src={post.img}/>*/}
-                            <UserInfo>{post.user}</UserInfo>
+                            <UserInfo>{post.userId}</UserInfo>
                         </UserInfoDiv>
                         <LocationInfoDiv>
                             <LocationIcon/>
-                            <LocationInfo>{post.location}</LocationInfo>
+                            <LocationInfo>{post.postLocation}</LocationInfo>
                         </LocationInfoDiv>
                     </FeedItem>
                 ))}
