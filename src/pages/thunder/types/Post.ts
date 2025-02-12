@@ -2,15 +2,15 @@ import { MouseEventHandler } from "react";
 
 // 게시물 타입
 interface PostType {
-    id: number; // 게시물 ID
-    isAI: boolean // isAI is a boolean type 없어질 수도 있음
-    thunderImage: string; // 이미지 URL
-    title: string
-    currentPeople: number; // 현재 인원수
-    totalPeople: number; // 총원
-    days: number; // 몇 박
-    travelDate: string; // 여행 날짜
-    location: string; // 여행 지역
+    meetingId: number,
+    meetingTitle: string,
+    meetingContent: string,
+    meetingStartDate: string,
+    meetingEndDate: string,
+    meetingNowCnt: number,
+    meetingMaxCnt: number,
+    meetingLocation: string,
+    meetingContentImage: string[],
 }
 
 // 게시물 리스트 타입

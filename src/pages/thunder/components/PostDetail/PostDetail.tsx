@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-
-//test
 import {dummyPostDetail} from '../../temp_dummyData/dummy';
 
 import PostDetailFooter from './PostDetailFooter';
@@ -11,6 +8,18 @@ import PostDetailInfo from './PostDetailInfo';
 import PostDetailContent from './PostDetailContent';
 
 import { PostDetailType, PostDetailInfoProp, DateTravelType } from '../../types/Post';
+
+// interface PostDetailType {
+// meetingId: number,
+// meetingTitle: string,
+// meetingContent: string,
+// meetingStartDate: string,
+// meetingEndDate: string,
+// meetingNowCnt: number,
+// meetingMaxCnt: number,
+// meetingLocation: string,
+// meetingContentImage: string[],
+// }
 
 export default function PostDetail() {
     const { id } = useParams<{ id: string }>();
