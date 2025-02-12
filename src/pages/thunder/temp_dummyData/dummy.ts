@@ -1,29 +1,9 @@
-import { PostListType, PostType, PostDetailType } from "../types/Post";
-import dummyPostImg from '../temp_assets/Frame 1707484749.png'; //test
+import {PostDetailType } from "../types/Post";
 import backgorundImage from '../temp_assets/detailBackgroundImage.png'; //test
 import contentTrablePlane from '../temp_assets/trablePlaneTest.png'; //test
 import authorProfileImg from '../temp_assets/authorProfileImg.png'; //test 
 
 // PostList.tsx
-export const dummyPosts:PostListType = [
-    { id: 1, isAI: false, thunderImage: dummyPostImg, title: "[전북 무주] 전북 겨울 여행 가실 분!", currentPeople: 3, totalPeople: 5, days: 7, travelDate: "2023-12-01", location: "전북 무주" },
-    { id: 2, isAI: false, thunderImage: dummyPostImg, title: "[전북 무주] 전북 겨울 여행 가실 분!", currentPeople: 3, totalPeople: 5, days: 7, travelDate: "2023-12-01", location: "전북 무주" },
-    { id: 3, isAI: false, thunderImage: dummyPostImg, title: "[전북 무주] 전북 겨울 여행 가실 분!", currentPeople: 3, totalPeople: 5, days: 7, travelDate: "2023-12-01", location: "전북 무주" },
-    { id: 4, isAI: false, thunderImage: dummyPostImg, title: "[전북 무주] 전북 겨울 여행 가실 분!", currentPeople: 3, totalPeople: 5, days: 7, travelDate: "2023-12-01", location: "전북 무주" },
-    { id: 5, isAI: false, thunderImage: dummyPostImg, title: "[전북 무주] 전북 겨울 여행 가실 분!", currentPeople: 3, totalPeople: 5, days: 7, travelDate: "2023-12-01", location: "전북 무주" },
-    { id: 6, isAI: true, thunderImage: dummyPostImg, title: "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW", currentPeople: 2, totalPeople: 4, days: 5, travelDate: "2023-11-15", location: "Maldives" },
-    { id: 7, isAI: false, thunderImage: dummyPostImg, title: "Mountain Hiking", currentPeople: 5, totalPeople: 10, days: 3, travelDate: "2023-10-20", location: "Swiss Alps" },
-    { id: 8, isAI: true, thunderImage: dummyPostImg, title: "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW", currentPeople: 2, totalPeople: 4, days: 5, travelDate: "2023-11-15", location: "Maldives" },
-    { id: 9, isAI: false, thunderImage: dummyPostImg, title: "Mountain Hiking", currentPeople: 5, totalPeople: 10, days: 3, travelDate: "2023-10-20", location: "Swiss Alps" },
-    { id: 10, isAI: true, thunderImage: dummyPostImg, title: "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW", currentPeople: 2, totalPeople: 4, days: 5, travelDate: "2023-11-15", location: "Maldives" },
-    { id: 11, isAI: false, thunderImage: dummyPostImg, title: "Mountain Hiking", currentPeople: 5, totalPeople: 10, days: 3, travelDate: "2023-10-20", location: "Swiss Alps" },
-    { id: 12, isAI: true, thunderImage: dummyPostImg, title: "City Tour", currentPeople: 1, totalPeople: 3, days: 2, travelDate: "2023-09-10", location: "New York" },
-    { id: 13, isAI: false, thunderImage: dummyPostImg, title: "Desert Safari", currentPeople: 4, totalPeople: 6, days: 4, travelDate: "2023-08-05", location: "Dubai" }
-];
-
-// PostItem.tsx
-export const dummyPost:PostType = { id: 1, isAI: false, thunderImage: dummyPostImg, title: "[전북 무주] 전북 겨울 여행 가실 분!", currentPeople: 3, totalPeople: 5, days: 7, travelDate: "2023-12-01", location: "전북 무주" };
-
 // PostDetail.tsx
 export const dummyPostDetail: PostDetailType = {
     id: 1,
