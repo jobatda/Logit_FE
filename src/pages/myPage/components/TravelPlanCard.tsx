@@ -18,7 +18,7 @@ export default function TravelPlanCard(props: TravelPlanCardProps) {
 
   return (
     <TravelCardWrapper>
-      <TravelCardImage src={props.courseImage[0]} alt={props.courseTitle} />
+      <TravelCardImage src={`data:image/png;base64,${props.courseImage[0]}`} alt={props.courseTitle} />
       <DeleteBtn src={deleteBtn} alt="delete" />
       {/* Right: Text Info */}
       <TravelCardInfoWrapper>

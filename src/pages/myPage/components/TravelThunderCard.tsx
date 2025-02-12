@@ -5,7 +5,7 @@ import { TravelCardProps } from "../types/TravelCardProps";
   export default function TravelThunderCard(props: TravelCardProps) {
     return (
       <TravelCardWrapper>
-        <TravelCardImage src={props.meetingContentImage[0]} alt={props.meetingTitle} />
+        <TravelCardImage src={`data:image/png;base64,${props.meetingContentImage[0]}`} alt={props.meetingTitle} />
         <DeleteBtn src={deleteBtn} alt="delete" />
         <TravelCardInfoWrapper>
           <TravelCardState>참여완료</TravelCardState>
