@@ -1,50 +1,33 @@
 import styled from "styled-components";
-
+import { useEffect, useState } from "react";
 import TravelPlanCard from "./TravelPlanCard";
-import testImg1 from "../../../assets/myPage/myPagePlanImg.png";
+import axios from "axios";
+import { TravelPlanCardProps } from "../types/TravelPlanCardProps";
 
-export interface TravelCardProps {
-    image: string;
-    state: string;
-    location?: string;
-    title: string;
-    description: string;
-    tag: string[];
-    dateInfo?: string;
-    joinDate?: string;
-  }
-
-  const travelPlans = [
-    {
-      image: testImg1,
-      state: "당일여행",
-      title: "대구 여행코스",
-      description: "총 4개의 장소",
-      tag: ["액티비티", "실내 여행지"],
-      dateInfo: "2025.2.14",
-    },
-    {
-      image: testImg1,
-      state: "당일여행",
-      title: "대구 여행코스",
-      description: "총 4개의 장소",
-      tag: ["액티비티", "실내 여행지"],
-      dateInfo: "2025.2.14",
-    },
-    {
-      image: testImg1,
-      state: "당일여행",
-      title: "대구 여행코스",
-      description: "총 4개의 장소",
-      tag: ["액티비티", "실내 여행지"],
-      dateInfo: "2025.2.14",
-    },
-  ];
 
 export default function PlanContent() {
+  const [posts, setPosts] = useState<TravelPlanCardProps[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://travelgo.mooo.com/api/course");
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+    console.log(posts);
+  }, []);
+
+  if (!posts) {
+    return <div>loading...</div>;
+  }
+
     return (
         <PlanContentWrapper>
-            {travelPlans.map((plan, index) => (
+            {posts.map((plan, index) => (
                 <TravelPlanCard key={index} {...plan} />
             ))}
         </PlanContentWrapper>

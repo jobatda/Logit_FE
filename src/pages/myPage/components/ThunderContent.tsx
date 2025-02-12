@@ -1,43 +1,36 @@
 import styled from "styled-components";
-
+import {useEffect, useState} from "react";
 import TravelThunderCard from "./TravelThunderCard";
-import testImg1 from "../../../assets/myPage/myPagePlanImg.png";
-
-export interface TravelCardProps {
-    image: string;
-    state: string;
-    title: string;
-    startDate: string;
-    endDate: string;
-  }
-  const travelThunders = [
-    {
-      image: testImg1,
-      state: "참여완료",
-      title: "[전북 무주]",
-      startDate: "2025.2.14",
-      endDate: "2025.2.15",
-    },
-    {
-      image: testImg1,
-      state: "참여완료",
-      title: "[전북 무주] 자연과 힐링을 한 번에! 무주 1박 2일 여행",
-      startDate: "2025.2.14",
-      endDate: "2025.2.15",
-    },
-    {
-      image: testImg1,
-      state: "참여완료",
-      title: "[전북 무주] 자연과 힐링을 한 번에! 무주 1박 2일 여행",
-      startDate: "2025.2.14",
-      endDate: "2025.2.15",
-    },
-  ];
+import axios from "axios";
+import { TravelCardProps } from "../types/TravelCardProps";
 
 export default function ThunderContent() {
+  const [posts, setPosts] = useState<TravelCardProps[]>([]);
+
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get("https://travelgo.mooo.com/api/meeting");
+          console.log(`${response.data}`);
+          setPosts(response.data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+      console.log(posts);
+    }, []);
+
+    if (!posts) {
+      return <div>loading...</div>;
+    }
+    
     return (
         <ThunderContentWrapper>
-            {travelThunders.map((plan, index) => (
+          
+          {/* {posts.map((plan, index) => ( */}
+            {posts.map((plan, index) => (
                 <TravelThunderCard key={index} {...plan} />
             ))}
         </ThunderContentWrapper>
