@@ -1,128 +1,159 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import PeopleIcon from "../../assets/main/PeoPleIcon.svg?react";
 import RightArrowMiniIcon from "../../assets/main/RightArrowMiniIcon.svg?react";
 import ThunderIcon from "../../assets/main/ThunderIcon.png";
 import AIPlanIcon from "../../assets/main/AIPlanIcon.png";
-import RouletteIcon from "../../assets/main/RouletteIcon.png";
-import testImg from "../../assets/main/testImg.png";
+import MainThunderGo from "../../assets/main/MainThunderGo.png";
+import MainBanner1 from "../../assets/main/MainBanner1.png";
+import MainBanner2 from "../../assets/main/MainBanner2.png";
+import MainBanner3 from "../../assets/main/MainBanner3.png";
+import MainBanner4 from "../../assets/main/MainBanner4.png";
+import FestivalImage1 from "../../assets/main/FestivalImage1.png";
+import FestivalImage2 from "../../assets/main/FestivalImage2.png";
+import FestivalImage3 from "../../assets/main/FestivalImage3.png";
 import Row from "../../styles/Common/Row.ts";
+import {useEffect, useState} from "react";
+import GetThunders from "../../apis/main/getThunders.ts";
 
-const feedDummys = [
-    {
-        title: "청도 정월대보름?",
-        location: "경상북도 청도",
-        img: testImg,
-    },
-    {
-        title: "제32회 태백산 눈축제",
-        location: "강원도 태백",
-        img: testImg,
-    },
-    {
-        title: "별빛이 흐르는 어쩌구",
-        location: "경기도 파주",
-        img: testImg,
-    },
-
-]
+interface thundersType {
+    meetingContent: string;
+    meetingContentImage: string[];
+    meetingEndDate: string;
+    meetingId: number;
+    meetingLocation: string;
+    meetingMaxCnt: number;
+    meetingNowCnt: number;
+    meetingStartDate: string;
+    meetingTitle: string;
+}
 
 export default function Main() {
     const navigate = useNavigate();
+    const [thunders, setThunders] = useState<thundersType[]>([]);
+
+    useEffect(() => {
+        const fetchThunders = async () => {
+            const result: any = await GetThunders();
+            setThunders(result);
+        }
+        fetchThunders();
+    }, [])
 
     const onClickGoAiPlanner = () => {
         navigate("/aitripplan");
     }
 
+    const formatDateIntl = (dateString: string) => {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat("ko-KR", {month: "long", day: "numeric", weekday: "short"}).format(date);
+    };
+
+    const getStayDuration = (startDate: string, endDate: string) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const diffTime = end.getTime() - start.getTime();
+        const days = diffTime / (1000 * 60 * 60 * 24);
+
+        return `${days}박 ${days + 1}일`;
+    };
+
+
     return (
         <>
+            <MainBanner>
+                <img src={MainBanner1} alt=""/>
+                <img src={MainBanner2} alt=""/>
+                <img src={MainBanner3} alt=""/>
+                <img src={MainBanner4} alt=""/>
+            </MainBanner>
             <SearchBarWrapper>
-                <SearchInput placeholder="무주, 겨울여행, 체험" />
-                <SearchIcon color="#71C9B0" />
+                <SearchInput placeholder="무주, 겨울여행, 체험"/>
+                <SearchIcon color="#71C9B0"/>
             </SearchBarWrapper>
             <Row $gap={14}>
                 <MenuItem onClick={onClickGoAiPlanner}>
                     <Title>AI 플래너</Title>
-                    <Subtitle>1분 만에<br />나만의 여행<br /> 코스 제작</Subtitle>
-                    <img src={AIPlanIcon} alt="" />
+                    <Subtitle>1분 만에<br/>나만의 여행<br/> 코스 제작</Subtitle>
+                    <img src={AIPlanIcon} alt=""/>
                 </MenuItem>
                 <MenuItem>
                     <Title>여행GO 번개</Title>
-                    <Subtitle>번개처럼 빠르게<br />여행 친구 찾기</Subtitle>
-                    <img src={ThunderIcon} alt="" />
+                    <Subtitle>번개처럼 빠르게<br/>여행 친구 찾기</Subtitle>
+                    <img src={ThunderIcon} alt=""/>
                 </MenuItem>
             </Row>
-            <RouletteItem style={{ marginTop: "14px" }}>
-                <Title>룰렛으로 떠나는 여행</Title>
-                <img src={RouletteIcon} alt="" />
-            </RouletteItem>
-            <FeedWrapper>
-                <SectionTitle>전국이 들썩! 지금 가야 할 축제는?</SectionTitle>
-                <Row $horizonAlign="distribute" $verticalAlign="center" style={{ marginBottom: "12px" }}>
-                    <SectionSubTitle>배너를 클릭하고 지금 바로 알아보세요</SectionSubTitle>
-                    <AddButton>
-                        더보기
-                        <RightArrowMiniIcon />
-                    </AddButton>
-                </Row>
-                <FeedSection>
-                    {feedDummys.map((feed) => (
-                        <FeedDetail key={feed.title}>
-                            <img src={feed.img} alt="" />
-                            <FeedDetailTitle>{feed.title}</FeedDetailTitle>
-                            <FeedDetailLocation>
-                                <LocationIcon />
-                                <div>{feed.location}</div>
-                            </FeedDetailLocation>
-                        </FeedDetail>
-                    ))}
-                </FeedSection>
-            </FeedWrapper>
-            <Banner />
             <ThunderWrapper>
                 <SectionTitle>추천 번개</SectionTitle>
-                <Row $horizonAlign="distribute" $verticalAlign="center" style={{ marginBottom: "12px" }}>
+                <Row $horizonAlign="distribute" $verticalAlign="center" style={{marginBottom: "12px"}}>
                     <SectionSubTitle>함께할 여행 메이트를 찾고, 지금 바로 떠나보세요!</SectionSubTitle>
                     <AddButton>
                         더보기
-                        <RightArrowMiniIcon />
+                        <RightArrowMiniIcon/>
                     </AddButton>
                 </Row>
                 <ThunderSection>
-                    {feedDummys.map((feed) => (
-                        <ThunderDetail key={feed.title}>
-                            <img src={feed.img} alt="" />
-                            <div style={{ margin: "8px 0" }}>
-                                <ThunderDetailTitle>{feed.title}</ThunderDetailTitle>
-                                <Row $gap={6} $verticalAlign="center" style={{ marginBottom: "3px" }}>
+                    {thunders.map((feed) => (
+                        <ThunderDetail key={feed.meetingId}>
+                            <img src={feed.meetingContentImage[0]} alt=""/>
+                            <div style={{margin: "8px 0"}}>
+                                <ThunderDetailTitle>{feed.meetingTitle}</ThunderDetailTitle>
+                                <Row $gap={6} $verticalAlign="center" style={{marginBottom: "3px"}}>
                                     <ThunderPeople>
-                                        <PeopleIcon />
-                                        2명/6명
+                                        <PeopleIcon/>
+                                        {feed.meetingNowCnt}명/{feed.meetingMaxCnt}명
                                     </ThunderPeople>
                                     <ThunderPeriod>
-                                        1박 2일
+                                        {getStayDuration(feed.meetingStartDate, feed.meetingEndDate)}
                                     </ThunderPeriod>
                                 </Row>
                                 <Row $gap={5}>
-                                    <ThunderDate>2월 16일 (토)</ThunderDate>
-                                    <StyledHr />
-                                    <ThunderLocation>전북 무주</ThunderLocation>
+                                    <ThunderDate>{formatDateIntl(feed.meetingStartDate)}</ThunderDate>
+                                    <StyledHr/>
+                                    <ThunderLocation>{feed.meetingLocation}</ThunderLocation>
                                 </Row>
                             </div>
                         </ThunderDetail>
                     ))}
                 </ThunderSection>
             </ThunderWrapper>
-            <ThunderBanner>
-                <ThunderBannerTitle>여행GO 번개</ThunderBannerTitle>
-                <ThunderBannerContent>전국 팔도의 숨겨진 장소로 직접 찾아 갈 타이밍!<br /> 지금 떠나볼까요?</ThunderBannerContent>
-                <ThunderBannerButton>바로 가기</ThunderBannerButton>
-            </ThunderBanner>
+            <button onClick={()=>navigate("/thunder")} style={{margin:"16px 0"}}>
+                <img src={MainThunderGo} alt=""/>
+            </button>
         </>
     );
 }
+
+const MainBanner = styled.div`
+    display: flex;
+    gap: 16px;
+    margin-top: 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    img {
+        max-width: 293px;
+        max-height: 266px;
+    }
+
+    &::after {
+        content: "";
+        width: 100vw;
+        max-width: 500px;
+        height: 200px;
+        background-color: #71C9B0;
+        position: absolute;
+        left: 0;
+        top: 56px;
+        z-index: -1;
+    }
+`;
 
 const ThunderBannerButton = styled.button`
     position: absolute;
@@ -363,8 +394,9 @@ const RouletteItem = styled.button`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 3px;
-    padding: 20px 16px;
+    padding: 12px 13px;
     border-radius: 12px;
     background-color: #F7FAF9;
 

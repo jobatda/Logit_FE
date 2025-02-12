@@ -5,6 +5,7 @@ import test3 from "../../assets/feed/test3.png";
 import styled from "styled-components";
 import Row from "../../styles/Common/Row.ts";
 import Dot3Icon from "../../assets/feed/Dot3Icon.svg?react";
+import SlideIcon from "../../assets/feed/SlideIcon.svg?react";
 import RightArrowIcon from "../../assets/feed/RightArrowIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import Column from "../../styles/Common/Column.ts";
@@ -14,7 +15,7 @@ const posts = [
         id: 1,
         user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
         location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
-        img: test1,
+        img: [test1, test3, test2],
         content: "대둔산 경치 좋네",
         date: "25년 2월 16일",
     },
@@ -22,7 +23,7 @@ const posts = [
         id: 2,
         user: "안농 123",
         location: "전북 무주",
-        img: test2,
+        img: [test2],
         content: "대둔산 경치 좋네",
         date: "25년 2월 16일",
     },
@@ -30,7 +31,7 @@ const posts = [
         id: 3,
         user: "안농 123",
         location: "전북 무주",
-        img: test3,
+        img: [test3],
         content: "대둔산 경치 좋네",
         date: "25년 2월 16일",
     },
@@ -38,7 +39,7 @@ const posts = [
         id: 4,
         user: "안농 123",
         location: "전북 무주",
-        img: test2,
+        img: [test2],
         content: "대둔산 경치 좋네",
         date: "25년 2월 16일",
     },
@@ -46,7 +47,7 @@ const posts = [
         id: 5,
         user: "안농 123",
         location: "전북 무주",
-        img: test3,
+        img: [test3],
         content: "대둔산 경치 좋네",
         date: "25년 2월 16일",
     },
@@ -58,17 +59,17 @@ export default function FeedScroll() {
 
     return (
         <Column $gap={30}>
-            {posts.map((post) => (
-                <div key={post.id} style={{width:"100%"}}>
-                    <Row $horizonAlign="distribute" $verticalAlign="center" $gap={10} >
-                        <UserDiv >
-                            <UserImage src={post.img}/>
+            {posts.map((post: any) => (
+                <div key={post.id} style={{width: "100%", position: "relative"}}>
+                    <Row $horizonAlign="distribute" $verticalAlign="center" $gap={10}>
+                        <UserDiv>
+                            {/*<UserImage src={post.img}/>*/}
                             <UserInfoDiv>
                                 <UserInfo>{post.user}</UserInfo>
                                 <FeedDate>{post.date}</FeedDate>
                             </UserInfoDiv>
                         </UserDiv>
-                        <Row $gap={22} $verticalAlign="center" >
+                        <Row $gap={22} $verticalAlign="center">
                             <FollowButton>
                                 팔로우
                             </FollowButton>
@@ -77,7 +78,14 @@ export default function FeedScroll() {
                             </button>
                         </Row>
                     </Row>
-                    <FeedScrollImage src={post.img}/>
+                    <ImageContainer>
+                        <MoreImage>
+                            <SlideIcon/>
+                        </MoreImage>
+                        {post.img.map((image: string, index: number) => (
+                            <FeedScrollImage key={index} src={image}/>
+                        ))}
+                    </ImageContainer>
                     <LocationInfoDiv>
                         <LocationIcon/>
                         <LocationInfo>{post.location}</LocationInfo>
@@ -91,6 +99,27 @@ export default function FeedScroll() {
         </Column>
     );
 }
+
+const MoreImage = styled.div`
+    position: absolute;
+    transform: translateX(50%);
+    right: 50%;
+    bottom: 68px;
+`;
+
+const ImageContainer = styled.div`
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    scroll-snap-type: x mandatory;
+    margin-top: 16px;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
 
 const UserDiv = styled.div`
     display: flex;
@@ -141,9 +170,11 @@ const FollowButton = styled.button`
 `;
 
 const FeedScrollImage = styled.img`
-    margin-top: 16px;
     width: 100%;
     border-radius: 10px;
+    scroll-snap-align: start;
+    min-width: 100%;
+    max-height: 348px;
 `;
 
 const LocationInfoDiv = styled.div`

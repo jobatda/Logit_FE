@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {useState} from "react";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
+import PhotosIcon from "../../assets/feed/PhotosIcon.svg?react";
 import FeedPlusIcon from "../../assets/feed/FeedPlusIcon.svg?react";
 import test1 from "../../assets/feed/test1.png";
 import test2 from "../../assets/feed/test2.png";
@@ -13,37 +14,37 @@ const posts = [
         id: 1,
         user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
         location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
-        img: test1,
+        img: [test1, test2, test1],
     },
     {
         id: 2,
         user: "안농 123",
         location: "전북 무주",
-        img: test2,
+        img: [test2],
     },
     {
         id: 3,
         user: "안농 123",
         location: "전북 무주",
-        img: test3,
+        img: [test3],
     },
     {
         id: 4,
         user: "안농 123",
         location: "전북 무주",
-        img: test2,
+        img: [test2],
     },
     {
         id: 5,
         user: "안농 123",
         location: "전북 무주",
-        img: test3,
+        img: [test3],
     },
     {
         id: 6,
         user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
         location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
-        img: test1,
+        img: [test1],
     },
 ];
 
@@ -94,9 +95,16 @@ export default function Feed() {
             <FeedGrid>
                 {posts.map((post) => (
                     <FeedItem key={post.id} onClick={() => navigate("/feed/scroll", {state: {feedId: post.id}})}>
-                        <FeedImage src={post.img}/>
+                        <FeedImageContainer>
+                            {post.img.length > 1 && (
+                                <MoreImage>
+                                    <PhotosIcon/>
+                                </MoreImage>
+                            )}
+                            <img src={post.img[0]} alt=""/>
+                        </FeedImageContainer>
                         <UserInfoDiv>
-                            <UserImage src={post.img}/>
+                            {/*<UserImage src={post.img}/>*/}
                             <UserInfo>{post.user}</UserInfo>
                         </UserInfoDiv>
                         <LocationInfoDiv>
@@ -113,6 +121,12 @@ export default function Feed() {
     );
 }
 
+const MoreImage = styled.div`
+    position: absolute;
+    right: 10px;
+    top: 10px;
+`;
+
 const TabsList = styled.div`
     margin-top: 16px;
     display: flex;
@@ -124,10 +138,10 @@ const Tab = styled.div<{ $isSelected: boolean }>`
     min-width: 48px;
     text-align: center;
     padding-bottom: 8px;
-    border-bottom: ${({ $isSelected }) => ($isSelected ? "2px solid #71C9B0" : "none")};
-    color: ${({ $isSelected }) => ($isSelected ? "#71C9B0" : "#606060")};
+    border-bottom: ${({$isSelected}) => ($isSelected ? "2px solid #71C9B0" : "none")};
+    color: ${({$isSelected}) => ($isSelected ? "#71C9B0" : "#606060")};
     cursor: pointer;
-    font-weight: ${({ $isSelected }) => ($isSelected ? "500" : "300")};
+    font-weight: ${({$isSelected}) => ($isSelected ? "500" : "300")};
 `;
 
 const SearchInputDiv = styled.div`
@@ -175,11 +189,16 @@ const FeedItem = styled.div`
     margin-bottom: 20px;
 `;
 
-const FeedImage = styled.img`
-    min-height: 110px;
-    max-height: 233px;
+const FeedImageContainer = styled.div`
+    position: relative;
     width: 100%;
-    border-radius: 10px;
+
+    img {
+        min-height: 110px;
+        max-height: 233px;
+        border-radius: 10px;
+        width: 100%;
+    }
 `;
 
 const UserInfoDiv = styled.div`

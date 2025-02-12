@@ -8,7 +8,6 @@ const baseUrl = import.meta.env.VITE_API_URL;
 
 const config: AxiosRequestConfig = {
     baseURL: baseUrl,
-    withCredentials: true
 };
 
 export const axiosInstance = axios.create(config);
