@@ -87,7 +87,7 @@ export default function Main() {
                     </AddButton>
                 </Row>
                 <ThunderSection>
-                    {thunders.slice(0, 3).map((feed) => (
+                    {thunders?.slice(0, 3).map((feed) => (
                         <ThunderDetail key={feed.meetingId}
                                        onClick={() => navigate(`/thunder/${feed.meetingId}`)}>
                             <img src={`data:image/png;base64,${feed.meetingContentImage[0]}`} alt=""/>
