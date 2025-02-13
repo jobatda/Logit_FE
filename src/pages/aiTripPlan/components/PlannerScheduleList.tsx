@@ -37,7 +37,6 @@ const dummyScheduleList: ScheduleList = {
           {category: "음식점", name: "기러기 농장가든", address: "대구 군위군 효령면 용매로 7888", imageUrl: testImg2 },
           {category: "여행지", name: "침상공원", address: "대구 북구 침산동 1344-1", imageUrl: testImg3 },
           {category: "음식점", name: "걸리버 막창", address: "대구 북구 옥산로 53", imageUrl: testImg4 },
-          {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
         ],
       },
       {
