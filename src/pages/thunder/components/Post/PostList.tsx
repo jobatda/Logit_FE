@@ -48,7 +48,7 @@ export default function PostList({searchQuery}: { searchQuery: string }) {
 
 const PostContainerWrapper = styled.div`
     width: 100%;
-    padding: 0 16px;
+    padding: 0 16px 100px 16px;
 `;
 
 const PostNo = styled.div`
@@ -56,6 +56,7 @@ const PostNo = styled.div`
     font-size: 13px;
     font-weight: 400;
     margin-top: 130px;
+    text-align: center;
 `;
 
 const PostContainer = styled.div`

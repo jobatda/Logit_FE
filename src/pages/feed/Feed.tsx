@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 import getFeeds from "../../apis/feed/getFeeds.ts";
 
 interface feedType {
-    "userName": string,
+    "userLoginId": string,
     "postId": number,
     "postTitle": string,
     "postContent": string,
@@ -22,74 +22,44 @@ interface feedType {
 
 export default function Feed() {
     const navigate = useNavigate();
-    const [selectedFilter, setSelectedFilter] = useState("인기순");
-    const [selectedTab, setSelectedTab] = useState("feed");
+    const [selectedTab, _] = useState("feed");
     const [feeds, setFeeds] = useState<feedType[]>([]);
+    const [search, setSearch] = useState<string>("");
+    const [filteredFeeds, setFilteredFeeds] = useState<feedType[]>([]);
 
     useEffect(() => {
         const fetchFeeds = async () => {
             const result: feedType[] = await getFeeds(selectedTab);
-            let sortedFeeds = [...result];
-
-            if (selectedFilter === "최신순") {
-                sortedFeeds.sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime());
-            } else if (selectedFilter === "인기순") {
-
-            } else if (selectedFilter === "팔로잉") {
-            }
-
-            setFeeds(sortedFeeds);
+            setFilteredFeeds([...result]);
+            setFeeds([...result]);
         }
         fetchFeeds();
-    }, [selectedTab])
+    }, [])
 
-    const tabNames: Record<string, string> = {
-        feed: "피드",
-        festival: "축제",
-        experience: "체험"
-    };
+    useEffect(() => {
+        if (!search) {
+            setFilteredFeeds(feeds);
+        } else {
+            const filtered = feeds.filter(post =>
+                post.postLocation.toLowerCase().includes(search.toLowerCase())
+            );
+            setFilteredFeeds(filtered);
+        }
+    }, [search]);
 
     return (
         <>
             <TabsList>
-                {["feed", "festival", "experience"].map((tab) => (
-                    <Tab
-                        key={tab}
-                        onClick={() => setSelectedTab(tab)}
-                        $isSelected={selectedTab === tab}
-                    >
-                        {tabNames[tab]}
-                    </Tab>
-                ))}
+                <Tab $isSelected={true}>
+                    피드
+                </Tab>
             </TabsList>
             <SearchInputDiv>
                 <SearchIcon color="#606060"/>
-                <SearchInput type="text"/>
+                <SearchInput type="text" value={search} onChange={(e) => setSearch(e.target.value)}/>
             </SearchInputDiv>
-            <Filter>
-                <FilterButton
-                    onClick={() => setSelectedFilter("인기순")}
-                    $isSelected={selectedFilter === "인기순"}
-                >
-                    인기순
-                </FilterButton>
-                <StyledHr/>
-                <FilterButton
-                    onClick={() => setSelectedFilter("최신순")}
-                    $isSelected={selectedFilter === "최신순"}
-                >
-                    최신순
-                </FilterButton>
-                <StyledHr/>
-                <FilterButton
-                    onClick={() => setSelectedFilter("팔로잉")}
-                    $isSelected={selectedFilter === "팔로잉"}
-                >
-                    팔로잉
-                </FilterButton>
-            </Filter>
             <FeedGrid>
-                {feeds.map((post: feedType) => (
+                {filteredFeeds.map((post: feedType) => (
                     <FeedItem key={post.postId}
                               onClick={() => navigate("/feed/scroll", {state: {postId: post.postId}})}>
                         <FeedImageContainer>
@@ -102,7 +72,7 @@ export default function Feed() {
                         </FeedImageContainer>
                         <UserInfoDiv>
                             <UserImage src={`data:image/png;base64,${post.userImage}`}/>
-                            <UserInfo>{post.userName}</UserInfo>
+                            <UserInfo>{post.userLoginId}</UserInfo>
                         </UserInfoDiv>
                         <LocationInfoDiv>
                             <LocationIcon/>
@@ -153,6 +123,7 @@ const SearchInputDiv = styled.div`
 
 const SearchInput = styled.input`
     background-color: inherit;
+    width: 100%;
 `;
 
 const Filter = styled.div`

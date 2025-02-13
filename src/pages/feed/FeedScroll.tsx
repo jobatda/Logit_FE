@@ -11,7 +11,7 @@ import getFeeds from "../../apis/feed/getFeeds.ts";
 
 
 interface feedType {
-    "userName": string,
+    "userLoginId": string,
     "postId": number,
     "postTitle": string,
     "postContent": string,
@@ -65,23 +65,17 @@ export default function FeedScroll() {
                         <UserDiv>
                             <UserImage src={`data:image/png;base64,${post.userImage}`}/>
                             <UserInfoDiv>
-                                <UserInfo>{post.userName}</UserInfo>
+                                <UserInfo>{post.userLoginId}</UserInfo>
                                 <FeedDate>{formatDate(post.postDate)}</FeedDate>
                             </UserInfoDiv>
                         </UserDiv>
                         <Row $gap={22} $verticalAlign="center">
-                            <FollowButton>
-                                팔로우
-                            </FollowButton>
                             <button>
                                 <Dot3Icon/>
                             </button>
                         </Row>
                     </Row>
                     <ImageContainer>
-                        <MoreImage>
-                            <SlideIcon/>
-                        </MoreImage>
                         {post.postContentImage.map((image: string, index: number) => (
                             <FeedScrollImage key={index} src={`data:image/png;base64,${image}`}/>
                         ))}
@@ -89,7 +83,6 @@ export default function FeedScroll() {
                     <LocationInfoDiv>
                         <LocationIcon/>
                         <LocationInfo>{post.postLocation}</LocationInfo>
-                        <RightArrowIcon/>
                     </LocationInfoDiv>
                     <FeedContent>
                         {post.postContent}

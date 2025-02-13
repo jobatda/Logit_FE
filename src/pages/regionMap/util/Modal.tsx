@@ -3,8 +3,11 @@ import Row from "../../../styles/Common/Row.ts";
 import LocationIcon from "../../../assets/feed/LocationIcon.svg?react"
 import CloseIcon from "../../../assets/regionMap/CloseIcon.svg?react"
 import GalleryIcon from "../../../assets/regionMap/GalleryIcon.svg?react"
+import AiIcon from "../../../assets/regionMap/AiIcon.svg?react"
+import PlusIcon from "../../../assets/regionMap/PlusIcon.svg?react"
 import PaintIcon from "../../../assets/regionMap/PaintIcon.svg?react"
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 interface ModalProps {
     selectedModal: { isOpen: boolean; name: string; }
@@ -16,10 +19,13 @@ interface ModalProps {
 const colors = ['#FF4015', '#FFAB01', '#FEFB41', '#76BB40', '#00A1D8', '#4D22B2', '#982ABC']; // 색상 배열
 
 export default function Modal({selectedModal, toggleIsOpen, handlePathClick, handleColorClick}: ModalProps) {
+    const navigate = useNavigate();
     const [selectDraw, setSelectDraw] = useState<boolean>(false);
+    const [selectFill, setSelectFill] = useState<string>("default");
 
     useEffect(() => {
         setSelectDraw(false);
+        setSelectFill("default");
     }, [selectedModal.name]);
 
     if (!selectedModal.isOpen) return null;
@@ -32,38 +38,57 @@ export default function Modal({selectedModal, toggleIsOpen, handlePathClick, han
                 </Row>
                 <button onClick={() => {
                     toggleIsOpen(selectedModal.name);
+                    setSelectFill("default");
                     setSelectDraw(false);
                 }}>
                     <CloseIcon/>
                 </button>
             </Row>
-            {selectDraw ?
-                <Row $horizonAlign="center" $gap={16}>
-                    {colors.map((colorName) => (
-                        <ColorButton
-                            key={colorName}
-                            style={{backgroundColor: colorName}}
-                            onClick={() => handleColorClick(colorName)}
-                        />
-                    ))}
-                </Row>
-                :
+            {selectFill === "default" && (
                 <Row $horizonAlign="even">
                     <Button onClick={() => {
-                        handlePathClick();
-                        setSelectDraw(false);
+                        setSelectFill("fill");
                     }}>
-                        <GalleryIcon/>
-                        <div>사진 넣기</div>
+                        <PlusIcon/>
+                        <div>지역 채우기</div>
                     </Button>
                     <StyledHr/>
-                    <Button onClick={() => setSelectDraw(true)}>
-                        <PaintIcon/>
-                        <div>색칠 하기</div>
+                    <Button onClick={() => navigate("/aitripplan")}>
+                        <AiIcon/>
+                        <div>여행코스 만들기</div>
                     </Button>
                 </Row>
+            )}
+            {selectFill === "fill" &&
+                <>
+                    {selectDraw ?
+                        <Row $horizonAlign="center" $gap={16}>
+                            {colors.map((colorName) => (
+                                <ColorButton
+                                    key={colorName}
+                                    style={{backgroundColor: colorName}}
+                                    onClick={() => handleColorClick(colorName)}
+                                />
+                            ))}
+                        </Row>
+                        :
+                        <Row $horizonAlign="even">
+                            <Button onClick={() => {
+                                handlePathClick();
+                                setSelectDraw(false);
+                            }}>
+                                <GalleryIcon/>
+                                <div>사진 넣기</div>
+                            </Button>
+                            <StyledHr/>
+                            <Button onClick={() => setSelectDraw(true)}>
+                                <PaintIcon/>
+                                <div>색칠 하기</div>
+                            </Button>
+                        </Row>
+                    }
+                </>
             }
-
         </ModalWrapper>
     );
 }

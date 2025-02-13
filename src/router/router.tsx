@@ -14,6 +14,7 @@ const Login = lazy(() => import("../pages/login/Login.tsx"));
 const MyPage = lazy(() => import("../pages/myPage/MyPage.tsx"));
 const AiTripPlan = lazy(() => import("../pages/aiTripPlan/AiTripPlan.tsx"));
 const ThunderCreate = lazy(() => import("../pages/thunder/thunderCreate/ThunderCreate.tsx"));
+const Alarm = lazy(() => import("../pages/alarm/Alarm.tsx"));
 
 export const router = createBrowserRouter([
         {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
                         {
                             path: "thunder/create",
                             element: <ThunderCreate/>,
+                        },
+                        {
+                            path: "alarm",
+                            element: <Alarm/>,
                         },
                     ],
                 }

@@ -19,6 +19,8 @@ import {Ulsan} from './components/Ulsan';
 import Modal from "./util/Modal.tsx";
 import {useImageSelection} from "./hooks/useImageSelection.ts";
 import styled from "styled-components";
+import {useEffect} from "react";
+import getMap from "../../apis/regionMap/getMap.ts";
 
 const regions = [
     {Component: Busan, name: "Busan"},
@@ -47,10 +49,10 @@ export default function RegionMap() {
         selectedImages,
         handlePathClick,
         handleColorClick,
-        getFillStyle
+        getFillStyle,
     } = useImageSelection();
     const commonProps = {toggleIsOpen, selectedImages, getFillStyle};
-
+    console.log(selectedImages)
     return (
         <>
             <RegionMapTop>
@@ -81,7 +83,7 @@ export default function RegionMap() {
 }
 
 const RegionMapTop = styled.div`
-    margin: 16px 0 32px;
+    margin: 16px 0 20px;
     display: flex;
     justify-content: space-between;
     padding: 12px 22px;

@@ -35,18 +35,18 @@ export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => v
     // onComplete(); // 완료 후 서버로 데이터 전송 또는 결과 페이지로 이동
   // };
 
-  const handleNextClick = () => {
-    if (data.themes.length > 1 && data.region && data.duration) {
-        onNext();
-    } else {
-        alert("지역을 선택해 주세요.");
-        // 실행하고 다음 추천 리스트로 넘어가기
-    }
-};
+    const handleNextClick = () => {
+        if (data.themes.length > 1 && data.region && data.duration) {
+            onNext();
+        } else {
+            alert("지역을 선택해 주세요.");
+            // 실행하고 다음 추천 리스트로 넘어가기
+        }
+    };
 
-const handlePrevClick = () => {
-    onPrevious();
-};
+    const handlePrevClick = () => {
+        onPrevious();
+    };
 
   return (
     <ThemeSelectionWrapper>
@@ -108,7 +108,6 @@ const ThemeList = styled.div`
     width: 100%;
     height: 100%;
     padding: 0 22px;
-    max-height: 323px;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 4열 레이아웃 */
     gap: 25px 20px; /* 세로 간격 25px, 가로 간격 20px */

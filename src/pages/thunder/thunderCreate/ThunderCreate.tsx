@@ -6,25 +6,31 @@ import PeopleIcon from "../../../assets/thunder/PeopleIcon.svg?react";
 import FlagIcon from "../../../assets/thunder/FlagIcon.svg?react";
 import StepLine from "../../../assets/thunder/StepLine.svg?react";
 import CalendarIcon from "../../../assets/thunder/CalendarIcon.svg?react";
+import test1 from "../../../assets/feed/test1.png";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {useRef, useState} from "react";
 import Row from "../../../styles/Common/Row.ts";
 import Column from "../../../styles/Common/Column.ts";
+import PlannerScheduleList from "../../aiTripPlan/components/PlannerScheduleList.tsx";
 
 export default function ThunderCreate() {
     const navigate = useNavigate();
     const [step, setStep] = useState<number>(0);
+    const [title, setTitle] = useState("");
+    const [intro, setIntro] = useState("");
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [meetingMaxCnt, setMeetingMaxCnt] = useState(1);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [formData, setFormData] = useState<FormData | null>(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [plan, setPlan] = useState("");
 
     const dateInputRef = useRef<HTMLInputElement>(null);
     const endDateInputRef = useRef<HTMLInputElement>(null);
 
+    const isAble = title && intro;
     const handleStartDateClick = () => {
         if (dateInputRef.current) {
             dateInputRef.current.showPicker();
@@ -111,11 +117,11 @@ export default function ThunderCreate() {
                         <CreateInputSection>
                             <CreateInputExplain>번개 제목을 입력해주세요*</CreateInputExplain>
                             <CreateInputDetail>번개 제목은 지역명을 포함하여 간결하게 작성하면 더욱 좋아요!</CreateInputDetail>
-                            <CreateTitleInput/>
+                            <CreateTitleInput value={title} onChange={(e) => setTitle(e.target.value)}/>
                         </CreateInputSection>
                         <CreateInputSection>
                             <CreateInputExplain>소개글을 입력해주세요*</CreateInputExplain>
-                            <CreateIntroduceInput/>
+                            <CreateIntroduceInput value={intro} onChange={(e) => setIntro(e.target.value)}/>
                         </CreateInputSection>
                     </>
                 )}
@@ -169,9 +175,23 @@ export default function ThunderCreate() {
                             여행 일정
                         </UnderLineDiv>
                         <Row $horizonAlign="center">
-                            <PlanButton onClick={() => setIsOpen(true)}>
-                                + 플랜 불러오기
-                            </PlanButton>
+                            {!plan ? (
+                                <PlanButton onClick={() => setIsOpen(true)}>
+                                    + 플랜 불러오기
+                                </PlanButton>
+                            ) : (
+                                <Column style={{marginTop: "20px", width: "100%"}}>
+                                    <ScheduleItem>
+                                        <ScheduleNumber>1</ScheduleNumber>
+                                        <ScheduleImg src={test1}/>
+                                        <ScheduleInfoWrapper>
+                                            <ScheduleCategory>여행지</ScheduleCategory>
+                                            <ScheduleName>대구어쩌구</ScheduleName>
+                                            <ScheduleAddress>대구</ScheduleAddress>
+                                        </ScheduleInfoWrapper>
+                                    </ScheduleItem>
+                                </Column>
+                            )}
                         </Row>
                     </>
                 )}
@@ -180,7 +200,19 @@ export default function ThunderCreate() {
             {isOpen && (
                 <ModalBackground onClick={() => setIsOpen(false)}>
                     <Modal onClick={(e) => e.stopPropagation()}>
-                        하이
+                        <ScheduleItem>
+                            <ScheduleImg src={test1}/>
+                            <ScheduleInfoWrapper>
+                                <ScheduleCategory>당일여행</ScheduleCategory>
+                                <ScheduleName>대구여행</ScheduleName>
+                            </ScheduleInfoWrapper>
+                            <input type="radio"
+                                   onChange={() => setPlan("대구여행")}
+                            />
+                        </ScheduleItem>
+                        <ModalButton onClick={() => setIsOpen(false)}>
+                            선택
+                        </ModalButton>
                     </Modal>
                 </ModalBackground>
             )}
@@ -190,13 +222,89 @@ export default function ThunderCreate() {
                     <PreviousButton onClick={() => setStep(0)}>이전</PreviousButton>
                 )}
                 <div></div>
-                <NextButton onClick={() => setStep(1)}>다음</NextButton>
+                {!plan && step === 0 ?
+                    <NextButton onClick={() => setStep(1)} disabled={!isAble} isAble={isAble}>다음</NextButton>
+                    :
+                    <NextButton onClick={() => setStep(1)} disabled={!plan} isAble={plan}>생성하기</NextButton>
+                }
             </Row>
         </Column>
     );
 }
 
-const ModalBackground  = styled.div`
+const ScheduleAddress = styled.div`
+    font-size: 12px;
+    line-height: 17px;
+    font-weight: 400;
+    color: #A1A1A1;
+`;
+
+const ScheduleNumber = styled.div`
+    border-radius: 50%;
+    background-color: #F8F8F8;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: #606060;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 20px;
+    max-height: 20px;
+`;
+
+const ModalButton = styled.button`
+    font-size: 13px;
+    font-weight: 400;
+    color: #71C9B0;
+    margin: 20px;
+`;
+
+const ScheduleItem = styled.label`
+    width: 100%;
+    display: flex;
+    padding: 12px;
+    gap: 12px;
+    border: 2px solid #F8F8F8;
+    border-radius: 12px;
+`;
+
+const ScheduleImg = styled.img`
+    max-width: 98px;
+    border-radius: 10px;
+`;
+
+const ScheduleInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 98px;
+    width: 100%;
+`;
+
+const ScheduleCategory = styled.span`
+    background-color: #71C9B0;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 500;
+    width: 50px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ScheduleName = styled.div`
+    margin-top: 6px;
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+    color: #333333;
+`;
+
+const ModalBackground = styled.div`
     background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0;
@@ -208,13 +316,17 @@ const ModalBackground  = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    
+
     @media (min-width: 500px) {
         right: calc(50vw - 250px);
     }
 `;
 
 const Modal = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
     background-color: white;
     width: calc(100% - 20px);
     height: 62.44%;
@@ -258,11 +370,11 @@ const UnderLineDiv = styled.div`
     border-bottom: 1px solid #C8C8C8;
 `;
 
-const NextButton = styled.button`
+const NextButton = styled.button<{ isAble: string }>`
     color: #FFFFFF;
     border-radius: 8px;
-    border: 1px solid #71C9B0;
-    background-color: #71C9B0;
+    border: 1px solid ${({isAble}) => isAble ? "#71C9B0" : "#C8C8C8"};
+    background-color: ${({isAble}) => isAble ? "#71C9B0" : "#C8C8C8"};
     padding: 10px 35px;
 `;
 

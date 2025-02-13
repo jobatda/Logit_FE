@@ -1,5 +1,5 @@
 export interface RegionProps {
     toggleIsOpen: (pathId: string) => void;
-    selectedImages: { [key: string]: string };
+    selectedImages: { region: string; background: string }[];
     getFillStyle: (pathId: string) => string;
 }

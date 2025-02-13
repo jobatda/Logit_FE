@@ -21,7 +21,7 @@ export default function Header() {
                     <HeaderH1 $isBackButtonPage={isBackButtonPage}>
                         여행 Go
                     </HeaderH1>
-                    <button>
+                    <button onClick={()=>navigate("/alarm")}>
                         <BellIcon/>
                     </button>
                 </>

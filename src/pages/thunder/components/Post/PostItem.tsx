@@ -1,7 +1,7 @@
-import { useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useRef, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import { PostType } from "../../types/Post";
+import {PostType} from "../../types/Post";
 import axios from "axios";
 import personIcon from '../../temp_assets/personIcon.png';
 import betweenBar from '../../temp_assets/betweenBar.png';
@@ -32,10 +32,10 @@ export default function PostItem({id}: PostId) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-              const response = await axios.get(`https://travelgo.mooo.com/api/meeting/meetingId/${id}`);
-              setPost(response.data);
+                const response = await axios.get(`https://travelgo.mooo.com/api/meeting/meetingId/${id}`);
+                setPost(response.data);
             } catch (error) {
-              console.error("Error fetching data:", error);
+                console.error("Error fetching data:", error);
             }
         };
         fetchData();
@@ -47,7 +47,9 @@ export default function PostItem({id}: PostId) {
         }
     }, []);
 
-    if (!post) {return null;}
+    if (!post) {
+        return null;
+    }
 
     const formatDateIntl = (dateString: string) => {
         const date = new Date(dateString);
@@ -59,12 +61,13 @@ export default function PostItem({id}: PostId) {
         const end = new Date(endDate);
         const diffTime = end.getTime() - start.getTime();
         const days = diffTime / (1000 * 60 * 60 * 24);
+        if (days === 0) return "당일치기";
         return `${days}박 ${days + 1}일`;
     };
 
     return (
         <PostContainer onClick={onClickToPostDetail}>
-            <PostImage src={`data:image/png;base64,${post.meetingContentImage[0]}`} alt="post" />
+            <PostImage src={`data:image/png;base64,${post.meetingContentImage[0]}`} alt="post"/>
             <PostTitle ref={titleRef}>{post.meetingTitle}</PostTitle>
             <PostMidleWrapper>
                 <PersonIcon src={personIcon} alt=""/>
@@ -75,7 +78,7 @@ export default function PostItem({id}: PostId) {
             </PostMidleWrapper>
             <PostBottomWrapper>
                 <PostDate>{formatDateIntl(post.meetingStartDate)}</PostDate>
-                <PostBar src={betweenBar} alt="날짜 사이 바" />
+                <PostBar src={betweenBar} alt="날짜 사이 바"/>
                 <PostLocation>{post.meetingLocation}</PostLocation>
             </PostBottomWrapper>
         </PostContainer>
@@ -103,7 +106,7 @@ const PostImage = styled.img`
 const PostTitle = styled.p`
     margin-top: 8px;
     width: 100%;
-    max-width:100%;
+    max-width: 100%;
     font-size: 15px;
     line-height: 18px;
     font-family: 'Pretendard-Regular';

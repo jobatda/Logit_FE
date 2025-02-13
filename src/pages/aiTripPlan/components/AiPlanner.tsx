@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import goHomeIcon from "../../../assets/aiPlan/aiPlanGoHome.svg";
 import ticketImg from "../../../assets/aiPlan/aiPlannerTheme.png";
@@ -17,53 +17,60 @@ export default function AiPlanner() {
     const navigate = useNavigate();
 
     const onClickGoHome = () => {
-      navigate("/");
+        navigate("/");
     };
-  
+
 
     return (
         <AiPlannerWrapper>
             <AiPlannerHeader>
-              <GoHomeBtn src={goHomeIcon} onClick={onClickGoHome} />
-              <HeaderText>
-                AI 플래너
-              </HeaderText>
+                <GoHomeBtn src={goHomeIcon} onClick={onClickGoHome}/>
+                <HeaderText>
+                    AI 플래너
+                </HeaderText>
             </AiPlannerHeader>
             <AiPlannerInfoWrapper>
-                <InfoTicketImg src={ticketImg} />
+                <InfoTicketImg src={ticketImg}/>
                 <InfoWrapper>
-                <div>
-                    <InfoTitleWrapper>
-                        <InfoTitle>
-                            {dummyDataUser.userName}이름님을 위한 지역
-                        </InfoTitle>
+                    <div>
+                        <InfoTitleWrapper>
+                            <InfoTitle>
+                                {dummyDataUser.userName}이름님을 위한 지역
+                            </InfoTitle>
                             &nbsp;여행코스
-                    </InfoTitleWrapper>
-                    <InfoDescription>
-                        총 4개 여행지 / 음식점 / 카페 / 숙소추천
-                    </InfoDescription>
-                </div>
-                <InfoMiddleWrapper>
-                    <TotalMiddleContentWrapper>
-                        총 이동거리 <img src={textBar} alt="" /> <TotalMiddleContent>100km</TotalMiddleContent>
-                    </TotalMiddleContentWrapper>
-                    <TotalMiddleContentWrapper>
-                        여행지역 <img src={textBar} alt="" /> <TotalMiddleContent>대구</TotalMiddleContent>
-                    </TotalMiddleContentWrapper>
-                </InfoMiddleWrapper>
-                <InfoTagWrapper>
-                    {dummyDataUser.userTravelTag.map((tag, index) => (
-                        <InfoTag key={index}># {tag}</InfoTag>
-                    ))}
-                </InfoTagWrapper>
+                        </InfoTitleWrapper>
+                        <InfoDescription>
+                            총 4개 여행지 / 음식점 / 카페 / 숙소추천
+                        </InfoDescription>
+                    </div>
+                    <InfoTagWrapper>
+                        {dummyDataUser.userTravelTag.map((tag, index) => (
+                            <InfoTag key={index}># {tag}</InfoTag>
+                        ))}
+                    </InfoTagWrapper>
                 </InfoWrapper>
             </AiPlannerInfoWrapper>
             <AiPlannerContentWrapper>
-                <PlannerScheduleList />
+                <PlannerScheduleList/>
             </AiPlannerContentWrapper>
+            <AiPlannerButton onClick={()=>navigate("/thunder/create")}>
+                번개 만들기
+            </AiPlannerButton>
         </AiPlannerWrapper>
     );
 }
+
+const AiPlannerButton = styled.button`
+    border-radius: 8px;
+    background-color: #71C9B0;
+    color: white;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 400;
+    width: 100%;
+    justify-content: center;
+    margin-top: 42px;
+`;
 
 const AiPlannerWrapper = styled.div`
 `;
@@ -168,6 +175,10 @@ const InfoTagWrapper = styled.div`
     gap: 6px;
     max-width: 230px;
     overflow: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const InfoTag = styled.span`

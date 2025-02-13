@@ -63,7 +63,6 @@ export default function PlannerScheduleList() {
                 <PlannerScheduleListContainer key={schedule.scheduleId}>
                     <PlannerHeaderWrapper>
                         <ScheduleDay>DAY {schedule.scheduleDay}</ScheduleDay>
-                        <UpdateScheduleBtn>일정 편집</UpdateScheduleBtn>
                     </PlannerHeaderWrapper>
                     <ScheduleList>
                         {schedule.location.map((location, index) => (
