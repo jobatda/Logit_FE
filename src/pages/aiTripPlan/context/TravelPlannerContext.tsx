@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-interface TravelData {
+export interface TravelData {
   region: string | null;
   duration: string | null;
   themes: string[];

@@ -131,8 +131,10 @@ const NextButton = styled.button<{$isAbled: boolean}>`
 `;
     
 const PrevButton = styled.button`
-    width: 93px;
-    height: 36px;
+
+    opacity: 0;
+    // width: 93px;
+    // height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;

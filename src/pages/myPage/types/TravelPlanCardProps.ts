@@ -1,5 +1,5 @@
 export interface TravelPlanCardProps {
-    courseId: number,
+    courseId: string,
     userId: number,
     courseTitle: string,
     courseArea: string,

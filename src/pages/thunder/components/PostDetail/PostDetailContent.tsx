@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import PlannerScheduleList from "../../../aiTripPlan/components/PlannerScheduleList";
+
 export default function PostDetailContent({content, scheduleImage}: {content: string; scheduleImage: string}) {
     return (
         <DetailContentWrapper>
@@ -7,6 +9,8 @@ export default function PostDetailContent({content, scheduleImage}: {content: st
                 {content}
             </DetailContent>
             <ContentTrablePlane src={scheduleImage} alt='여행 계획 이미지'/>
+            <PlannerScheduleList courseid="1"/>
+
         </DetailContentWrapper>
     )
 }
@@ -30,4 +34,5 @@ const ContentTrablePlane = styled.img`
     width:100%;
     height:100%;
     object-fit: cover;
+    margin-bottom: 20px;
 `;
