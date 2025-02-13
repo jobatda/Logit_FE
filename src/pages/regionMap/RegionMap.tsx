@@ -52,7 +52,7 @@ export default function RegionMap() {
         getFillStyle,
     } = useImageSelection();
     const commonProps = {toggleIsOpen, selectedImages, getFillStyle};
-    console.log(selectedImages)
+
     return (
         <>
             <RegionMapTop>

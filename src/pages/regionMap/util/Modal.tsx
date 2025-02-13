@@ -53,7 +53,7 @@ export default function Modal({selectedModal, toggleIsOpen, handlePathClick, han
                         <div>지역 채우기</div>
                     </Button>
                     <StyledHr/>
-                    <Button onClick={() => navigate("/aitripplan")}>
+                    <Button onClick={() => navigate("/aitripplan", {state: {region: selectedModal.name}})}>
                         <AiIcon/>
                         <div>여행코스 만들기</div>
                     </Button>
