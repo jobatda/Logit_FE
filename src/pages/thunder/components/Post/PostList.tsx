@@ -32,13 +32,26 @@ export default function PostList({searchQuery}: { searchQuery: string }) {
     }, [searchQuery, posts]);
 
     return (
-        <PostContainer>
-            {filteredPosts && filteredPosts.map((post) => (
-                <PostItem key={post.meetingId} id={post.meetingId}/>
-            ))}
-        </PostContainer>
+        <>
+            {filteredPosts.length ?
+                <PostContainer>
+                    {filteredPosts.map((post) => (
+                        <PostItem key={post.meetingId} id={post.meetingId}/>
+                    ))}
+                </PostContainer>
+                :
+                <PostNo>검색된 번개가 없습니다</PostNo>
+            }
+        </>
     );
 }
+
+const PostNo = styled.div`
+    color: #606060;
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 130px;
+`;
 
 const PostContainer = styled.div`
     display: grid;
