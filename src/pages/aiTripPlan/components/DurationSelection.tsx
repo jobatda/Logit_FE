@@ -15,14 +15,13 @@ const durations = [
     {data: "2박 3일", beforeIcon: twoDayBeforeIcon, afterIcon: twoDayAfterIcon},
 ];
 
-export default function DurationSelection({ onNext, onPrevious }: { onNext: () => void; onPrevious: () => void }) {
-  const { setDuration, data } = useTravelPlanner();
+export default function DurationSelection({ onNext, onPrevious, region }: { onNext: () => void; onPrevious: () => void; region: {region: string} }) {
+  const { setDuration, setRegion ,data } = useTravelPlanner();
 
     const handleNextClick = () => {
-        if (data.duration) {
+        if (data.duration && region.region) {
             onNext();
         } else {
-            // alert("지역을 선택해 주세요.");
         }
     };
 
@@ -31,12 +30,13 @@ export default function DurationSelection({ onNext, onPrevious }: { onNext: () =
     };
 
   const handleDurationClick = (duration: string) => {
+    setRegion(region.region);
     setDuration(duration);
   };
 
   return (
     <div>
-      <PageNavigation currentStep={2} totalSteps={3} />
+      <PageNavigation currentStep={1} totalSteps={2} />
       <Aisubject>
             AI 플래너
         </Aisubject>

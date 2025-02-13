@@ -37,9 +37,10 @@ export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => v
 
     const handleNextClick = () => {
         if (data.themes.length > 1 && data.region && data.duration) {
+            console.log(data);
             onNext();
         } else {
-            alert("지역을 선택해 주세요.");
+            // alert("지역을 선택해 주세요.");
             // 실행하고 다음 추천 리스트로 넘어가기
         }
     };
@@ -50,7 +51,7 @@ export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => v
 
   return (
     <ThemeSelectionWrapper>
-      <PageNavigation currentStep={3} totalSteps={3} />
+      <PageNavigation currentStep={2} totalSteps={2} />
         <Aisubject>
             AI 플래너
         </Aisubject>
