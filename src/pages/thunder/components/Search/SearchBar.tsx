@@ -12,7 +12,8 @@ export default function SearchBar({ search, setQuery }: SearchInputProps) {
 }
 
 const SearchBarContainer = styled.div`
-    max-width: 100%;
+    padding: 0 16px;
+    width: 100%;
     height: 35px;
     background-color: #FFFFFF;
     display: flex;

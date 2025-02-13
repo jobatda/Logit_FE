@@ -86,14 +86,15 @@ const PostContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
-    max-width: 172px;
+    // max-width: 172px;
+    width: 100%;
     cursor: pointer;
 `;
 
 const PostImage = styled.img`
     width: 100%;
-    max-width: 172px;
-    max-height: 118px;
+    // max-width: 172px;
+    // max-height: 118px;
     height: auto;
     object-fit: cover;
     border-radius: 12px;

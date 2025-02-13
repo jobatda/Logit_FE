@@ -24,6 +24,7 @@ export default function CarouselWrapper(props: CarouselProps) {
 
     return (
         <CarouselContainer>
+            <BackgroundMint/>
             <Embla ref={emblaRef}>
                 <EmblaContainer>
                     {images.map((image, index) => (
@@ -38,20 +39,25 @@ export default function CarouselWrapper(props: CarouselProps) {
     )
 }
 
-const CarouselContainer = styled.div`
-    margin-top: 8px;
+const BackgroundMint = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 358px;
-    max-height: 152px;
-    border-radius: 10px;
+    height: 58%;
+    background-color: #71C9B0;
+`;
+
+const CarouselContainer = styled.div`
+    padding: 8px 16px 0 16px;
+    width: 100%;
     overflow: hidden;
     position: relative;
-
-
 `;
     
 const Embla = styled.div`
     overflow: hidden;
+    border-radius: 10px;
     width: 100%;
     height: 100%;
     position: relative;
@@ -70,12 +76,11 @@ const EmblaSlide = styled.div`
     align-items: center;
     position: relative;
     img {
-        max-width: 100%;
-        max-height: 100%;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
     }
 `;
-// 옆에 딱 안 붙도록 margin-left 추가함
 
 const SlideNumber = styled.span`
     position: absolute;
@@ -92,4 +97,3 @@ const SlideNumber = styled.span`
     align-items: center;
     justify-content: center;
 `;
-
