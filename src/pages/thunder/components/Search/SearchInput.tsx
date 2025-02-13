@@ -16,7 +16,7 @@ export default function SearchInput({ search, setQuery }: SearchInputProps) {
 }
 
 const SearchInputContainer = styled.div`
-    width: 324px;
+    width: 100%;
     height: 35px;
     border-radius: 13px;
     display: flex;

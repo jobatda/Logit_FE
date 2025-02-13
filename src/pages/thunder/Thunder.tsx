@@ -34,7 +34,7 @@ export default function Thunder() {
 
     return (
         <ThunderContainer>
-            <BackGroundMint/>
+            {/* <BackGroundMint/> */}
             <CarouselWrapper images={images}/>
             <SearchBar search={searchQuery} setQuery={setSearchQuery}/>
             <PostList searchQuery={searchQuery}/>
@@ -47,17 +47,21 @@ const ThunderContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    min-height: 100vh;
     background-color: #FFFFFF;
-    position: relative;
+    position: absolute;
+    width: 100vw;
+    max-width: 500px;
+    left: 0;
+    // padding: 0 16px;
 `;
 
 const BackGroundMint = styled.div`
-    background-color: #71C9B0;
-    position: absolute;
-    height: 147px;
-    width: 100vw;
-    max-width: 500px;
-    top: -50px;
+    // background-color: #71C9B0;
+    // position: absolute;
+    // height: 19vh;
+    // width: 100vw;
+    // max-width: 500px;
+    // top: -50px;
+    // padding-top: 36%; /* 높이를 비율로 설정 */
 `;
 
