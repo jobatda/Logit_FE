@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useTravelPlanner } from "../context/TravelPlannerContext";
 import PageNavigation from "./PageNavigation";
+import { useState } from "react";
 
 import mountainImage from "../../../assets/aiPlan/mountain.png";
 import seaImage from "../../../assets/aiPlan/sea.png";
@@ -9,6 +10,7 @@ import activityImage from "../../../assets/aiPlan/activities.png";
 import cultureImage from "../../../assets/aiPlan/cultureHistory.png";
 import themeparkImage from "../../../assets/aiPlan/themeParks.png";
 import festivalImage from "../../../assets/aiPlan/festivals.png";
+import axios from "axios";
 
 const dummythemes = [
   { label: "산", image: mountainImage },
@@ -20,8 +22,9 @@ const dummythemes = [
   { label: "축제", image: festivalImage },
 ];
 
-export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => void; onPrevious: () => void }) {
+export default function ThemeSelection({ onNext, onPrevious, setCourseid }: { onNext: () => void; onPrevious: () => void; setCourseid: (courseid: string) => void }) {
   const { setThemes, data } = useTravelPlanner();
+  const [ loadding, setLoading ] = useState<boolean>(false);
 
   const handleThemeClick = (theme: string) => {
     if (data.themes.includes(theme)) {
@@ -37,11 +40,58 @@ export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => v
 
     const handleNextClick = () => {
         if (data.themes.length > 1 && data.region && data.duration) {
-            console.log(data);
-            onNext();
+          // console.log(data);
+          const postData = async () => {
+            try {
+              // 보낼 데이터 정의
+              const aicreatProp = {
+                region: data.region,
+                duration: data.duration,
+                theme: data.themes,
+            };
+
+            const headers = {
+              "Content-Type": "application/json", // 요청 본문이 JSON 형식임을 명시
+            };
+
+              const url = "https://travelgo.mooo.com/ai/aiplanner";
+              // const url = "https://localhost:8000/aiplanner";
+              setLoading(true);
+              const response = await axios.post(url, aicreatProp, { headers });
+              // 응답 출력
+              // console.log("응답 데이터:", response.data);
+              setLoading(false);
+              
+              // response.data.output
+              // response.data.themes = data.themes;
+              // response.data.location = data.region;
+              const createCourseData = {
+                output:{
+                ...response.data.output,
+              },
+              themes: data.themes,
+              location: data.region,
+              };
+              console.log(createCourseData);
+              const creatUrl = "https://travelgo.mooo.com/api/course";
+              // const createResponse = await axios.post(creatUrl, createCourseData, { headers });
+              const createResponse = await axios.post(creatUrl, createCourseData);
+              // 서버에 post 한 번 더 보내서 courseid를 받아옴
+              // 서버에서 받은 데이터 중 courseid를 저장
+              // setCourseid(response.data.courseid);
+              setCourseid(createResponse.data.courseid);
+              onNext();
+            } catch (error) {
+              console.error("오류 발생:", error);
+              // 에러발생시 에외처리 요함
+            }
+          };
+          // postData();
+          
+
+          setCourseid("1");
+          onNext();
         } else {
-            // alert("지역을 선택해 주세요.");
-            // 실행하고 다음 추천 리스트로 넘어가기
         }
     };
 
@@ -51,6 +101,9 @@ export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => v
 
   return (
     <ThemeSelectionWrapper>
+      <Loadding $isLoadding={loadding}>
+        AI플래너가 여행지를 추천 중입니다!
+      </Loadding>
       <PageNavigation currentStep={2} totalSteps={2} />
         <Aisubject>
             AI 플래너
@@ -76,7 +129,24 @@ export default function ThemeSelection({ onNext, onPrevious }: { onNext: () => v
   );
 }
 
+const Loadding = styled.div<{$isLoadding: boolean}>`
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: ${({ $isLoadding }) => ($isLoadding ? 'flex' : 'none')};
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+`;
+
 const ThemeSelectionWrapper = styled.div`
+  position: relative;
   padding-bottom: 60px;
 `;
 

@@ -56,7 +56,7 @@ export default function RegionMap() {
     return (
         <>
             <RegionMapTop>
-                <RegionMapName>상혁이의 여행지도:)</RegionMapName>
+                <RegionMapName>여행지도:)</RegionMapName>
                 <RegionMapCount>방문 지역 수: <span style={{color: "#71C9B0"}}>{Object.keys(selectedImages).length}</span> / 255</RegionMapCount>
             </RegionMapTop>
             <RegionMapDiv>

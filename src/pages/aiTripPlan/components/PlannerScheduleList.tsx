@@ -1,6 +1,12 @@
 import styled from "styled-components";
-
-import testImg from "../../../assets/aiPlan/aiPlannerScheduleTest.png";
+import axios from "axios";
+import testImg from "../../../assets/aiPlan/plannerTempImg.svg";
+import testImg1 from "../../../assets/aiPlan/imgtest1.png";
+import testImg2 from "../../../assets/aiPlan/imgtest2.png";
+import testImg3 from "../../../assets/aiPlan/imgtest3.png";
+import testImg4 from "../../../assets/aiPlan/imgtest4.png";
+import { useEffect, useState } from "react";
+// src/pages/aiTripPlan/assetsPan/plannerTempImg.svg
 
 
 interface LocationType {
@@ -11,12 +17,13 @@ interface LocationType {
 }
 
 interface ScheduleType{
+    // location: string;
     scheduleId: number;
     scheduleDay: number;
     location: LocationType[];
 }
 
-interface ScheduleList {
+export interface ScheduleList {
     scheduleList: ScheduleType[];
 }
 
@@ -26,12 +33,10 @@ const dummyScheduleList: ScheduleList = {
         scheduleId: 1,
         scheduleDay: 1,
         location: [
-          {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-          {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-          {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-          {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-          {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-          {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
+          {category: "여행지", name: "경북대학교 자연사 박물관", address: "대구 군위군 효령면 경북대로 2228", imageUrl: testImg1 },
+          {category: "음식점", name: "기러기 농장가든", address: "대구 군위군 효령면 용매로 7888", imageUrl: testImg2 },
+          {category: "여행지", name: "침상공원", address: "대구 북구 침산동 1344-1", imageUrl: testImg3 },
+          {category: "음식점", name: "걸리버 막창", address: "대구 북구 옥산로 53", imageUrl: testImg4 },
           {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
         ],
       },
@@ -39,24 +44,46 @@ const dummyScheduleList: ScheduleList = {
         scheduleId: 2,
         scheduleDay: 2,
         location: [
-            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
+            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg3 },
+            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg2 },
+            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg1 },
         ],
       },
       {
         scheduleId: 3,
         scheduleDay: 3,
         location: [
-            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
-            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg },
+            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg2 },
+            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg3 },
+            {category: "여행지", name: "서울 타워", address: "서울의 랜드마크 gyfudaus dydaofh 788", imageUrl: testImg1 },
         ],
       },
     ],
   };
 
-export default function PlannerScheduleList() {
+export default function PlannerScheduleList({courseid}: {courseid: string}) {
+    const [posts, setPosts] = useState<ScheduleList | null>(null);
+    console.log(courseid);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // const response = await axios.get(`https://travelgo.mooo.com/api/course-plan/${courseid}`);
+                const response = await axios.get(`https://travelgo.mooo.com/api/course-plan/${courseid}`);
+
+                // location 정보를 제외한 나머지 정보만 set
+                // const { location, ...rest } = response.data;
+                // setPosts(rest);
+
+                setPosts(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+        // setPosts(dummyScheduleList);
+    }, []);
+
     return (
         <PlannerScheduleListWrapper>
             {dummyScheduleList.scheduleList.map((schedule) => (

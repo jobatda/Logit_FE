@@ -7,12 +7,24 @@ import FlagIcon from "../../../assets/thunder/FlagIcon.svg?react";
 import StepLine from "../../../assets/thunder/StepLine.svg?react";
 import CalendarIcon from "../../../assets/thunder/CalendarIcon.svg?react";
 import test1 from "../../../assets/feed/test1.png";
+import axios from "axios";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
-import {useRef, useState} from "react";
+import {useRef, useState, useEffect} from "react";
 import Row from "../../../styles/Common/Row.ts";
 import Column from "../../../styles/Common/Column.ts";
-import PlannerScheduleList from "../../aiTripPlan/components/PlannerScheduleList.tsx";
+
+import { TravelPlanCardProps } from "../../myPage/types/TravelPlanCardProps.ts";
+
+import {ScheduleList} from "../../aiTripPlan/components/PlannerScheduleList";
+
+import PlannerScheduleList from "../../aiTripPlan/components/PlannerScheduleList"
+
+
+
+
+// import PlanContent from "../../myPage/components/PlanContent"
+// import PlannerScheduleList from "../../aiTripPlan/components/PlannerScheduleList.tsx";
 
 export default function ThunderCreate() {
     const navigate = useNavigate();
@@ -26,6 +38,11 @@ export default function ThunderCreate() {
     const [formData, setFormData] = useState<FormData | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [plan, setPlan] = useState("");
+    const [modalPosts, setModalPosts] = useState<TravelPlanCardProps[]>([]);
+
+    const [posts, setPosts] = useState<ScheduleList | null>(null);
+
+
 
     const dateInputRef = useRef<HTMLInputElement>(null);
     const endDateInputRef = useRef<HTMLInputElement>(null);
@@ -42,6 +59,22 @@ export default function ThunderCreate() {
             endDateInputRef.current.showPicker();
         }
     };
+
+    const handleModal = () => {
+        const courseid = plan;
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`https://travelgo.mooo.com/api/course-plan/${courseid}`);
+                setPosts(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+        // setPosts(dummyScheduleList);
+
+        setIsOpen(false);
+    }
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -62,7 +95,72 @@ export default function ThunderCreate() {
         }
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+              const response = await axios.get("https://travelgo.mooo.com/api/course");
+              setModalPosts(response.data);
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+        console.log(modalPosts);
+    }, []);
+
+    const getCoursePeriodText = (period: number) => {
+        switch (period) {
+          case 0:
+            return '당일치기';
+          case 1:
+            return '1박 2일';
+          case 2:
+            return '2박 3일';
+          default:
+            return '미정';
+        }
+      };
+
+
+    const handleRadioChange = (courseId: string) => {
+        if (plan === courseId) {
+            setPlan(""); // 이미 선택된 항목을 다시 클릭하면 선택 해제
+        } else {
+            setPlan(courseId); // 새로운 항목을 선택
+        }
+    };
+
+    const handleCreateThunder = async () => {
+        if (step === 1 && plan) {
+            try {
+                const post = {
+                    meetingHostId: "id123",
+                    meetingTitle: title,
+                    meetingContent: intro,
+                    meetingStartDate: startDate,
+                    meetingEndDate: endDate,
+                    meetingLocation: "",
+                    meetingNowCnt: 1,
+                    meetingMaxCnt: meetingMaxCnt,
+                    userMeetingMbti: "ESTJ", 
+                }
+                const response = await axios.post("https://travelgo.mooo.com/api/meeting", {
+
+                });
+                console.log("번개 생성 성공:", response.data);
+                // 번개 생성 후 필요한 추가 작업 수행
+            } catch (error) {
+                console.error("번개 생성 실패:", error);
+            }
+        } else {
+            setStep(1);
+        }
+    };
+
     return (
+        // <TravelPlannerProvider>
+
+
         <Column $verticalAlign="distribute" $horizonAlign="distribute" style={{minHeight: 'calc(100vh - 56px - 80px)'}}>
             <div>
                 <CreateHeader>
@@ -180,16 +278,9 @@ export default function ThunderCreate() {
                                     + 플랜 불러오기
                                 </PlanButton>
                             ) : (
+                                !isOpen &&
                                 <Column style={{marginTop: "20px", width: "100%"}}>
-                                    <ScheduleItem>
-                                        <ScheduleNumber>1</ScheduleNumber>
-                                        <ScheduleImg src={test1}/>
-                                        <ScheduleInfoWrapper>
-                                            <ScheduleCategory>여행지</ScheduleCategory>
-                                            <ScheduleName>대구어쩌구</ScheduleName>
-                                            <ScheduleAddress>대구</ScheduleAddress>
-                                        </ScheduleInfoWrapper>
-                                    </ScheduleItem>
+                                    <PlannerScheduleList courseid={plan}/>
                                 </Column>
                             )}
                         </Row>
@@ -198,21 +289,28 @@ export default function ThunderCreate() {
             </div>
 
             {isOpen && (
-                <ModalBackground onClick={() => setIsOpen(false)}>
+                // <ModalBackground onClick={() => setIsOpen(false)}>
+                <ModalBackground>
                     <Modal onClick={(e) => e.stopPropagation()}>
-                        <ScheduleItem>
-                            <ScheduleImg src={test1}/>
-                            <ScheduleInfoWrapper>
-                                <ScheduleCategory>당일여행</ScheduleCategory>
-                                <ScheduleName>대구여행</ScheduleName>
-                            </ScheduleInfoWrapper>
-                            <input type="radio"
-                                   onChange={() => setPlan("대구여행")}
-                            />
-                        </ScheduleItem>
-                        <ModalButton onClick={() => setIsOpen(false)}>
-                            선택
-                        </ModalButton>
+                        {modalPosts.map((post, index) => (
+                            <SchedulItemWrapper key={index}>   
+                            <ScheduleItem>
+                                <ScheduleImg src={`data:image/png;base64,${post.courseImage[0]}`}/>
+                                <ScheduleInfoWrapper>
+                                    <ScheduleCategory>{getCoursePeriodText(post.coursePeriod)}</ScheduleCategory>
+                                    <ScheduleName>{post.courseTitle}</ScheduleName>
+                                </ScheduleInfoWrapper>
+                                <input type="radio"
+                                        checked={plan === post.courseId}
+                                        onChange={() => handleRadioChange(post.courseId)}
+                                    // onChange={() => setPlan(post.courseTitle)}
+                                />
+                            </ScheduleItem>
+                            </SchedulItemWrapper>   
+                        ))}
+                            <ModalButton onClick={() => setIsOpen(false)}>
+                                선택
+                            </ModalButton>
                     </Modal>
                 </ModalBackground>
             )}
@@ -225,12 +323,17 @@ export default function ThunderCreate() {
                 {!plan && step === 0 ?
                     <NextButton onClick={() => setStep(1)} disabled={!isAble} isAble={isAble}>다음</NextButton>
                     :
-                    <NextButton onClick={() => setStep(1)} disabled={!plan} isAble={plan}>생성하기</NextButton>
+                    <NextButton onClick={() => navigate("/")} disabled={!plan} isAble={plan}>생성하기</NextButton>
                 }
             </Row>
         </Column>
+        // </TravelPlannerProvider>
     );
 }
+
+const SchedulItemWrapper = styled.div`
+    width: 100%;
+`;
 
 const ScheduleAddress = styled.div`
     font-size: 12px;
@@ -316,6 +419,7 @@ const ModalBackground = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    
 
     @media (min-width: 500px) {
         right: calc(50vw - 250px);
@@ -333,6 +437,7 @@ const Modal = styled.div`
     padding: 5px;
     border-radius: 10px;
     z-index: 2000;
+    overflow-y: scroll;
 `;
 
 const PlanButton = styled.button`

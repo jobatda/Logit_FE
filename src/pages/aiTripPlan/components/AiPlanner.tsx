@@ -1,10 +1,27 @@
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
+import { useTravelPlanner } from "../context/TravelPlannerContext";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 import goHomeIcon from "../../../assets/aiPlan/aiPlanGoHome.svg";
 import ticketImg from "../../../assets/aiPlan/aiPlannerTheme.png";
 import textBar from "../../../assets/aiPlan/aiPlannerBar.svg";
 import PlannerScheduleList from "./PlannerScheduleList";
+
+// type Place = {
+//     장소명: string; // 장소 이름
+//     주소: string;
+//     imgUrl?: string; // 이미지 URL (선택적 속성)
+//   };
+  
+//   type TravelPlan = {
+//     [key: `Day ${number}`]: Place[]; // "Day 1", "Day 2", "Day 3"와 같은 키
+//   };
+
+// type PlannerScheduleListProps = {
+//     travelPlan: TravelPlan; // 여행 일정 데이터를 전달받음
+// };
 
 const dummyDataUser = {
     userName: "이동학",
@@ -13,12 +30,27 @@ const dummyDataUser = {
     userTravelTag: ["당일 치기", "액티비티", "실내 여행지"],
 }
 
-export default function AiPlanner() {
+export default function AiPlanner({courseid}: {courseid: string}) {
+    const {data} = useTravelPlanner();
     const navigate = useNavigate();
+    // const [posts, setPosts] = useState<PlannerScheduleListProps | null>(null);
 
     const onClickGoHome = () => {
         navigate("/");
     };
+
+    useEffect(() => {
+        // const fetchData = async () => {
+        //     try {
+        //       const response = await axios.get("https://travelgo.mooo.com/api/meeting");
+        //       console.log(`${response.data}`);
+        //       setPosts(response.data);
+        //     } catch (error) {
+        //       console.error("Error fetching data:", error);
+        //     }
+        //   };
+        //   fetchData();
+    }, []);
 
 
     return (
@@ -40,7 +72,7 @@ export default function AiPlanner() {
                             &nbsp;여행코스
                         </InfoTitleWrapper>
                         <InfoDescription>
-                            총 4개 여행지 / 음식점 / 카페 / 숙소추천
+                            총 4개 여행지 / 음식점 추천
                         </InfoDescription>
                     </div>
                     <InfoTagWrapper>
@@ -51,7 +83,7 @@ export default function AiPlanner() {
                 </InfoWrapper>
             </AiPlannerInfoWrapper>
             <AiPlannerContentWrapper>
-                <PlannerScheduleList/>
+                <PlannerScheduleList courseid={courseid}/>
             </AiPlannerContentWrapper>
             <AiPlannerButton onClick={()=>navigate("/thunder/create")}>
                 번개 만들기
