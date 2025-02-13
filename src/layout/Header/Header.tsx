@@ -60,6 +60,7 @@ const HeaderWrapper = styled.header<{ $isBackButtonPage: boolean }>`
 `;
 
 const HeaderH1 = styled.h1<{ $isBackButtonPage: boolean }>`
+    font-family: 'LaundryGothic';
     font-size: ${({$isBackButtonPage}) => $isBackButtonPage ? "16px" : "24px"};
     color: ${({$isBackButtonPage}) => $isBackButtonPage ? "#333333" : "#ffffff"};
     font-weight: 400;

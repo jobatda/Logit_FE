@@ -9,14 +9,16 @@ export default function Layout() {
     const excludePaths = [
         "/thunder/:id",
         "/thunder/:id/members",
-        "/login"
+        "/login",
     ];
 
     const footerExcludePaths = [
         "/aitripplan"
     ];
 
-    const isWithoutHeaderFooter = excludePaths.some(path => matchPath(path, location.pathname));
+    const isWithoutHeaderFooter = excludePaths.some(
+        path => matchPath(path, location.pathname) && location.pathname !== "/thunder/create"
+    );
     const isWithoutFooter = footerExcludePaths.some(path => matchPath(path, location.pathname));
 
     return (

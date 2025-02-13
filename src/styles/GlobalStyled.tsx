@@ -2,6 +2,13 @@ import {createGlobalStyle} from "styled-components";
 import 'pretendard/dist/web/variable/pretendardvariable.css';
 
 export const GlobalStyled = createGlobalStyle`
+    @font-face {
+        font-family: 'LaundryGothic';
+        src: url('/src/assets/font/런드리고딕OTF Regular.otf') format('opentype'); /* OTF 폰트 경로 */
+        font-weight: normal;
+        font-style: normal;
+    }
+    
     *, *::before, *::after {
         box-sizing: border-box;
     }
