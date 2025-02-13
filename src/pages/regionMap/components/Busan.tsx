@@ -103,24 +103,24 @@ export const Busan = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProps)
                 onClick={() => toggleIsOpen("해운대구")}
             />
             <polygon
-                id="북구"
+                id="부산광역시_북구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("북구"),
+                    fill:getFillStyle("부산광역시_북구"),
                     cursor: 'pointer'
                 }}
                 points="412.1,535.9 413.2,530.5 415.3,524.5 419.6,524.4 419.3,531.2 421.6,531.9 419.4,536.1 416.4,538"
-                onClick={() => toggleIsOpen("북구")}
+                onClick={() => toggleIsOpen("부산광역시_북구")}
             />
             <path
-                id="남구"
+                id="부산광역시_남구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("남구"),
+                    fill:getFillStyle("부산광역시_남구"),
                     cursor: 'pointer'
                 }}
                 d="M426.3,552.5l-0.4-2.4l-3.4-0.3l-0.1-2.6l-0.3-2.1l2.3-2.7l1.6-0.5l3.4,4l0.4,5.6L426.3,552.5z"
-                onClick={() => toggleIsOpen("남구")}
+                onClick={() => toggleIsOpen("부산광역시_남구")}
             />
             <polygon
                 id="동래구"
@@ -153,34 +153,34 @@ export const Busan = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProps)
                 onClick={() => toggleIsOpen("영도구")}
             />
             <polygon
-                id="동구"
+                id="부산광역시_동구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("동구"),
+                    fill:getFillStyle("부산광역시_동구"),
                     cursor: 'pointer'
                 }}
                 points="417.2,546.1 422.1,545.1 422.2,547.2 422.2,547.3 420.3,549.6 417.4,549.2"
-                onClick={() => toggleIsOpen("동구")}
+                onClick={() => toggleIsOpen("부산광역시_동구")}
             />
             <path
-                id="서구"
+                id="부산광역시_서구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("서구"),
+                    fill:getFillStyle("부산광역시_서구"),
                     cursor: 'pointer'
                 }}
                 d="M417,555.5l-0.2,2.3l-1.7,1.7l-1.3-11.3l1.6-2.2l1.7,0.2l0.3,3.2l0,3.9l0.5,0.7L417,555.5z"
-                onClick={() => toggleIsOpen("서구")}
+                onClick={() => toggleIsOpen("부산광역시_서구")}
             />
             <polygon
-                id="중구"
+                id="부산광역시_중구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("중구"),
+                    fill:getFillStyle("부산광역시_중구"),
                     cursor: 'pointer'
                 }}
                 points="417.4,552.5 418.6,552.2 420.3,549.6 417.4,549.2"
-                onClick={() => toggleIsOpen("중구")}
+                onClick={() => toggleIsOpen("부산광역시_중구")}
             />
         </g>
     );

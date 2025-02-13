@@ -33,44 +33,44 @@ export const Gwangju = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProp
                 onClick={() => toggleIsOpen("광산구")}
             />
             <polygon
-                id="북구"
+                id="광주광역시_북구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("북구"),
+                    fill:getFillStyle("광주광역시_북구"),
                     cursor: 'pointer'
                 }}
                 points="141.6,529.2 146.1,528.2 153,540.4 159.8,541.6 158.1,547.7 157.5,549.7 149.1,543.3 145.1,544.9 136.3,540.6 139.1,539.5 135.9,532.8"
-                onClick={() => toggleIsOpen("북구")}
+                onClick={() => toggleIsOpen("광주광역시_북구")}
             />
             <polygon
-                id="남구"
+                id="광주광역시_남구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("남구"),
+                    fill:getFillStyle("광주광역시_남구"),
                     cursor: 'pointer'
                 }}
                 points="131.6,553.9 142.6,550.3 142.3,545.7 145.4,545.3 146.6,554.3 143.1,556.4 133.5,560.3 125.6,559.4 127.5,557.5"
-                onClick={() => toggleIsOpen("남구")}
+                onClick={() => toggleIsOpen("광주광역시_남구")}
             />
             <polygon
-                id="서구"
+                id="광주광역시_서구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("서구"),
+                    fill:getFillStyle("광주광역시_서구"),
                     cursor: 'pointer'
                 }}
                 points="136.3,540.6 145.1,544.9 145.4,545.3 142.3,545.7 142.6,550.3 131.6,553.9"
-                onClick={() => toggleIsOpen("서구")}
+                onClick={() => toggleIsOpen("광주광역시_서구")}
             />
             <polygon
-                id="동구"
+                id="광주광역시_동구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("동구"),
+                    fill:getFillStyle("광주광역시_동구"),
                     cursor: 'pointer'
                 }}
                 points="145.1,544.9 149.1,543.3 157.5,549.7 150.7,557.2 146.6,554.3 145.4,545.3"
-                onClick={() => toggleIsOpen("동구")}
+                onClick={() => toggleIsOpen("광주광역시_동구")}
             />
         </g>
     );

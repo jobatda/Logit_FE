@@ -53,54 +53,54 @@ export const Daegu = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProps)
                 onClick={() => toggleIsOpen("수성구")}
             />
             <polygon
-                id="북구"
+                id="대구광역시_북구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("북구"),
+                    fill:getFillStyle("대구광역시_북구"),
                     cursor: 'pointer'
                 }}
                 points="361.4,413.5 365.2,424 362.5,431.2 358.6,430.6 351.7,429.3 349,428.8 351.2,424.8 352.1,423.7 352.2,423.1 352.6,422.3 351.9,414.8 355.9,415.9 356,415.9"
-                onClick={() => toggleIsOpen("북구")}
+                onClick={() => toggleIsOpen("대구광역시_북구")}
             />
             <polygon
-                id="남구"
+                id="대구광역시_남구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("남구"),
+                    fill:getFillStyle("대구광역시_남구"),
                     cursor: 'pointer'
                 }}
                 points="358,433.6 362.3,434.3 360.2,441.5 359.7,441.8 355.6,437.6"
-                onClick={() => toggleIsOpen("남구")}
+                onClick={() => toggleIsOpen("대구광역시_남구")}
             />
             <polygon
-                id="서구"
+                id="대구광역시_서구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("서구"),
+                    fill:getFillStyle("대구광역시_서구"),
                     cursor: 'pointer'
                 }}
                 points="351.7,429.3 358.6,430.6 357.9,433.2 350.9,432.2"
-                onClick={() => toggleIsOpen("서구")}
+                onClick={() => toggleIsOpen("대구광역시_서구")}
             />
             <polygon
-                id="동구"
+                id="대구광역시_동구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("동구"),
+                    fill:getFillStyle("대구광역시_동구"),
                     cursor: 'pointer'
                 }}
                 points="373.1,409 378.1,412.5 377.7,413.7 381.9,428.9 380.4,433.7 377.2,433.7 363.1,432.3 362.5,431.2 365.2,424 361.4,413.5 366.1,410 370.3,409.5"
-                onClick={() => toggleIsOpen("동구")}
+                onClick={() => toggleIsOpen("대구광역시_동구")}
             />
             <polygon
-                id="중구"
+                id="대구광역시_중구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("중구"),
+                    fill:getFillStyle("대구광역시_중구"),
                     cursor: 'pointer'
                 }}
                 points="358.6,430.6 362.5,431.2 363.1,432.3 362.3,434.3 358,433.6 357.9,433.2"
-                onClick={() => toggleIsOpen("중구")}
+                onClick={() => toggleIsOpen("대구광역시_중구")}
             />
         </g>
     );

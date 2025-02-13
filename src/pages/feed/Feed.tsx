@@ -1,18 +1,19 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import SearchIcon from "../../assets/feed/SearchIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import PhotosIcon from "../../assets/feed/PhotosIcon.svg?react";
 import FeedPlusIcon from "../../assets/feed/FeedPlusIcon.svg?react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import getFeeds from "../../apis/feed/getFeeds.ts";
 
 interface feedType {
-    "userId": number,
+    "userName": string,
     "postId": number,
     "postTitle": string,
     "postContent": string,
-    "postContentImage": string[]
+    "postContentImage": string[],
+    "userImage": string,
     "postDate": string,
     "postLocation": string,
     "postCategory": string,
@@ -28,7 +29,16 @@ export default function Feed() {
     useEffect(() => {
         const fetchFeeds = async () => {
             const result: feedType[] = await getFeeds(selectedTab);
-            setFeeds(result);
+            let sortedFeeds = [...result];
+
+            if (selectedFilter === "최신순") {
+                sortedFeeds.sort((a, b) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime());
+            } else if (selectedFilter === "인기순") {
+
+            } else if (selectedFilter === "팔로잉") {
+            }
+
+            setFeeds(sortedFeeds);
         }
         fetchFeeds();
     }, [selectedTab])
@@ -48,13 +58,13 @@ export default function Feed() {
                         onClick={() => setSelectedTab(tab)}
                         $isSelected={selectedTab === tab}
                     >
-                        {tabNames[tab]} {/* 한글로 변경된 부분 */}
+                        {tabNames[tab]}
                     </Tab>
                 ))}
             </TabsList>
             <SearchInputDiv>
-                <SearchIcon color="#606060" />
-                <SearchInput type="text" />
+                <SearchIcon color="#606060"/>
+                <SearchInput type="text"/>
             </SearchInputDiv>
             <Filter>
                 <FilterButton
@@ -63,14 +73,14 @@ export default function Feed() {
                 >
                     인기순
                 </FilterButton>
-                <StyledHr />
+                <StyledHr/>
                 <FilterButton
                     onClick={() => setSelectedFilter("최신순")}
                     $isSelected={selectedFilter === "최신순"}
                 >
                     최신순
                 </FilterButton>
-                <StyledHr />
+                <StyledHr/>
                 <FilterButton
                     onClick={() => setSelectedFilter("팔로잉")}
                     $isSelected={selectedFilter === "팔로잉"}
@@ -80,28 +90,29 @@ export default function Feed() {
             </Filter>
             <FeedGrid>
                 {feeds.map((post: feedType) => (
-                    <FeedItem key={post.postId} onClick={() => navigate("/feed/scroll", { state: { feedId: post.postId } })}>
+                    <FeedItem key={post.postId}
+                              onClick={() => navigate("/feed/scroll", {state: {postId: post.postId}})}>
                         <FeedImageContainer>
                             {post.postContentImage.length > 1 && (
                                 <MoreImage>
-                                    <PhotosIcon />
+                                    <PhotosIcon/>
                                 </MoreImage>
                             )}
-                            <img src={`data:image/png;base64,${post.postContentImage[0]}`} alt="" />
+                            <img src={`data:image/png;base64,${post.postContentImage[0]}`} alt=""/>
                         </FeedImageContainer>
                         <UserInfoDiv>
-                            {/*<UserImage src={post.img}/>*/}
-                            <UserInfo>{post.userId}</UserInfo>
+                            <UserImage src={`data:image/png;base64,${post.userImage}`}/>
+                            <UserInfo>{post.userName}</UserInfo>
                         </UserInfoDiv>
                         <LocationInfoDiv>
-                            <LocationIcon />
+                            <LocationIcon/>
                             <LocationInfo>{post.postLocation}</LocationInfo>
                         </LocationInfoDiv>
                     </FeedItem>
                 ))}
             </FeedGrid>
             <PlusButton>
-                <FeedPlusIcon />
+                <FeedPlusIcon/>
             </PlusButton>
         </>
     );
@@ -124,10 +135,10 @@ const Tab = styled.div<{ $isSelected: boolean }>`
     min-width: 48px;
     text-align: center;
     padding-bottom: 8px;
-    border-bottom: ${({ $isSelected }) => ($isSelected ? "2px solid #71C9B0" : "none")};
-    color: ${({ $isSelected }) => ($isSelected ? "#71C9B0" : "#606060")};
+    border-bottom: ${({$isSelected}) => ($isSelected ? "2px solid #71C9B0" : "none")};
+    color: ${({$isSelected}) => ($isSelected ? "#71C9B0" : "#606060")};
     cursor: pointer;
-    font-weight: ${({ $isSelected }) => ($isSelected ? "500" : "300")};
+    font-weight: ${({$isSelected}) => ($isSelected ? "500" : "300")};
 `;
 
 const SearchInputDiv = styled.div`
@@ -153,7 +164,7 @@ const Filter = styled.div`
 
 const FilterButton = styled.button<{ $isSelected: boolean }>`
     font-size: 12px;
-    font-weight: ${({ $isSelected }) => ($isSelected ? "600" : "400")};
+    font-weight: ${({$isSelected}) => ($isSelected ? "600" : "400")};
     color: #606060;
 `;
 
@@ -203,11 +214,11 @@ const UserInfo = styled.div`
     flex: 1;
 `;
 
-// const UserImage = styled.img`
-//     width: 24px;
-//     height: 24px;
-//     border-radius: 50%;
-// `;
+const UserImage = styled.img`
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+`;
 
 const LocationInfoDiv = styled.div`
     margin-top: 4px;

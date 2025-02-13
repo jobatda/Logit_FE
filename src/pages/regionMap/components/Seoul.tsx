@@ -243,14 +243,14 @@ export const Seoul = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProps)
                 onClick={() => toggleIsOpen("용산구")}
             />
             <polygon
-                id="중구"
+                id="서울특별시_중구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("중구"),
+                    fill:getFillStyle("서울특별시_중구"),
                     cursor: 'pointer'
                 }}
                 points="154.8,167.4 161.9,166.5 161.9,166.5 160,170.8 154.2,169.6 154.2,168.4"
-                onClick={() => toggleIsOpen("중구")}
+                onClick={() => toggleIsOpen("서울특별시_중구")}
             />
             <polygon
                 id="종로구"

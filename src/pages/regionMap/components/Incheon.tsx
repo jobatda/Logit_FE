@@ -33,14 +33,14 @@ export const Incheon = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProp
                 onClick={() => toggleIsOpen("강화군")}
             />
             <path
-                id="서구"
+                id="인천광역시_서구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("서구"),
+                    fill:getFillStyle("인천광역시_서구"),
                     cursor: 'pointer'
                 }}
                 d="M108.8,169.5l8.3-4.3l-9-2.4l7.7-7.2l9,7.5l-5.4,1.2l3.7,4.9l-2.9,4.5L120,182l-0.3-0.1l-1.4-0.6l-4.3-4.5l-2.1,1.2l-1.1,0l-1.2,0l0-2.1l-0.2-1.1L108.8,169.5z"
-                onClick={() => toggleIsOpen("서구")}
+                onClick={() => toggleIsOpen("인천광역시_서구")}
             />
             <polygon
                 id="계양구"
@@ -83,14 +83,14 @@ export const Incheon = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProp
                 onClick={() => toggleIsOpen("연수구")}
             />
             <path
-                id="중구"
+                id="인천광역시_중구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("중구"),
+                    fill:getFillStyle("인천광역시_중구"),
                     cursor: 'pointer'
                 }}
                 d="M85.4,191.1l3.4,5.5l-0.5,0.6l-1.2,0.6l-3.7-3.8l1.5-3.1L85.4,191.1z M110,179.4l-0.4,1l1.1-0.4l3.5,2.3l-1.6,4.2l-0.9,1.8l-1.1,0l-0.5,0l-0.1-0.1l0.1-3.8l-2.1,2.4l-0.4-3.6l1.1-0.6l0-0.1l-0.3-1.5L110,179.4z M96.5,172.4l7.4,2.3l0.7,0l2.2,4.2l-17.7,10.6l-1.7-0.3l-1.6,1l-0.3-0.1l-2.1-4.7l-3.9,0.7l-0.5-4.8l6.7-3.1l3.4-0.7l2.2-0.1l1.9-0.1l2.8-2.7l0.2-1.4L96.5,172.4z M109,182.6L109,182.6L109,182.6L109,182.6L109,182.6z"
-                onClick={() => toggleIsOpen("중구")}
+                onClick={() => toggleIsOpen("인천광역시_중구")}
             />
             <path
                 id="옹진군"
@@ -103,14 +103,14 @@ export const Incheon = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProp
                 onClick={() => toggleIsOpen("옹진군")}
             />
             <polygon
-                id="동구"
+                id="인천광역시_동구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("동구"),
+                    fill:getFillStyle("인천광역시_동구"),
                     cursor: 'pointer'
                 }}
                 points="113.6,178 118.3,181.2 114.3,182.3 110.5,179.9 110.3,179.3 111.1,178.9 111.2,178.9 112.3,178.5"
-                onClick={() => toggleIsOpen("동구")}
+                onClick={() => toggleIsOpen("인천광역시_동구")}
             />
             <polygon
                 id="미추홀구"

@@ -2,7 +2,7 @@ export const SELECTED_IMAGES = {
     "경주시":"#FFF1A4",
     "기장군":"#FFF1A4",
     "금정구":"#FFF1A4",
-    "북구":"#FFF1A4",
+    "울산광역시_북구":"#FFF1A4",
     "강서구":"#FFF1A4",
     "연제구":"#FFF1A4",
     "사하구":"#FFF1A4",

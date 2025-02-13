@@ -1,7 +1,4 @@
-// import {useLocation} from "react-router-dom";
-import test1 from "../../assets/feed/test1.png";
-import test2 from "../../assets/feed/test2.png";
-import test3 from "../../assets/feed/test3.png";
+import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Row from "../../styles/Common/Row.ts";
 import Dot3Icon from "../../assets/feed/Dot3Icon.svg?react";
@@ -9,64 +6,67 @@ import SlideIcon from "../../assets/feed/SlideIcon.svg?react";
 import RightArrowIcon from "../../assets/feed/RightArrowIcon.svg?react";
 import LocationIcon from "../../assets/feed/LocationIcon.svg?react";
 import Column from "../../styles/Common/Column.ts";
+import {useEffect, useRef, useState} from "react";
+import getFeeds from "../../apis/feed/getFeeds.ts";
 
-const posts = [
-    {
-        id: 1,
-        user: "안농 12asdasdadsadsadasdasdsadassaasdasadsads3",
-        location: "전북 무asdasdasaasdasdsdasdadsadsasd주",
-        img: [test1, test3, test2],
-        content: "대둔산 경치 좋네",
-        date: "25년 2월 16일",
-    },
-    {
-        id: 2,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test2],
-        content: "대둔산 경치 좋네",
-        date: "25년 2월 16일",
-    },
-    {
-        id: 3,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test3],
-        content: "대둔산 경치 좋네",
-        date: "25년 2월 16일",
-    },
-    {
-        id: 4,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test2],
-        content: "대둔산 경치 좋네",
-        date: "25년 2월 16일",
-    },
-    {
-        id: 5,
-        user: "안농 123",
-        location: "전북 무주",
-        img: [test3],
-        content: "대둔산 경치 좋네",
-        date: "25년 2월 16일",
-    },
-];
+
+interface feedType {
+    "userName": string,
+    "postId": number,
+    "postTitle": string,
+    "postContent": string,
+    "postContentImage": string[],
+    "userImage": string,
+    "postDate": string,
+    "postLocation": string,
+    "postCategory": string,
+    "postTravelNum": number
+}
 
 export default function FeedScroll() {
-    // const location = useLocation();
-    // const {feedId} = location.state;
+    const [feeds, setFeeds] = useState<feedType[]>([]);
+    const location = useLocation();
+    const postId = location.state?.postId || 1;
+    const feedRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+
+    useEffect(() => {
+        const fetchFeeds = async () => {
+            const result: feedType[] = await getFeeds('feed');
+            setFeeds(result);
+        }
+        fetchFeeds();
+    }, [])
+
+    useEffect(() => {
+        if (postId && feeds.length > 0) {
+            const targetElement = feedRefs.current.get(postId);
+            if (targetElement) {
+                targetElement.scrollIntoView({behavior: "smooth", block: "nearest"});
+            }
+        }
+    }, [postId, feeds]);
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        date.setDate(date.getDate() + 3); // 3일 추가
+        return date.toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+    }
 
     return (
         <Column $gap={30}>
-            {posts.map((post: any) => (
-                <div key={post.id} style={{width: "100%", position: "relative"}}>
+            {feeds.map((post: any) => (
+                <div key={post.postId} ref={(el) => el && feedRefs.current.set(post.postId, el)}
+                     style={{width: "100%", position: "relative"}}>
                     <Row $horizonAlign="distribute" $verticalAlign="center" $gap={10}>
                         <UserDiv>
-                            {/*<UserImage src={post.img}/>*/}
+                            <UserImage src={`data:image/png;base64,${post.userImage}`}/>
                             <UserInfoDiv>
-                                <UserInfo>{post.user}</UserInfo>
-                                <FeedDate>{post.date}</FeedDate>
+                                <UserInfo>{post.userName}</UserInfo>
+                                <FeedDate>{formatDate(post.postDate)}</FeedDate>
                             </UserInfoDiv>
                         </UserDiv>
                         <Row $gap={22} $verticalAlign="center">
@@ -82,17 +82,17 @@ export default function FeedScroll() {
                         <MoreImage>
                             <SlideIcon/>
                         </MoreImage>
-                        {post.img.map((image: string, index: number) => (
-                            <FeedScrollImage key={index} src={image}/>
+                        {post.postContentImage.map((image: string, index: number) => (
+                            <FeedScrollImage key={index} src={`data:image/png;base64,${image}`}/>
                         ))}
                     </ImageContainer>
                     <LocationInfoDiv>
                         <LocationIcon/>
-                        <LocationInfo>{post.location}</LocationInfo>
+                        <LocationInfo>{post.postLocation}</LocationInfo>
                         <RightArrowIcon/>
                     </LocationInfoDiv>
                     <FeedContent>
-                        {post.content}
+                        {post.postContent}
                     </FeedContent>
                 </div>
             ))}
@@ -129,11 +129,11 @@ const UserDiv = styled.div`
     text-overflow: ellipsis;
 `;
 
-// const UserImage = styled.img`
-//     width: 40px;
-//     height: 40px;
-//     border-radius: 50%;
-// `;
+const UserImage = styled.img`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+`;
 
 const UserInfoDiv = styled.div`
     white-space: nowrap;

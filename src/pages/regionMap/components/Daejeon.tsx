@@ -43,34 +43,34 @@ export const Daejeon = ({toggleIsOpen, selectedImages, getFillStyle}: RegionProp
                 onClick={() => toggleIsOpen("유성구")}
             />
             <polygon
-                id="서구"
+                id="대전광역시_서구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("서구"),
+                    fill:getFillStyle("대전광역시_서구"),
                     cursor: 'pointer'
                 }}
                 points="204.8,367.2 204.8,367.2 205,369.9 204,378.2 199.9,383.7 193.5,374 194.8,371.1 194.8,371.1 202.3,357.2 207.7,354.4 207.7,354.4 209,357.8"
-                onClick={() => toggleIsOpen("서구")}
+                onClick={() => toggleIsOpen("대전광역시_서구")}
             />
             <polygon
-                id="중구"
+                id="대전광역시_중구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("중구"),
+                    fill:getFillStyle("대전광역시_중구"),
                     cursor: 'pointer'
                 }}
                 points="210.4,359.1 216,366.7 212.1,366.8 214,375.1 211.4,379.9 207,372.7 205,369.9 204.8,367.2 209,357.8"
-                onClick={() => toggleIsOpen("중구")}
+                onClick={() => toggleIsOpen("대전광역시_중구")}
             />
             <polygon
-                id="동구"
+                id="대전광역시_동구"
                 className="st0"
                 style={{
-                    fill:getFillStyle("동구"),
+                    fill:getFillStyle("대전광역시_동구"),
                     cursor: 'pointer'
                 }}
                 points="220.2,343.7 221.4,348.5 223,346.4 228.1,350.7 224.4,351.9 221.3,359.4 220.3,375.2 214.7,381.7 211.4,379.9 214,375.1 212.1,366.8 216,366.7 210.4,359.1 212.4,356.3 212.4,356.3 216.7,357.6 215.6,349.9"
-                onClick={() => toggleIsOpen("동구")}
+                onClick={() => toggleIsOpen("대전광역시_동구")}
             />
         </g>
     );
