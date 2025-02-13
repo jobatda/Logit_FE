@@ -38,7 +38,7 @@ export default function Main() {
     }, [])
 
     const onClickGoAiPlanner = () => {
-        navigate("/aitripplan");
+        navigate("/regionMap");
     }
 
     const formatDateIntl = (dateString: string) => {
