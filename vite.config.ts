@@ -41,6 +41,13 @@ export default defineConfig({
             cleanupOutdatedCaches: true,
             clientsClaim: true,
             maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB로 파일 크기 한도 설정
+
+            runtimeCaching: [
+                {
+                    urlPattern: /^https:\/\/travelgo\.mooo\.com\/ai\/.*/,
+                    handler: 'NetworkOnly',
+                },
+            ],
         },
 
         devOptions: {

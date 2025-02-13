@@ -1,12 +1,15 @@
 import LeftArrowIcon from "../../../assets/thunder/LeftArrowIcon.svg?react";
 import ImageIcon from "../../../assets/thunder/ImageIcon.svg?react";
+import StepLine from "../../../assets/thunder/StepLine.svg?react";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import Row from "../../../styles/Common/Row.ts";
+import Column from "../../../styles/Common/Column.ts";
 
 export default function ThunderCreate() {
     const navigate = useNavigate();
+    const [step, setStep] = useState<number>(0);
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [formData, setFormData] = useState<FormData | null>(null);
 
@@ -30,50 +33,101 @@ export default function ThunderCreate() {
     };
 
     return (
-        <div>
-            <CreateHeader>
-                <button onClick={() => navigate("/")}>
-                    <LeftArrowIcon/>
-                </button>
-            </CreateHeader>
-            <CreateTitle>
-                <CreateMainTitle>여행GO 번개</CreateMainTitle>
-                <CreateIntro>번개를 소개해주세요!</CreateIntro>
-            </CreateTitle>
-            <CreateInputSection>
-                <CreateInputExplain>사진을 등록해주세요(선택)</CreateInputExplain>
-                <Row $gap={6}>
-                    <IconWrapperButton>
-                        <ImageIcon/>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            multiple
-                            onChange={handleImageChange}
-                            style={{display: 'none'}}
-                            id="image-upload"
-                        />
-                        <label htmlFor="image-upload" style={{width: "70px", height: "70px"}}></label>
-                    </IconWrapperButton>
-                    <ImagePreview>
-                        {selectedImages.map((image, index) => (
-                            <ImageThumbnail key={index} src={image} alt={`selected-image-${index}`}/>
-                        ))}
-                    </ImagePreview>
-                </Row>
-            </CreateInputSection>
-            <CreateInputSection>
-                <CreateInputExplain>번개 제목을 입력해주세요*</CreateInputExplain>
-                <CreateInputDetail>번개 제목은 지역명을 포함하여 간결하게 작성하면 더욱 좋아요!</CreateInputDetail>
-                <CreateTitleInput/>
-            </CreateInputSection>
-            <CreateInputSection>
-                <CreateInputExplain>소개글을 입력해주세요*</CreateInputExplain>
-                <CreateIntroduceInput/>
-            </CreateInputSection>
-        </div>
+        <Column $verticalAlign="distribute" $horizonAlign="distribute" style={{height:'calc(100vh - 56px - 80px)'}}>
+            <div>
+                <CreateHeader>
+                    <button onClick={() => navigate("/")}>
+                        <LeftArrowIcon/>
+                    </button>
+                    <Row $verticalAlign="center" $gap={8}>
+                        {step === 0 ? (
+                            <>
+                                <Step>01</Step>
+                                <StepLine/>
+                                <Step style={{color: "#A1A1A1"}}>02</Step>
+                            </>
+                        ) : (
+                            <>
+                                <Step>01</Step>
+                                <Step>02</Step>
+                                <StepLine/>
+                            </>
+                        )}
+                    </Row>
+                </CreateHeader>
+                <CreateTitle>
+                    <CreateMainTitle>여행GO 번개</CreateMainTitle>
+                    <CreateIntro>{step === 0 ? "번개를 소개해주세요!" : "세부 계획을 세워주세요!"}</CreateIntro>
+                </CreateTitle>
+
+                {step === 0 && (
+                    <>
+                        <CreateInputSection>
+                            <CreateInputExplain>사진을 등록해주세요(선택)</CreateInputExplain>
+                            <Row $gap={6}>
+                                <IconWrapperButton>
+                                    <ImageIcon/>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleImageChange}
+                                        style={{display: 'none'}}
+                                        id="image-upload"
+                                    />
+                                    <label htmlFor="image-upload" style={{width: "70px", height: "70px"}}></label>
+                                </IconWrapperButton>
+                                <ImagePreview>
+                                    {selectedImages.map((image, index) => (
+                                        <ImageThumbnail key={index} src={image} alt={`selected-image-${index}`}/>
+                                    ))}
+                                </ImagePreview>
+                            </Row>
+                        </CreateInputSection>
+                        <CreateInputSection>
+                            <CreateInputExplain>번개 제목을 입력해주세요*</CreateInputExplain>
+                            <CreateInputDetail>번개 제목은 지역명을 포함하여 간결하게 작성하면 더욱 좋아요!</CreateInputDetail>
+                            <CreateTitleInput/>
+                        </CreateInputSection>
+                        <CreateInputSection>
+                            <CreateInputExplain>소개글을 입력해주세요*</CreateInputExplain>
+                            <CreateIntroduceInput/>
+                        </CreateInputSection>
+                    </>
+                )}
+            </div>
+
+            <Row $horizonAlign="distribute" style={{marginBottom: "20px"}}>
+                {step !== 0 && (
+                    <PreviousButton onClick={() => setStep(0)}>이전</PreviousButton>
+                )}
+                <div></div>
+                <NextButton onClick={() => setStep(1)}>다음</NextButton>
+            </Row>
+        </Column>
     );
 }
+
+const NextButton = styled.button`
+    color: #FFFFFF;
+    border-radius: 8px;
+    border: 1px solid #71C9B0;
+    background-color: #71C9B0;
+    padding: 10px 35px;
+`;
+
+const PreviousButton = styled.button`
+    color: #A1A1A1;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+    padding: 10px 35px;
+`;
+
+const Step = styled.div`
+    font-weight: 400;
+    font-size: 14px;
+    color: #333333;
+`;
 
 const IconWrapperButton = styled.button`
     padding: 17px 23px;
@@ -171,5 +225,8 @@ const CreateTitle = styled.div`
 `;
 
 const CreateHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
     margin-top: 13px;
+    align-items: center;
 `;
