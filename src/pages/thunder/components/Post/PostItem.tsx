@@ -96,6 +96,7 @@ const PostImage = styled.img`
     max-height: 118px;
     height: auto;
     object-fit: cover;
+    border-radius: 12px;
 `;
 
 const PostTitle = styled.p`

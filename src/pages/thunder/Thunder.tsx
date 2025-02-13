@@ -37,7 +37,7 @@ export default function Thunder() {
             <BackGroundMint/>
             <CarouselWrapper images={images}/>
             <SearchBar search={searchQuery} setQuery={setSearchQuery}/>
-            <PostList/>
+            <PostList searchQuery={searchQuery}/>
         </ThunderContainer>
     );
 };

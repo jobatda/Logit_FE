@@ -1,32 +1,43 @@
 import styled from "styled-components"
-import { useState, useEffect } from "react"
+import {useState, useEffect} from "react"
 import PostItem from "./PostItem";
-import { PostListType } from "../../types/Post"
+import {PostListType} from "../../types/Post"
 import axios from "axios"
 
-export default function PostList() {
-    const [posts, setPosts] = useState<PostListType>();
+export default function PostList({searchQuery}: { searchQuery: string }) {
+    const [posts, setPosts] = useState<PostListType>([]);
+    const [filteredPosts, setFilteredPosts] = useState<PostListType>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-              const response = await axios.get("https://travelgo.mooo.com/api/meeting");
-              console.log(`${response.data}`);
-              setPosts(response.data);
+                const response = await axios.get("https://travelgo.mooo.com/api/meeting");
+                setPosts(response.data);
             } catch (error) {
-              console.error("Error fetching data:", error);
+                console.error("Error fetching data:", error);
             }
-          };
-          fetchData();
+        };
+        fetchData();
     }, []);
+
+    useEffect(() => {
+        if (!searchQuery) {
+            setFilteredPosts(posts);
+        } else {
+            const filtered = posts.filter(post =>
+                post.meetingTitle.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setFilteredPosts(filtered);
+        }
+    }, [searchQuery, posts]);
 
     return (
         <PostContainer>
-            {posts && posts.map((post) => (
-                <PostItem key={post.meetingId} id={post.meetingId} />
+            {filteredPosts && filteredPosts.map((post) => (
+                <PostItem key={post.meetingId} id={post.meetingId}/>
             ))}
         </PostContainer>
-    )
+    );
 }
 
 const PostContainer = styled.div`
