@@ -12,21 +12,7 @@ import dummyCarouselImg from './temp_assets/Frame 1707484734.png'; //test
 
 
 export default function Thunder() {
-    const [images, setImages] = useState<Image[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
-
-
-    useEffect(() => {
-        // API 호출하여 캐러셀 이미지 데이터 가져오기
-        const dummyImages: Image[] = [
-            {url: dummyCarouselImg, description: "test"},
-            {url: dummyCarouselImg, description: "test"},
-            {url: dummyCarouselImg, description: "test"}
-        ];
-        setImages(dummyImages);
-
-
-    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0); // 페이지가 로드될 때 스크롤을 최상단으로 이동
@@ -35,7 +21,7 @@ export default function Thunder() {
     return (
         <ThunderContainer>
             {/* <BackGroundMint/> */}
-            <CarouselWrapper images={images}/>
+            <CarouselWrapper />
             <SearchBar search={searchQuery} setQuery={setSearchQuery}/>
             <PostList searchQuery={searchQuery}/>
         </ThunderContainer>

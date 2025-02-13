@@ -1,39 +1,15 @@
 import styled from "styled-components";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
-// import CarouselSlide from "./CarouselSlide";
-import { CarouselProps } from "../../types/Carousel";
-import { useEffect, useState } from "react";
+import ThunderBanner from "../../../../assets/thunder/ThunderBanner.png"
 
-
-export default function CarouselWrapper(props: CarouselProps) {
-    const { images } = props;
-    const [emblaRef, emblaApi] = useEmblaCarousel({loop: true}, [Autoplay({delay: 1000})]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const length = images.length;
-
-    useEffect(() => {
-        if (emblaApi) {
-            const onSelect = () => {
-                setCurrentIndex(emblaApi.selectedScrollSnap());
-            };
-            emblaApi.on("select", onSelect);
-            onSelect(); // 초기 인덱스 설정
-        }
-    }, [emblaApi]);
+export default function CarouselWrapper() {
 
     return (
         <CarouselContainer>
             <BackgroundMint/>
-            <Embla ref={emblaRef}>
+            <Embla>
                 <EmblaContainer>
-                    {images.map((image, index) => (
-                        <EmblaSlide key={index}>
-                            <img src={image.url} alt={image.description} />
-                        </EmblaSlide>
-                    ))}
+                    <img src={ThunderBanner}/>
                 </EmblaContainer>
-                <SlideNumber>{currentIndex + 1}/{length}</SlideNumber>
             </Embla>
         </CarouselContainer>
     )
@@ -54,7 +30,7 @@ const CarouselContainer = styled.div`
     overflow: hidden;
     position: relative;
 `;
-    
+
 const Embla = styled.div`
     overflow: hidden;
     border-radius: 10px;
@@ -66,8 +42,8 @@ const Embla = styled.div`
 
 const EmblaContainer = styled.div`
     display: flex;
-`; 
-    
+`;
+
 const EmblaSlide = styled.div`
     margin-left: 20px;
     flex: 0 0 100%;
@@ -75,6 +51,7 @@ const EmblaSlide = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
+
     img {
         width: 100%;
         height: 100%;

@@ -41,7 +41,7 @@ export default function FeedScroll() {
         if (postId && feeds.length > 0) {
             const targetElement = feedRefs.current.get(postId);
             if (targetElement) {
-                targetElement.scrollIntoView({behavior: "smooth", block: "nearest"});
+                targetElement.scrollIntoView({behavior: "smooth", block: "center"});
             }
         }
     }, [postId, feeds]);
