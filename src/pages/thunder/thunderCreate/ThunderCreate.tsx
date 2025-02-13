@@ -1,9 +1,14 @@
 import LeftArrowIcon from "../../../assets/thunder/LeftArrowIcon.svg?react";
 import ImageIcon from "../../../assets/thunder/ImageIcon.svg?react";
+import PlusIcon from "../../../assets/thunder/PlusIcon.svg?react";
+import MinusIcon from "../../../assets/thunder/MinusIcon.svg?react";
+import PeopleIcon from "../../../assets/thunder/PeopleIcon.svg?react";
+import FlagIcon from "../../../assets/thunder/FlagIcon.svg?react";
 import StepLine from "../../../assets/thunder/StepLine.svg?react";
+import CalendarIcon from "../../../assets/thunder/CalendarIcon.svg?react";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
-import { useState} from "react";
+import {useRef, useState} from "react";
 import Row from "../../../styles/Common/Row.ts";
 import Column from "../../../styles/Common/Column.ts";
 
@@ -11,7 +16,26 @@ export default function ThunderCreate() {
     const navigate = useNavigate();
     const [step, setStep] = useState<number>(0);
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
+    const [meetingMaxCnt, setMeetingMaxCnt] = useState(1);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [formData, setFormData] = useState<FormData | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const dateInputRef = useRef<HTMLInputElement>(null);
+    const endDateInputRef = useRef<HTMLInputElement>(null);
+
+    const handleStartDateClick = () => {
+        if (dateInputRef.current) {
+            dateInputRef.current.showPicker();
+        }
+    };
+
+    const handleEndDateClick = () => {
+        if (endDateInputRef.current) {
+            endDateInputRef.current.showPicker();
+        }
+    };
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -33,7 +57,7 @@ export default function ThunderCreate() {
     };
 
     return (
-        <Column $verticalAlign="distribute" $horizonAlign="distribute" style={{height:'calc(100vh - 56px - 80px)'}}>
+        <Column $verticalAlign="distribute" $horizonAlign="distribute" style={{minHeight: 'calc(100vh - 56px - 80px)'}}>
             <div>
                 <CreateHeader>
                     <button onClick={() => navigate("/")}>
@@ -95,9 +119,73 @@ export default function ThunderCreate() {
                         </CreateInputSection>
                     </>
                 )}
+
+                {step === 1 && (
+                    <>
+                        <UnderLineDiv>
+                            <Row $gap={5} $verticalAlign="center">
+                                <PeopleIcon/>
+                                <div>인원</div>
+                            </Row>
+                            <Row $gap={20} $verticalAlign="center">
+                                <StyledButton
+                                    onClick={() => setMeetingMaxCnt(prev => Math.max(1, prev - 1))}
+                                ><MinusIcon/></StyledButton>
+                                {meetingMaxCnt}
+                                <StyledButton
+                                    onClick={() => setMeetingMaxCnt(prev => prev + 1)}
+                                ><PlusIcon/></StyledButton>
+                            </Row>
+                        </UnderLineDiv>
+                        <Description>인원은 본인을 포함한 명수로 지정해주세요</Description>
+                        <UnderLineDiv>
+                            <Row $gap={5} $verticalAlign="center" style={{width: "100%"}}>
+                                <DateButton onClick={handleStartDateClick}>
+                                    <CalendarIcon/>
+                                    <div>{startDate ? startDate : "시작일"}</div>
+                                </DateButton>
+                                <input
+                                    ref={dateInputRef}
+                                    type="date"
+                                    style={{display: "none"}}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                />
+                                ~
+                                <DateButton onClick={handleEndDateClick}>
+                                    <CalendarIcon/>
+                                    <div>{endDate ? endDate : "종료일"}</div>
+                                    <input
+                                        ref={endDateInputRef}
+                                        type="date"
+                                        style={{display: "none"}}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                    />
+                                </DateButton>
+                            </Row>
+                        </UnderLineDiv>
+                        <Description>최대 2박 3일</Description>
+                        <UnderLineDiv style={{justifyContent: "start"}}>
+                            <FlagIcon/>
+                            여행 일정
+                        </UnderLineDiv>
+                        <Row $horizonAlign="center">
+                            <PlanButton onClick={() => setIsOpen(true)}>
+                                + 플랜 불러오기
+                            </PlanButton>
+                        </Row>
+                    </>
+                )}
             </div>
 
-            <Row $horizonAlign="distribute" style={{marginBottom: "20px"}}>
+            {isOpen && (
+                <ModalBackground onClick={() => setIsOpen(false)}>
+                    <Modal onClick={(e) => e.stopPropagation()}>
+                        하이
+                    </Modal>
+                </ModalBackground>
+            )}
+
+            <Row $horizonAlign="distribute" style={{marginBottom: "20px", gap: "6px"}}>
                 {step !== 0 && (
                     <PreviousButton onClick={() => setStep(0)}>이전</PreviousButton>
                 )}
@@ -107,6 +195,68 @@ export default function ThunderCreate() {
         </Column>
     );
 }
+
+const ModalBackground  = styled.div`
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    max-width: 500px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    
+    @media (min-width: 500px) {
+        right: calc(50vw - 250px);
+    }
+`;
+
+const Modal = styled.div`
+    background-color: white;
+    width: calc(100% - 20px);
+    height: 62.44%;
+    padding: 5px;
+    border-radius: 10px;
+    z-index: 2000;
+`;
+
+const PlanButton = styled.button`
+    margin-top: 16px;
+    color: #D2D2D2;
+    font-weight: 500;
+`;
+
+const Description = styled.div`
+    color: #C8C8C8;
+    font-size: 10px;
+    font-weight: 400;
+    text-align: right;
+    margin-top: 6px;
+`;
+
+const DateButton = styled.button`
+    align-items: center;
+    gap: 6px;
+    width: 50%;
+    position: relative;
+`;
+
+const StyledButton = styled.button`
+    border-radius: 50%;
+    background-color: #D2D2D2;
+`;
+
+const UnderLineDiv = styled.div`
+    color: #333333;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #C8C8C8;
+`;
 
 const NextButton = styled.button`
     color: #FFFFFF;
@@ -130,6 +280,7 @@ const Step = styled.div`
 `;
 
 const IconWrapperButton = styled.button`
+    margin-top: 10px;
     padding: 17px 23px;
     border-radius: 10px;
     cursor: pointer;
@@ -168,7 +319,7 @@ const CreateIntroduceInput = styled.textarea`
     border-radius: 10px;
     border: 1px solid #F8F8F8;
     width: 100%;
-    height: 230px;
+    height: 150px;
     margin-top: 10px;
     resize: none;
 
